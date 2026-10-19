@@ -1,33 +1,538 @@
-<!doctype html>
-<html class="no-js" lang="">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
-  <link rel="stylesheet" href="css/style.css">
-  <meta name="description" content="">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#EDE4F5">
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-  <meta property="og:image:alt" content="">
+  <title>Terooka — Discover Malaysia Differently</title>
 
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fraunces: warm, soft serif for headings (matches the logo lettering)
+       Plus Jakarta Sans: clean, friendly sans for body text -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#fafafa">
+  <style>
+    :root {
+      --purple: #5724A3;
+      --pink: #D842A0;
+      --ink: #32204B;
+      --muted: #796B85;
+      --outer: #EDE4F5;
+      --serif: 'Fraunces', Georgia, serif;
+      --sans: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; min-height: 100%; }
+
+    body {
+      background: var(--outer);
+      font-family: var(--sans);
+      color: var(--ink);
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    /* =========================
+       PHONE FRAME
+    ========================= */
+
+    .stage {
+      width: 414px;
+      height: 868px;
+      flex-shrink: 0;
+      transform-origin: center;
+    }
+
+    .phone {
+      width: 414px;
+      height: 868px;
+      padding: 12px;
+      background: #111015;
+      border-radius: 62px;
+      position: relative;
+      box-shadow: 0 24px 70px rgba(54,25,88,.23), 0 0 0 2px #343039;
+    }
+
+    .phone::before,
+    .phone::after {
+      content: "";
+      position: absolute;
+      left: -5px;
+      width: 4px;
+      background: #302b35;
+      border-radius: 4px;
+    }
+    .phone::before { top: 155px; height: 52px; }
+    .phone::after  { top: 228px; height: 69px; }
+
+    /* =========================
+       PHONE SCREEN
+    ========================= */
+
+    .screen {
+      width: 390px;
+      height: 844px;
+      border-radius: 50px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #F0E4FB 0%, #F9EAF5 35%, #FFF9F7 70%, #FFECE5 100%);
+    }
+
+    /* soft colour glows for depth */
+    .screen::before,
+    .screen::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(50px);
+      pointer-events: none;
+    }
+    .screen::before {
+      width: 240px; height: 240px;
+      top: -70px; right: -80px;
+      background: rgba(216,66,160,.20);
+    }
+    .screen::after {
+      width: 260px; height: 260px;
+      bottom: 60px; left: -110px;
+      background: rgba(136,52,185,.15);
+    }
+
+    .island {
+      position: absolute;
+      z-index: 10;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 34px;
+      width: 118px;
+      background: #08070a;
+      border-radius: 30px;
+    }
+
+    .status {
+      position: absolute;
+      top: 18px;
+      left: 34px;
+      right: 30px;
+      z-index: 9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    /* =========================
+       MAIN CONTENT
+    ========================= */
+
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 72px 28px 43px;
+    }
+
+    /* =========================
+       LOGO AND SLOGAN
+    ========================= */
+
+    .brand {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo {
+      display: block;
+      width: 215px;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .tagline {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 13px;
+      font-weight: 500;
+      color: #784597;
+      letter-spacing: .005em;
+      margin: 0;
+    }
+
+    /* =========================
+       MAIN HEADLINE
+    ========================= */
+
+    .intro {
+      margin-top: 32px;
+      width: 100%;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin: 0 0 14px;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-optical-sizing: auto;
+      font-size: 37px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -.025em;
+      color: #32145B;
+      margin: 0;
+    }
+
+    /* the word "Differently." gets the italic + gradient treatment */
+    h1 em {
+      font-style: italic;
+      font-weight: 500;
+      background: linear-gradient(100deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      padding-right: .06em; /* stops italic tail from clipping */
+    }
+
+    /* small ornament divider */
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px auto 0;
+      width: 130px;
+      color: var(--pink);
+    }
+    .ornament::before,
+    .ornament::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(216,66,160,.55));
+    }
+    .ornament::after {
+      background: linear-gradient(270deg, transparent, rgba(216,66,160,.55));
+    }
+    .ornament span {
+      font-size: 8px;
+      line-height: 1;
+    }
+
+    /* =========================
+       GLASS FEATURE CARDS
+    ========================= */
+
+    .features {
+      width: 100%;
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      text-align: left;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 72px;
+      padding: 13px 15px;
+      background: rgba(255,255,255,.28);
+      border: 1px solid rgba(255,255,255,.65);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 6px 22px rgba(87,36,163,.05);
+      transition: transform .3s ease, background .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px) scale(1.015);
+      background: rgba(255,255,255,.55);
+      border-color: rgba(255,255,255,.95);
+      box-shadow: 0 14px 30px rgba(87,36,163,.12), 0 0 20px rgba(216,66,160,.07);
+    }
+
+    .icon-wrap {
+      width: 40px;
+      height: 40px;
+      flex: 0 0 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+    }
+
+    .feature:nth-child(1) .icon-wrap { background: rgba(224,202,252,.7); color: var(--purple); }
+    .feature:nth-child(2) .icon-wrap { background: rgba(250,208,235,.7); color: #C12D91; }
+    .feature:nth-child(3) .icon-wrap { background: rgba(255,211,218,.7); color: #D9517A; }
+
+    .feature svg { width: 20px; height: 20px; stroke-width: 1.9; }
+
+    .feature h2 {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -.01em;
+      margin: 0 0 2px;
+      color: #32145B;
+    }
+
+    .feature p {
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* =========================
+       START EXPLORING BUTTON
+    ========================= */
+
+    .bottom {
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .cta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      min-height: 54px;
+      width: 100%;
+      border-radius: 17px;
+      background: linear-gradient(105deg, var(--purple), #8834B9 52%, var(--pink));
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .01em;
+      box-shadow: 0 12px 24px rgba(112,42,159,.2);
+      transition: transform .25s, filter .25s;
+    }
+
+    .cta span { transition: transform .25s; }
+    .cta:hover { transform: translateY(-3px); filter: brightness(1.08); }
+    .cta:hover span { transform: translateX(4px); }
+    .cta:focus-visible { outline: 3px solid var(--pink); outline-offset: 4px; }
+
+    .homebar {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 126px;
+      height: 5px;
+      background: #2F2837;
+      border-radius: 20px;
+    }
+
+    /* =========================
+       MOBILE RESPONSIVE
+    ========================= */
+
+    @media (max-width: 500px) {
+      body { display: block; overflow: auto; }
+
+      .stage, .phone {
+        width: 100%;
+        height: 100dvh;
+        transform: none !important;
+      }
+
+      .phone { padding: 0; border-radius: 0; box-shadow: none; }
+
+      .phone::before, .phone::after, .island, .status, .homebar { display: none; }
+
+      .screen {
+        width: 100%;
+        height: 100%;
+        min-height: 650px;
+        border-radius: 0;
+      }
+
+      .content { padding-top: 45px; padding-bottom: 28px; }
+      .intro { margin-top: 26px; }
+      h1 { font-size: 35px; }
+      .features { margin-top: 22px; }
+    }
+
+    /* SHORT MOBILE SCREENS */
+    @media (max-height: 740px) and (max-width: 500px) {
+      .content { padding-top: 30px; }
+      .logo { height: 85px; }
+      .intro { margin-top: 16px; }
+      h1 { font-size: 31px; }
+      .ornament { margin-top: 14px; }
+      .features { margin-top: 16px; gap: 9px; }
+      .feature { padding: 10px 12px; min-height: 64px; }
+    }
+
+    /* gentle entrance animation */
+    @media (prefers-reduced-motion: no-preference) {
+      .brand, .intro, .feature, .bottom {
+        opacity: 0;
+        transform: translateY(14px);
+        animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards;
+      }
+      .intro { animation-delay: .12s; }
+      .feature:nth-child(1) { animation-delay: .24s; }
+      .feature:nth-child(2) { animation-delay: .34s; }
+      .feature:nth-child(3) { animation-delay: .44s; }
+      .bottom { animation-delay: .56s; }
+    }
+
+    @keyframes rise {
+      to { opacity: 1; transform: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .feature, .cta, .cta span { transition: none; }
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- Add your site or application content here -->
-  <p>Hello world! This is HTML5 Boilerplate.</p>
-  <script src="js/app.js"></script>
+<div class="stage" id="stage">
+  <div class="phone">
+    <div class="screen">
+
+      <div class="island"></div>
+
+      <div class="status">
+        <span>9:41</span>
+        <svg width="70" height="15" viewBox="0 0 70 15" fill="none" aria-label="Signal, Wi-Fi and battery">
+          <g fill="#32204B">
+            <rect x="0" y="10" width="3" height="5" rx="1"/>
+            <rect x="5" y="7" width="3" height="8" rx="1"/>
+            <rect x="10" y="4" width="3" height="11" rx="1"/>
+            <rect x="15" y="1" width="3" height="14" rx="1"/>
+          </g>
+          <g stroke="#32204B" stroke-width="1.8" stroke-linecap="round">
+            <path d="M27 5Q34-1 41 5"/>
+            <path d="M30 9Q34 5 38 9"/>
+          </g>
+          <circle cx="34" cy="12" r="1.5" fill="#32204B"/>
+          <rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/>
+          <rect x="50" y="4" width="15" height="7" rx="1.6" fill="#32204B"/>
+          <path d="M69 5v5" stroke="#32204B" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <main class="content">
+
+        <!-- LOGO AND SLOGAN -->
+        <header class="brand">
+          <img src="img/terooka.png" alt="Terooka logo" class="logo">
+          <p class="tagline">Travel Beyond Places, Into Cultures</p>
+        </header>
+
+        <!-- MAIN HEADLINE -->
+        <section class="intro">
+          <p class="eyebrow">Your cultural journey starts here</p>
+          <h1>Discover Malaysia<br><em>Differently.</em></h1>
+          <div class="ornament" aria-hidden="true"><span>◆</span></div>
+        </section>
+
+        <!-- GLASS FEATURE CARDS -->
+        <section class="features" aria-label="Terooka features">
+
+          <div class="feature">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z"/>
+                <path d="M9 3v15M15 6v15"/>
+                <circle cx="15" cy="10" r="2"/>
+              </svg>
+            </div>
+            <div>
+              <h2>Discover</h2>
+              <p>Explore cultural places and stories.</p>
+            </div>
+          </div>
+
+          <div class="feature">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 7h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4V7Z"/>
+                <path d="M12 7v2m0 3v2m0 3v2"/>
+              </svg>
+            </div>
+            <div>
+              <h2>Experience</h2>
+              <p>Enjoy authentic local activities.</p>
+            </div>
+          </div>
+
+          <div class="feature">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/>
+                <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>
+                <path d="m11 8 1 2 2 .3-1.5 1.5.4 2-1.9-1-1.9 1 .4-2L8 10.3l2-.3Z"/>
+              </svg>
+            </div>
+            <div>
+              <h2>Remember</h2>
+              <p>Keep memories in your travelogue.</p>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- START BUTTON -->
+        <div class="bottom">
+          <a class="cta" href="auth.html">
+            Start Exploring
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+      </main>
+
+      <div class="homebar"></div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const stage = document.getElementById('stage');
+
+    function fit() {
+      if (window.innerWidth <= 500) {
+        stage.style.transform = '';
+        return;
+      }
+      const scale = Math.min(1, (window.innerHeight - 28) / 868, (window.innerWidth - 28) / 414);
+      stage.style.transform = `scale(${scale})`;
+    }
+
+    fit();
+    window.addEventListener('resize', fit);
+  })();
+</script>
 
 </body>
-
 </html>
