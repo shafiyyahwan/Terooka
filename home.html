@@ -3,245 +3,945 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Terooka – Jelajah Budaya, Cipta Cerita</title>
+  <meta name="theme-color" content="#EDE4F5">
+
+  <title>Home — Terooka</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    :root{
-      --cream:#FFF9F3; --lav:#E6DAFA; --lav-d:#C9B3F2; --purple:#6A2BB8; --deep:#3B1A78;
-      --pink:#F7C9E1; --rose:#D9559F; --peach:#FBD8C2; --amber:#EE8A55; --muted:#6B5F8C;
-      --font:ui-rounded,"SF Pro Rounded","Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
+    :root {
+      --purple: #5724A3;
+      --pink: #D842A0;
+      --ink: #32204B;
+      --muted: #796B85;
+      --outer: #EDE4F5;
+      --error: #C0224F;
+      --ok: #1F7A4D;
+      --serif: 'Fraunces', Georgia, serif;
+      --sans: 'Plus Jakarta Sans', sans-serif;
+      --grad: linear-gradient(105deg, var(--purple), #8834B9 52%, var(--pink));
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{font-family:var(--font);color:var(--deep);display:flex;align-items:center;justify-content:center;overflow:hidden;
-      background:linear-gradient(135deg,#F1EAFB 0%,#FBEAF3 50%,#FDEBDD 100%)}
-    button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
-    /* ---------- Phone ---------- */
-    .stage{width:414px;height:868px;flex:none;transform-origin:center}
-    .phone{position:relative;width:414px;height:868px;padding:12px;border-radius:62px;background:#0b0b0d;
-      box-shadow:0 0 0 2px #2b2b30,0 40px 80px -20px rgba(59,26,120,.38),0 18px 36px -10px rgba(0,0,0,.25)}
-    .phone::before,.phone::after{content:"";position:absolute;left:-6px;width:4px;border-radius:2px;background:#1c1c20}
-    .phone::before{top:150px;height:56px}.phone::after{top:230px;height:56px}
-    .screen{position:relative;width:390px;height:844px;border-radius:50px;overflow:hidden;background:var(--cream);isolation:isolate}
-    .island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:118px;height:34px;border-radius:20px;background:#000;z-index:30}
-    .status{position:absolute;inset:0 0 auto 0;height:54px;padding:17px 30px 0 36px;display:flex;justify-content:space-between;font-weight:700;font-size:15px;z-index:29}
-    .status .icons{display:flex;gap:6px;align-items:center;margin-top:3px}
-    .home-bar{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:128px;height:5px;border-radius:3px;background:var(--deep);z-index:30}
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    button { font-family: inherit; }
 
-    /* ---------- Backdrop: simple colour fields ---------- */
-    .glow{position:absolute;border-radius:50%;filter:blur(42px);z-index:0}
-    .g1{width:300px;height:300px;left:-90px;top:-100px;background:var(--lav)}
-    .g2{width:260px;height:260px;right:-100px;top:60px;background:var(--pink);opacity:.7}
-    .g3{width:300px;height:260px;left:-60px;bottom:-110px;background:var(--peach)}
-    .g4{width:220px;height:220px;right:-80px;bottom:-60px;background:var(--lav);opacity:.8}
-
-    /* ---------- Content ---------- */
-    .content{position:relative;z-index:5;height:100%;padding:60px 22px 22px;display:flex;flex-direction:column;align-items:center}
-    .logo{display:block;height:auto;width:150px;max-height:120px;object-fit:contain;animation:rise .7s ease both}
-    .tagline{margin-top:4px;font-size:14px;font-weight:700;color:var(--purple);letter-spacing:.3px}
-    .hero{margin-top:18px;text-align:center}
-    .hero h1{font-size:26px;line-height:1.15;font-weight:800;letter-spacing:-.3px}
-    .hero p{margin:8px auto 0;max-width:300px;font-size:13.5px;line-height:1.5;color:var(--muted)}
-
-    /* Preview panel */
-    .panel{margin-top:18px;width:100%}
-    .tabs{display:flex;gap:6px;padding:4px;border-radius:18px;background:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.9);box-shadow:0 4px 14px -6px rgba(106,43,184,.25)}
-    .tab{flex:1;height:34px;border-radius:14px;font-size:13px;font-weight:700;color:var(--muted);transition:background .25s,color .25s,box-shadow .25s}
-    .tab[aria-selected="true"]{color:#fff;background:linear-gradient(100deg,#7A3AC9,#B2479C);box-shadow:0 6px 12px -4px rgba(106,43,184,.5)}
-    .tab:focus-visible,.cta:focus-visible,.stamp:focus-visible{outline:3px solid var(--purple);outline-offset:2px}
-    .views{position:relative;margin-top:10px;height:236px}
-    .view{position:absolute;inset:0;padding:14px;border-radius:24px;background:rgba(255,255,255,.8);border:1px solid #fff;
-      box-shadow:0 14px 30px -12px rgba(106,43,184,.35);opacity:0;transform:translateX(18px) scale(.98);pointer-events:none;transition:opacity .4s,transform .4s}
-    .view.on{opacity:1;transform:none;pointer-events:auto}
-    .dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
-    .dots i{width:6px;height:6px;border-radius:3px;background:var(--lav-d);transition:width .3s,background .3s}
-    .dots i.on{width:20px;background:var(--purple)}
-
-    /* View 1: discover */
-    .map{position:relative;height:122px;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#EFE6FC,#FBE3EF 60%,#FDE6D6)}
-    .map svg{position:absolute;inset:0;width:100%;height:100%}
-    .pin{position:absolute;left:61%;top:30%;width:34px;height:34px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:linear-gradient(135deg,#8A4FD6,#6A2BB8);box-shadow:0 8px 14px -4px rgba(106,43,184,.6);display:grid;place-items:center;animation:bob 2.4s ease-in-out infinite}
-    .pin::after{content:"";width:12px;height:12px;border-radius:50%;background:#fff}
-    .place{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
-    .place h3{font-size:15px;font-weight:800}
-    .place span{display:block;margin-top:2px;font-size:12px;color:var(--muted)}
-    .chip{padding:6px 11px;border-radius:12px;font-size:12px;font-weight:700;color:var(--purple);background:var(--lav)}
-    .story{margin-top:10px;display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
-    .story b{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--peach);color:#B8561F}
-
-    /* View 2: stamps */
-    .sh{display:flex;justify-content:space-between;align-items:baseline}
-    .sh h3{font-size:15px;font-weight:800}
-    .sh span{font-size:12px;font-weight:700;color:var(--purple)}
-    .grid{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px 6px}
-    .stamp{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--muted)}
-    .disc{position:relative;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;border:2px dashed var(--lav-d);background:rgba(230,218,250,.35);color:var(--lav-d);transition:transform .2s}
-    .stamp:hover .disc{transform:scale(1.06)}
-    .disc svg{width:24px;height:24px}
-    .stamp.got .disc{border:2px solid rgba(255,255,255,.7);color:#fff;box-shadow:0 8px 14px -6px rgba(106,43,184,.55),inset 0 0 0 4px rgba(255,255,255,.18)}
-    .stamp.c0.got .disc{background:linear-gradient(135deg,#8A4FD6,#6A2BB8)}
-    .stamp.c1.got .disc{background:linear-gradient(135deg,#E86FAE,#C2479A)}
-    .stamp.c2.got .disc{background:linear-gradient(135deg,#F5A06B,#E0764A)}
-    .stamp.got{color:var(--deep)}
-    .stamp.pop .disc{animation:thud .5s cubic-bezier(.2,1.6,.4,1)}
-    .hint{margin-top:8px;text-align:center;font-size:11.5px;color:var(--muted)}
-
-    /* View 3: travelogue */
-    .board{position:relative;height:100%;border-radius:16px;background:linear-gradient(135deg,#F4EBFD,#FDEDE3);overflow:hidden}
-    .polaroid{position:absolute;width:112px;padding:7px 7px 22px;border-radius:6px;background:#fff;box-shadow:0 10px 18px -8px rgba(59,26,120,.4)}
-    .polaroid .ph{height:92px;border-radius:3px;overflow:hidden}
-    .polaroid small{position:absolute;left:0;right:0;bottom:5px;text-align:center;font-size:10.5px;font-weight:700;color:var(--muted)}
-    .p1{left:16px;top:14px;transform:rotate(-6deg)}
-    .p2{left:100px;top:56px;transform:rotate(5deg)}
-    .note{position:absolute;right:12px;top:16px;width:92px;padding:9px;border-radius:12px;background:var(--pink);font-size:11.5px;line-height:1.35;font-weight:700;transform:rotate(3deg)}
-    .mini{position:absolute;right:20px;bottom:16px;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#F5A06B,#E0764A);border:2px solid #fff;transform:rotate(-12deg)}
-    .mini svg{width:22px;height:22px}
-
-    /* CTA */
-    .bottom{margin-top:auto;width:100%;display:flex;flex-direction:column;align-items:center}
-    .cta{display:flex;align-items:center;justify-content:space-between;width:100%;height:58px;padding:0 8px 0 26px;border-radius:29px;text-decoration:none;color:#fff;font-size:16.5px;font-weight:800;
-      background:linear-gradient(100deg,#7A3AC9 0%,#6A2BB8 40%,#C2479A 100%);box-shadow:0 14px 26px -10px rgba(106,43,184,.65),inset 0 1px 0 rgba(255,255,255,.35);transition:transform .18s,filter .18s}
-    .cta:hover{filter:brightness(1.07);transform:translateY(-2px)}
-    .cta:active{transform:scale(.97)}
-    .cta .go{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.95);color:var(--purple);transition:transform .2s}
-    .cta:hover .go{transform:translateX(3px)}
-    .cta .go svg{width:20px;height:20px}
-    .copy{margin-top:10px;font-size:11px;color:var(--muted);text-align:center}
-
-    @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-    @keyframes bob{0%,100%{translate:0 0}50%{translate:0 -4px}}
-    @keyframes thud{0%{transform:scale(1.7) rotate(-14deg);opacity:.2}100%{transform:scale(1) rotate(0);opacity:1}}
-    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
-    /* Real phones */
-    @media (max-width:500px){
-      body{display:block;overflow:auto}
-      .stage{width:100%;height:100%;transform:none!important}
-      .phone{width:100%;height:100%;padding:0;border-radius:0;background:none;box-shadow:none}
-      .phone::before,.phone::after,.island,.status,.home-bar{display:none}
-      .screen{width:100%;height:100%;min-height:760px;border-radius:0}
-      .content{padding-top:max(26px,env(safe-area-inset-top));padding-bottom:max(18px,env(safe-area-inset-bottom))}
+    body {
+      background: var(--outer);
+      font-family: var(--sans);
+      color: var(--ink);
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
     }
+
+    /* ===== PHONE FRAME ===== */
+    .stage { width: 414px; height: 868px; flex-shrink: 0; transform-origin: center; }
+    .phone {
+      width: 414px; height: 868px; padding: 12px;
+      background: #111015; border-radius: 62px; position: relative;
+      box-shadow: 0 24px 70px rgba(54,25,88,.23), 0 0 0 2px #343039;
+    }
+    .phone::before, .phone::after {
+      content: ""; position: absolute; left: -5px; width: 4px; background: #302b35; border-radius: 4px;
+    }
+    .phone::before { top: 155px; height: 52px; }
+    .phone::after  { top: 228px; height: 69px; }
+
+    .screen {
+      width: 390px; height: 844px; border-radius: 50px; position: relative; overflow: hidden;
+      background: linear-gradient(160deg, #F0E4FB 0%, #F9EAF5 35%, #FFF9F7 70%, #FFECE5 100%);
+    }
+    .glow { position: absolute; border-radius: 50%; filter: blur(55px); pointer-events: none; }
+    .glow-1 { width: 240px; height: 240px; top: -70px; right: -80px; background: rgba(216,66,160,.20); }
+    .glow-2 { width: 260px; height: 260px; top: 420px; left: -120px; background: rgba(136,52,185,.14); }
+
+    .island {
+      position: absolute; z-index: 30; top: 11px; left: 50%; transform: translateX(-50%);
+      height: 34px; width: 118px; background: #08070a; border-radius: 30px;
+    }
+    .status {
+      position: absolute; top: 18px; left: 34px; right: 30px; z-index: 29;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 14px; font-weight: 800;
+    }
+    .homebar {
+      position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+      width: 126px; height: 5px; background: #2F2837; border-radius: 20px; z-index: 30;
+    }
+
+    /* ===== SCROLL AREA ===== */
+    .scroll {
+      position: absolute; inset: 0; z-index: 2;
+      overflow-y: auto; overflow-x: hidden; scrollbar-width: none;
+      padding: 64px 0 118px;
+      scroll-behavior: smooth;
+    }
+    .scroll::-webkit-scrollbar { display: none; }
+    .pad { padding-left: 22px; padding-right: 22px; }
+
+    /* ===== HEADER ===== */
+    .top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .eyebrow {
+      font-size: 10px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--pink); margin: 4px 0 8px;
+    }
+    h1 {
+      font-family: var(--serif); font-size: 30px; font-weight: 600; line-height: 1.1;
+      letter-spacing: -.025em; color: #32145B; margin: 0;
+    }
+    h1 em, .grad-text {
+      font-style: italic; font-weight: 500; padding-right: .06em;
+      background: linear-gradient(100deg, var(--purple), var(--pink));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .avatar {
+      width: 46px; height: 46px; flex: 0 0 46px; border: 0; border-radius: 16px; cursor: pointer;
+      background: var(--grad); color: #fff; font: 700 19px var(--serif);
+      box-shadow: 0 8px 18px rgba(112,42,159,.25);
+      display: grid; place-items: center; transition: transform .2s;
+    }
+    .avatar:hover { transform: translateY(-2px); }
+    .avatar:focus-visible, .chip:focus-visible, .btn:focus-visible, .heart:focus-visible,
+    .nav button:focus-visible, .x:focus-visible, .link:focus-visible, .exp:focus-visible {
+      outline: 3px solid var(--pink); outline-offset: 2px;
+    }
+
+    /* ===== SEARCH ===== */
+    .search { position: relative; margin-top: 18px; }
+    .search svg {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      width: 18px; height: 18px; color: var(--muted); pointer-events: none;
+    }
+    .search input {
+      width: 100%; height: 48px; padding: 0 14px 0 42px; font: 500 14px var(--sans); color: var(--ink);
+      background: rgba(255,255,255,.6); border: 1.5px solid rgba(255,255,255,.9); border-radius: 15px;
+      outline: none; box-shadow: 0 4px 14px rgba(87,36,163,.04);
+      transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+    .search input::placeholder { color: #aa9db6; }
+    .search input:focus { background: rgba(255,255,255,.88); border-color: #B77BDB; box-shadow: 0 0 0 4px rgba(184,123,219,.18); }
+
+    /* ===== GLASS ===== */
+    .glass {
+      background: rgba(255,255,255,.34); border: 1px solid rgba(255,255,255,.7);
+      border-radius: 22px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 6px 22px rgba(87,36,163,.06);
+    }
+
+    /* ===== GETTING STARTED ===== */
+    .start { margin-top: 20px; padding: 16px; position: relative; }
+    .start h2 { font: 600 18px var(--serif); letter-spacing: -.01em; margin: 0 0 3px; color: #32145B; }
+    .start .lead { font-size: 11.5px; color: var(--muted); margin: 0 0 12px; line-height: 1.5; }
+    .x {
+      position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border: 0; border-radius: 10px;
+      background: none; color: var(--muted); cursor: pointer; display: grid; place-items: center;
+    }
+    .x:hover { background: rgba(255,255,255,.6); color: var(--ink); }
+    .x svg { width: 16px; height: 16px; }
+    .bar { height: 6px; border-radius: 6px; background: rgba(87,36,163,.1); overflow: hidden; margin-bottom: 14px; }
+    .bar i { display: block; height: 100%; border-radius: 6px; background: var(--grad); transition: width .5s cubic-bezier(.2,.7,.2,1); }
+
+    .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+    .step { display: flex; align-items: center; gap: 11px; font-size: 12.5px; font-weight: 600; }
+    .tick {
+      width: 24px; height: 24px; flex: 0 0 24px; border-radius: 50%; display: grid; place-items: center;
+      border: 1.8px solid #C9B4E2; color: #fff; transition: background .3s, border-color .3s;
+    }
+    .tick svg { width: 13px; height: 13px; opacity: 0; transition: opacity .3s; }
+    .step.done .tick { background: var(--grad); border-color: transparent; }
+    .step.done .tick svg { opacity: 1; }
+    .step.done .label { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(121,107,133,.5); }
+    .step .label { flex: 1; }
+    .link {
+      border: 0; background: none; cursor: pointer; font: 800 11.5px var(--sans); color: var(--purple);
+      text-decoration: underline; text-underline-offset: 3px; padding: 4px 2px; border-radius: 6px;
+    }
+    .pick { margin-top: 14px; padding-top: 13px; border-top: 1px dashed rgba(87,36,163,.18); }
+    .pick p { font-size: 11px; font-weight: 700; margin: 0 0 8px; color: #4a3566; }
+
+    /* ===== CHIPS ===== */
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .row-chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px 22px 6px; }
+    .row-chips::-webkit-scrollbar { display: none; }
+    .chip {
+      flex-shrink: 0; border: 1.5px solid rgba(255,255,255,.9); background: rgba(255,255,255,.55);
+      padding: 8px 14px; border-radius: 40px; cursor: pointer; font: 700 12px var(--sans); color: #5a4670;
+      transition: background .2s, color .2s, border-color .2s, transform .2s;
+    }
+    .chip:hover { transform: translateY(-2px); background: rgba(255,255,255,.85); }
+    .chip[aria-pressed="true"] { background: var(--grad); color: #fff; border-color: transparent; box-shadow: 0 6px 14px rgba(112,42,159,.22); }
+
+    /* ===== SECTIONS ===== */
+    .section { margin-top: 30px; }
+    .sec-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 4px; }
+    h2.sec { font: 600 22px var(--serif); letter-spacing: -.02em; margin: 0; color: #32145B; }
+    .sec-sub { font-size: 12px; color: var(--muted); margin: 3px 0 12px; line-height: 1.5; }
+    .count { font-size: 11px; font-weight: 700; color: var(--muted); }
+
+    /* ===== PLACE CARDS ===== */
+    .rail { display: flex; gap: 14px; overflow-x: auto; scrollbar-width: none; padding: 4px 22px 14px; scroll-snap-type: x mandatory; }
+    .rail::-webkit-scrollbar { display: none; }
+    .place {
+      flex: 0 0 214px; scroll-snap-align: start; border-radius: 22px; overflow: hidden;
+      background: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 10px 26px rgba(87,36,163,.10); transition: transform .3s, box-shadow .3s;
+    }
+    .place:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(87,36,163,.16); }
+    .cover {
+      position: relative; height: 116px; padding: 12px; display: flex; flex-direction: column; justify-content: flex-end;
+      color: #fff; overflow: hidden;
+    }
+    .cover::before {
+      content: ""; position: absolute; inset: 0; opacity: .16;
+      background:
+        linear-gradient(45deg, #fff 25%, transparent 25%) 0 0 / 22px 22px,
+        linear-gradient(-45deg, #fff 25%, transparent 25%) 0 0 / 22px 22px;
+    }
+    .cover .state { position: relative; font: italic 500 22px var(--serif); letter-spacing: -.02em; text-shadow: 0 2px 10px rgba(0,0,0,.18); }
+    .tags { position: absolute; top: 11px; left: 11px; right: 48px; display: flex; flex-wrap: wrap; gap: 5px; }
+    .tag {
+      font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      background: rgba(255,255,255,.28); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      padding: 4px 8px; border-radius: 20px;
+    }
+    .tag.fy { background: #fff; color: var(--pink); }
+    .heart {
+      position: absolute; top: 8px; right: 8px; z-index: 2; width: 34px; height: 34px; border: 0; border-radius: 50%;
+      background: rgba(255,255,255,.88); color: #B58FCF; cursor: pointer; display: grid; place-items: center;
+      transition: transform .2s, color .2s;
+    }
+    .heart:hover { transform: scale(1.1); }
+    .heart svg { width: 17px; height: 17px; }
+    .heart[aria-pressed="true"] { color: var(--pink); }
+    .heart[aria-pressed="true"] svg path { fill: currentColor; }
+    .body { padding: 12px 14px 14px; }
+    .body h3 { font: 600 16px var(--serif); letter-spacing: -.01em; margin: 0 0 4px; color: #32145B; }
+    .body p { font-size: 11.5px; line-height: 1.55; color: var(--muted); margin: 0; }
+
+    /* ===== EXPERIENCES ===== */
+    .exps { display: flex; flex-direction: column; gap: 11px; }
+    .exp {
+      display: flex; align-items: center; gap: 13px; padding: 13px 14px; text-align: left; width: 100%;
+      border: 1px solid rgba(255,255,255,.7); background: rgba(255,255,255,.34); border-radius: 20px; cursor: pointer;
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: inherit;
+      box-shadow: 0 6px 22px rgba(87,36,163,.05); transition: transform .3s, background .3s, box-shadow .3s;
+    }
+    .exp:hover { transform: translateY(-4px); background: rgba(255,255,255,.6); box-shadow: 0 14px 28px rgba(87,36,163,.11); }
+    .exp-ic { width: 44px; height: 44px; flex: 0 0 44px; border-radius: 15px; display: grid; place-items: center; }
+    .exp-ic svg { width: 22px; height: 22px; }
+    .exp h3 { font: 600 15px var(--serif); margin: 0 0 3px; letter-spacing: -.01em; color: #32145B; }
+    .exp small { font-size: 11px; color: var(--muted); display: block; line-height: 1.4; }
+    .exp .arrow { margin-left: auto; color: #B58FCF; font-size: 16px; }
+    .note { font-size: 10.5px; color: var(--muted); margin: 12px 4px 0; font-style: italic; text-align: center; }
+
+    /* ===== DID YOU KNOW ===== */
+    .know {
+      margin-top: 28px; padding: 18px; border-radius: 22px; color: #fff; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #5724A3, #8834B9 55%, #D842A0);
+      box-shadow: 0 14px 30px rgba(112,42,159,.24);
+    }
+    .know svg.bg { position: absolute; width: 150px; right: -34px; bottom: -40px; opacity: .22; transform: rotate(-16deg); }
+    .know .k-eyebrow { font-size: 9.5px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; opacity: .85; margin: 0 0 8px; position: relative; }
+    .know p.k-text { font: 500 17px/1.35 var(--serif); letter-spacing: -.01em; margin: 0; position: relative; max-width: 270px; }
+
+    .know .k-text { min-height: 94px; opacity: 0; transition: opacity .25s ease; }
+    .know .k-text.fact-visible { opacity: 1; }
+    .fact-dots { position: relative; display: flex; gap: 7px; margin-top: 15px; }
+    .fact-dot { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 10px; background: rgba(255,255,255,.35); cursor: pointer; transition: width .25s, background .25s; }
+    .fact-dot.selected { width: 23px; background: #fff; }
+
+    /* ===== TRAVELOGUE ===== */
+    .empty { text-align: center; padding: 26px 20px 22px; }
+    .empty svg { width: 74px; height: 74px; opacity: .85; }
+    .empty h3 { font: 600 18px var(--serif); margin: 10px 0 5px; color: #32145B; }
+    .empty p { font-size: 12px; color: var(--muted); line-height: 1.55; margin: 0 0 16px; }
+    .mem-list { display: flex; flex-direction: column; gap: 11px; }
+    .mem { padding: 14px 15px; position: relative; }
+    .mem h3 { font: 600 16px var(--serif); margin: 0 0 3px; padding-right: 30px; color: #32145B; }
+    .mem .meta { font-size: 10.5px; font-weight: 700; color: var(--pink); margin: 0 0 7px; letter-spacing: .02em; }
+    .mem p { font-size: 12px; line-height: 1.6; color: #5d4d70; margin: 0; white-space: pre-wrap; word-break: break-word; }
+    .mem .del {
+      position: absolute; top: 9px; right: 9px; width: 28px; height: 28px; border: 0; border-radius: 9px;
+      background: none; color: #B9A9C8; cursor: pointer; display: grid; place-items: center;
+    }
+    .mem .del:hover { color: var(--error); background: rgba(192,34,79,.08); }
+    .mem .del:focus-visible { outline: 3px solid var(--pink); }
+    .mem .del svg { width: 15px; height: 15px; }
+
+    .btn {
+      display: inline-flex; justify-content: center; align-items: center; gap: 9px; border: 0; cursor: pointer;
+      min-height: 50px; padding: 0 24px; border-radius: 16px; background: var(--grad); color: #fff;
+      font: 800 13.5px var(--sans); letter-spacing: .01em; box-shadow: 0 12px 24px rgba(112,42,159,.2);
+      transition: transform .25s, filter .25s;
+    }
+    .btn:hover { transform: translateY(-3px); filter: brightness(1.08); }
+    .btn.full { width: 100%; }
+    .btn.ghost { background: rgba(255,255,255,.7); color: var(--purple); box-shadow: none; border: 1.5px solid #fff; }
+    .btn.danger { background: rgba(192,34,79,.09); color: var(--error); box-shadow: none; }
+    .none { text-align: center; padding: 26px 10px; font-size: 12.5px; color: var(--muted); }
+
+    /* ===== BOTTOM NAV ===== */
+    .nav {
+      position: absolute; z-index: 20; left: 16px; right: 16px; bottom: 22px; height: 66px; padding: 6px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px;
+      background: rgba(255,255,255,.62); border: 1px solid rgba(255,255,255,.9); border-radius: 24px;
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 14px 34px rgba(87,36,163,.16);
+    }
+    .nav button {
+      border: 0; background: none; cursor: pointer; border-radius: 18px; color: #9886AB;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+      font: 700 10px var(--sans); transition: color .25s, background .25s;
+    }
+    .nav button svg { width: 21px; height: 21px; }
+    .nav button[aria-current="true"] { color: var(--purple); background: rgba(216,66,160,.10); }
+
+    /* ===== SHEET ===== */
+    .overlay {
+      position: absolute; inset: 0; z-index: 40; display: flex; align-items: flex-end;
+      background: rgba(40,18,66,.38); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+      opacity: 0; pointer-events: none; transition: opacity .3s;
+    }
+    .overlay.open { opacity: 1; pointer-events: auto; }
+    .sheet {
+      width: 100%; max-height: 88%; overflow-y: auto; scrollbar-width: none;
+      background: linear-gradient(170deg, #FBF4FF, #FFF7F5); border-radius: 30px 30px 0 0;
+      padding: 12px 22px 34px; transform: translateY(100%); transition: transform .38s cubic-bezier(.2,.8,.2,1);
+      box-shadow: 0 -16px 40px rgba(40,18,66,.2);
+    }
+    .sheet::-webkit-scrollbar { display: none; }
+    .overlay.open .sheet { transform: none; }
+    .grab { width: 40px; height: 4px; border-radius: 4px; background: #D8C8E8; margin: 0 auto 16px; }
+    .sheet h2 { font: 600 24px var(--serif); letter-spacing: -.02em; margin: 0 0 4px; color: #32145B; }
+    .sheet .sub { font-size: 12px; color: var(--muted); margin: 0 0 16px; line-height: 1.5; }
+
+    .f { margin-bottom: 12px; }
+    .f label { display: block; font-size: 11px; font-weight: 700; margin: 0 0 5px 3px; color: #4a3566; }
+    .f input, .f textarea {
+      width: 100%; padding: 0 14px; font: 500 14px var(--sans); color: var(--ink);
+      background: rgba(255,255,255,.8); border: 1.5px solid #fff; border-radius: 14px; outline: none;
+      box-shadow: 0 4px 14px rgba(87,36,163,.05); transition: border-color .2s, box-shadow .2s;
+    }
+    .f input { height: 46px; }
+    .f textarea { padding: 12px 14px; min-height: 104px; resize: vertical; line-height: 1.5; }
+    .f input:focus, .f textarea:focus { border-color: #B77BDB; box-shadow: 0 0 0 4px rgba(184,123,219,.18); }
+    .f.invalid input { border-color: var(--error); }
+    .f .err { display: block; font-size: 10.5px; font-weight: 600; color: var(--error); margin: 4px 0 0 3px; }
+    .f .err:empty { display: none; }
+
+    .who { display: flex; align-items: center; gap: 13px; margin-bottom: 16px; }
+    .who .avatar { cursor: default; }
+    .who .avatar:hover { transform: none; }
+    .who b { display: block; font: 600 18px var(--serif); color: #32145B; }
+    .who span { font-size: 12px; color: var(--muted); }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    .stat { padding: 14px; text-align: center; }
+    .stat b { display: block; font: 600 26px var(--serif); color: var(--purple); }
+    .stat span { font-size: 11px; font-weight: 700; color: var(--muted); }
+    .stack { display: flex; flex-direction: column; gap: 10px; }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: absolute; z-index: 60; left: 50%; top: 58px; transform: translate(-50%, -20px);
+      background: #32204B; color: #fff; font-size: 12px; font-weight: 700; padding: 11px 16px; border-radius: 14px;
+      opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; max-width: 86%; text-align: center;
+      box-shadow: 0 10px 24px rgba(40,18,66,.3);
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 500px) {
+      body { display: block; overflow: auto; }
+      .stage, .phone { width: 100%; height: 100dvh; transform: none !important; }
+      .phone { padding: 0; border-radius: 0; box-shadow: none; }
+      .phone::before, .phone::after, .island, .status, .homebar { display: none; }
+      .screen { width: 100%; height: 100%; min-height: 650px; border-radius: 0; }
+      .scroll { padding-top: 30px; }
+      .toast { top: 24px; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .rise { opacity: 0; transform: translateY(14px); animation: rise .65s cubic-bezier(.2,.7,.2,1) forwards; }
+      .rise.d1 { animation-delay: .08s; } .rise.d2 { animation-delay: .16s; } .rise.d3 { animation-delay: .24s; }
+    }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .scroll { scroll-behavior: auto; }
+      .place, .exp, .chip, .btn, .sheet, .overlay, .toast, .bar i { transition: none; }
+    }
+
+    /* NEW JOURNEY-FIRST HOME */
+    .story-hero {margin-top:20px;min-height:238px;border-radius:24px;overflow:hidden;position:relative;padding:23px 20px;display:flex;flex-direction:column;justify-content:flex-end;color:white;background:linear-gradient(180deg,rgba(45,20,82,.18),rgba(45,20,82,.91)),url('img/story-bg.jpg') center/cover,linear-gradient(135deg,#5724A3,#D842A0);box-shadow:0 14px 28px rgba(87,36,163,.19)}
+    .story-hero .hero-kicker{font-size:9px;letter-spacing:.19em;font-weight:800;text-transform:uppercase;margin:0 0 7px;color:#FAD7F1}
+    .story-hero h2{font:600 27px/1.08 var(--serif);margin:0 0 9px;max-width:260px}
+    .story-hero p.hero-copy{font-size:11px;line-height:1.55;margin:0 0 14px;max-width:285px;color:#F7EBFF}
+    .hero-action{background:#fff;color:var(--purple);border:0;border-radius:13px;padding:13px 17px;font:800 12px var(--sans);cursor:pointer;width:100%}
+    .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:16px}
+    .mini-stat{background:rgba(255,255,255,.68);border:1px solid #fff;border-radius:18px;padding:13px 5px;text-align:center}
+    .mini-stat .num{font:600 25px var(--serif);color:var(--purple);display:block}
+    .mini-stat .stat-label{font-size:9px;font-weight:700;color:var(--muted);display:block;margin-top:3px}
+    .nearby-card{margin-top:18px;padding:16px 17px;display:flex;gap:13px;align-items:center}
+    .nearby-icon{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;background:#F1DFF8;color:var(--purple);font-size:23px;flex-shrink:0}
+    .nearby-card h3{font:600 16px var(--serif);margin:0 0 4px}
+    .nearby-card p{font-size:10.5px;color:var(--muted);line-height:1.45;margin:0 0 6px}
+    .nearby-card button{border:0;background:none;color:var(--purple);font:800 11px var(--sans);padding:0;cursor:pointer}
+    .destination-image{height:116px;width:100%;object-fit:cover;display:block}
+    .nav button{font-size:9px}
   </style>
 </head>
+
 <body>
-<div class="stage" id="stage"><div class="phone"><div class="screen">
-  <div class="island"></div>
-  <div class="status"><span>9:41</span><span class="icons">
-    <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" width="3" height="12" rx="1"/></svg>
-    <svg width="17" height="12" viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M1.5 4.3a10 10 0 0 1 14 0"/><path d="M4.2 7.2a6 6 0 0 1 8.6 0"/><circle cx="8.5" cy="10.2" r="1" fill="currentColor" stroke="none"/></svg>
-    <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x=".6" y=".6" width="22.8" height="11.8" rx="3.6" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="19.6" height="8.6" rx="2.4" fill="currentColor"/><path d="M25 4.5v4c.9-.3 1.5-1.2 1.5-2s-.6-1.7-1.5-2Z" fill="currentColor" fill-opacity=".5"/></svg>
-  </span></div>
+<div class="stage" id="stage">
+  <div class="phone">
+    <div class="screen">
 
-  <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div><div class="glow g4"></div>
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="petalGrad" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#D842A0"/><stop offset="1" stop-color="#F58AA6"/>
+          </linearGradient>
+          <symbol id="hibiscus" viewBox="0 0 200 200"></symbol>
+        </defs>
+      </svg>
 
-  <main class="content">
-    <img class="logo" src="img/terooka logo.png" alt="Terooka logo">
-    <div class="tagline">Jelajah Budaya, Cipta Cerita</div>
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
 
-    <section class="hero">
-      <h1>Walk through culture.<br>Keep every story.</h1>
-      <p>Find heritage places across Malaysia, collect a stamp at each one, and turn the trip into your own travelogue.</p>
-    </section>
-
-    <section class="panel" aria-label="App preview">
-      <div class="tabs" role="tablist">
-        <button class="tab" role="tab" aria-selected="true">Discover</button>
-        <button class="tab" role="tab" aria-selected="false">Collect</button>
-        <button class="tab" role="tab" aria-selected="false">Remember</button>
+      <div class="island"></div>
+      <div class="status">
+        <span>9:41</span>
+        <svg width="70" height="15" viewBox="0 0 70 15" fill="none" aria-label="Signal, Wi-Fi and battery">
+          <g fill="#32204B">
+            <rect x="0" y="10" width="3" height="5" rx="1"/><rect x="5" y="7" width="3" height="8" rx="1"/>
+            <rect x="10" y="4" width="3" height="11" rx="1"/><rect x="15" y="1" width="3" height="14" rx="1"/>
+          </g>
+          <g stroke="#32204B" stroke-width="1.8" stroke-linecap="round"><path d="M27 5Q34-1 41 5"/><path d="M30 9Q34 5 38 9"/></g>
+          <circle cx="34" cy="12" r="1.5" fill="#32204B"/>
+          <rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/>
+          <rect x="50" y="4" width="15" height="7" rx="1.6" fill="#32204B"/>
+          <path d="M69 5v5" stroke="#32204B" stroke-width="2" stroke-linecap="round"/>
+        </svg>
       </div>
 
-      <div class="views">
-        <!-- Discover -->
-        <div class="view on">
-          <div class="map">
-            <svg viewBox="0 0 330 122" preserveAspectRatio="none" fill="none">
-              <path d="M-10 90C50 70 80 110 140 80S240 40 340 60" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".8"/>
-              <path d="M60 130C80 90 110 60 150 -10" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".7"/>
-              <path d="M200 130C210 100 240 90 260 60" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".6"/>
-              <circle cx="60" cy="38" r="22" fill="#fff" opacity=".35"/><circle cx="280" cy="100" r="26" fill="#fff" opacity=".3"/>
-            </svg>
-            <div class="pin"></div>
+      <main class="scroll" id="scroll">
+
+        <!-- HEADER + SEARCH -->
+        <section id="sec-home" class="pad">
+          <div class="top rise">
+            <div>
+              <p class="eyebrow" id="greet">Selamat datang</p>
+              <h1 id="hello">Hi, <em>traveller.</em></h1>
+            </div>
+            <button class="avatar" id="avatar" type="button" aria-label="Open profile">T</button>
           </div>
-          <div class="place"><div><h3>Old Court House</h3><span>Kuching, Sarawak</span></div><div class="chip">Heritage</div></div>
-          <div class="story"><b>♪</b>Tap a place to read the story behind it.</div>
-        </div>
 
-        <!-- Collect -->
-        <div class="view">
-          <div class="sh"><h3>My Sarawak stamps</h3><span id="count">3 of 6</span></div>
-          <div class="grid" id="grid"></div>
-          <div class="hint" id="hint">Tap an empty stamp to try it.</div>
-        </div>
+          <label class="search rise d1">
+            <span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search places and experiences</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="q" type="search" placeholder="Search batik, wayang kulit, Melaka…" autocomplete="off">
+          </label>
 
-        <!-- Remember -->
-        <div class="view">
-          <div class="board">
-            <div class="polaroid p1"><div class="ph"><svg viewBox="0 0 98 92" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"><rect width="98" height="92" fill="#FBD8C2"/><circle cx="68" cy="26" r="13" fill="#F7C9E1"/><path d="M0 92V62C20 44 40 66 60 54S90 52 98 58V92Z" fill="#C9B3F2"/><path d="M0 92V76C24 64 50 82 98 70V92Z" fill="#8A4FD6"/></svg></div><small>Waterfront</small></div>
-            <div class="polaroid p2"><div class="ph"><svg viewBox="0 0 98 92" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"><rect width="98" height="92" fill="#E6DAFA"/><circle cx="28" cy="28" r="12" fill="#FBD8C2"/><path d="M0 92V58L30 40L58 62L80 46L98 58V92Z" fill="#F7C9E1"/><path d="M0 92V74C30 62 60 84 98 68V92Z" fill="#D9559F"/></svg></div><small>Day 2</small></div>
-            <div class="note">“The best part was the story behind it.”</div>
-            <div class="mini"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.5 2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 16.6 6.2 20l1.4-6.4L2.7 9.2l6.5-.7Z"/></svg></div>
+          <!-- STORY HERO: replace img/story-bg.jpg with your own photograph -->
+          <div id="start"></div>
+          <div class="mini-stats rise d3" aria-label="Your exploration stats">
+            <div class="mini-stat"><span class="num" id="stat-stamps">0</span><span class="stat-label">Stamps</span></div>
+            <div class="mini-stat"><span class="num" id="stat-books">0</span><span class="stat-label">Travelogues</span></div>
+            <div class="mini-stat"><span class="num" id="stat-places">0</span><span class="stat-label">Places visited</span></div>
           </div>
-        </div>
-      </div>
-      <div class="dots"><i class="on"></i><i></i><i></i></div>
-    </section>
+        </section>
 
-    <div class="bottom">
-      <a class="cta" href="home.html"><span>Get started</span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-      <p class="copy">© 2026 Terooka. All rights reserved.</p>
+        <!-- DISCOVER -->
+        <section id="sec-discover" class="section">
+          <div class="pad">
+            <div class="sec-head"><h2 class="sec">Explore Malaysia</h2><span class="count" id="place-count"></span></div>
+            <p class="sec-sub">Find a destination that sparks your curiosity.</p>
+          </div>
+          <div class="row-chips" id="cats" role="group" aria-label="Filter by category"></div>
+          <div class="rail" id="places" tabindex="-1"></div>
+        </section>
+
+        <section class="pad"><div class="nearby-card glass"><div class="nearby-icon">⌖</div><div><h3>Explore nearby</h3><p>Discover cultural gems around you, even without a journey.</p><button id="nearby" type="button">Explore places →</button></div></div></section>
+
+        <!-- DID YOU KNOW -->
+        <section class="pad">
+          <div class="know">
+            <svg class="bg" viewBox="0 0 200 200" aria-hidden="true"><use href="#hibiscus"/></svg>
+            <p class="k-eyebrow">Did you know</p>
+            <p class="k-text" id="fun-fact" aria-live="polite">Malaysia is home to a wonderful variety of cultures, languages and traditions.</p><div class="fact-dots" id="fact-dots" aria-label="Fun fact progress"></div>
+          </div>
+        </section>
+
+        <!-- REMEMBER -->
+        <section id="sec-remember" class="section pad">
+          <div class="sec-head">
+            <h2 class="sec">Your Journal</h2>
+            <button class="link" id="add-top" type="button">+ Add memory</button>
+          </div>
+          <p class="sec-sub">Your personal travelogue.</p>
+          <div id="memories"></div>
+        </section>
+
+      </main>
+
+      <!-- BOTTOM NAV -->
+      <nav class="nav" aria-label="Main navigation">
+        <button type="button" data-go="sec-home" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m3 11 9-8 9 8M5 10v10h14V10"/></svg>Home</button>
+        <button type="button" data-go="sec-discover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 4-4 2 2-4z"/></svg>Discover</button>
+        <button type="button" data-go="journey"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 19c4-2 2-7 7-8s4-5 9-6M16 5h4v4"/><circle cx="4" cy="19" r="2"/></svg>Journey</button>
+        <button type="button" data-go="sec-remember"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></svg>Journal</button>
+        <button type="button" data-go="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 16-5 16 0"/></svg>Profile</button>
+      </nav>
+
+      <div class="overlay" id="overlay" aria-hidden="true"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <div class="homebar"></div>
     </div>
-  </main>
-  <div class="home-bar"></div>
-</div></div></div>
+  </div>
+</div>
 
 <script>
-  (function(){
-    /* Fit phone to short screens */
-    var stage=document.getElementById('stage');
-    function fit(){
-      if(innerWidth<=500){stage.style.transform='';return}
-      stage.style.transform='scale('+Math.min(1,(innerHeight-24)/868,(innerWidth-24)/414)+')';
-    }
-    fit();addEventListener('resize',fit);
+  (function () {
+    'use strict';
 
-    /* Preview tabs */
-    var tabs=[].slice.call(document.querySelectorAll('.tab')),
-      views=[].slice.call(document.querySelectorAll('.view')),
-      dots=[].slice.call(document.querySelectorAll('.dots i')),
-      cur=0,timer;
-    function show(i){
-      cur=i;
-      tabs.forEach(function(t,n){t.setAttribute('aria-selected',n===i)});
-      views.forEach(function(v,n){v.classList.toggle('on',n===i)});
-      dots.forEach(function(d,n){d.classList.toggle('on',n===i)});
-    }
-    function auto(){clearInterval(timer);timer=setInterval(function(){show((cur+1)%3)},4500)}
-    tabs.forEach(function(t,n){t.addEventListener('click',function(){show(n);auto()})});
-    auto();
+    /* ================= SESSION GUARD ================= */
+    var session = null;
+    try { session = JSON.parse(localStorage.getItem('terooka_session')); } catch (e) {}
+    if (!session) { location.replace('auth.html'); return; }
 
-    /* Stamp grid */
-    var places=['Old Court House','Waterfront','Fort Margherita','Cultural Village','Annah Rais','Main Bazaar'],
-      star='<svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.5 2.8 6 6.5.7-4.9 4.4 1.4 6.4L12 16.6 6.2 20l1.4-6.4L2.7 9.2l6.5-.7Z"/></svg>',
-      plus='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>',
-      grid=document.getElementById('grid'),count=document.getElementById('count'),hint=document.getElementById('hint');
-    places.forEach(function(name,i){
-      var b=document.createElement('button');
-      b.className='stamp c'+(i%3)+(i<3?' got':'');
-      b.setAttribute('aria-label',name+(i<3?' stamp collected':' stamp not collected yet'));
-      b.innerHTML='<span class="disc">'+(i<3?star:plus)+'</span><span>'+name+'</span>';
-      b.addEventListener('click',function(){
-        if(b.classList.contains('got')){return}
-        b.classList.add('got','pop');b.querySelector('.disc').innerHTML=star;
-        b.setAttribute('aria-label',name+' stamp collected');
-        var n=grid.querySelectorAll('.got').length;
-        count.textContent=n+' of 6';
-        hint.textContent=n===6?'Sarawak complete. Time to write your travelogue.':'Nice! One more place, one more story.';
-        auto();
+    var uid = session.username || session.email || 'guest';
+    var PKEY = 'terooka_profile_' + uid;
+    var TKEY = 'terooka_travelogue_' + uid;
+
+    function load(key, fallback) {
+      try { var v = JSON.parse(localStorage.getItem(key)); return v == null ? fallback : v; }
+      catch (e) { return fallback; }
+    }
+    function store(key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+      catch (e) { toast('Couldn\u2019t save. Check your browser storage settings.'); return false; }
+    }
+
+    var profile = load(PKEY, { interests: [], saved: [], hideStart: false });
+    var memories = load(TKEY, []);
+    var cat = 'all';
+    var query = '';
+
+    /* ================= DATA (sample content) ================= */
+    var CATS = [
+      { id: 'heritage', label: 'Heritage' },
+      { id: 'food', label: 'Food' },
+      { id: 'crafts', label: 'Crafts' },
+      { id: 'festivals', label: 'Festivals' },
+      { id: 'arts', label: 'Arts & Music' }
+    ];
+    var CAT_LABEL = {}; CATS.forEach(function (c) { CAT_LABEL[c.id] = c.label; });
+
+    var PLACES = [
+      { id: 'penang', name: 'George Town', state: 'Penang', cats: ['heritage', 'food'],
+        blurb: 'A UNESCO-listed old town where Chinese clan houses, mosques and temples sit streets apart.',
+        grad: 'linear-gradient(135deg,#5724A3,#8834B9)' },
+      { id: 'melaka', name: 'Melaka', state: 'Melaka', cats: ['heritage', 'food'],
+        blurb: 'Peranakan (Baba Nyonya) culture, from heritage shophouses to nyonya kuih.',
+        grad: 'linear-gradient(135deg,#C12D91,#E0679E)' },
+      { id: 'kelantan', name: 'Kota Bharu', state: 'Kelantan', cats: ['arts', 'crafts'],
+        blurb: 'Home of wayang kulit shadow puppetry, batik and silver craft.',
+        grad: 'linear-gradient(135deg,#8834B9,#D842A0)' },
+      { id: 'terengganu', name: 'Kuala Terengganu', state: 'Terengganu', cats: ['crafts', 'food'],
+        blurb: 'Songket weaving, brassware and keropok lekor by the sea.',
+        grad: 'linear-gradient(135deg,#D9517A,#F58AA6)' },
+      { id: 'sarawak', name: 'Kuching', state: 'Sarawak', cats: ['festivals', 'arts'],
+        blurb: 'Longhouse culture, Iban and Bidayuh traditions, and the Rainforest World Music Festival.',
+        grad: 'linear-gradient(135deg,#4a1d8a,#B04BC2)' },
+      { id: 'sabah', name: 'Kota Kinabalu', state: 'Sabah', cats: ['festivals', 'heritage'],
+        blurb: 'Kaamatan, the harvest festival celebrated by the Kadazan-Dusun community every May.',
+        grad: 'linear-gradient(135deg,#A33BAE,#F27A8F)' }
+    ];
+
+    var EXPS = [
+      { id: 'batik', title: 'Batik painting workshop', meta: 'About 2 hours \u00B7 Crafts', color: 'rgba(224,202,252,.75)', ink: '#5724A3',
+        icon: '<path d="M12 3c3 4 5 6.5 5 10a5 5 0 0 1-10 0c0-3.5 2-6 5-10Z"/>' },
+      { id: 'wayang', title: 'Wayang kulit evening', meta: 'Evening show \u00B7 Arts', color: 'rgba(250,208,235,.75)', ink: '#C12D91',
+        icon: '<circle cx="12" cy="12" r="9"/><path d="M8 14c1 2 7 2 8 0M9 9.5h.01M15 9.5h.01"/>' },
+      { id: 'kuih', title: 'Nyonya kuih class', meta: 'About 3 hours \u00B7 Food', color: 'rgba(255,211,218,.8)', ink: '#D9517A',
+        icon: '<path d="M4 14a8 6 0 0 0 16 0Z"/><path d="M8 11c0-2 1.5-3 4-3s4 1 4 3"/>' },
+      { id: 'songket', title: 'Songket weaving demo', meta: 'About 1 hour \u00B7 Crafts', color: 'rgba(233,213,252,.8)', ink: '#8834B9',
+        icon: '<path d="M4 6h16M4 12h16M4 18h16M8 3v18M16 3v18"/>' }
+    ];
+
+    var FACTS = [
+      'Malaysia is home to many ethnic communities, including Malay, Chinese, Indian, Iban, Bidayuh, Kadazan-Dusun and many more.',
+      'Malaysia has 13 states and 3 federal territories, each with its own stories and cultural traditions.',
+      'The bunga raya (hibiscus) is Malaysia’s national flower, chosen in 1960.',
+      'Sarawak is home to diverse Indigenous communities and a rich tradition of weaving, beadwork and music.',
+      'George Town and Melaka are recognised together as UNESCO World Heritage cities.',
+      'The Rainforest World Music Festival in Sarawak brings musicians and cultures together from around the world.'
+    ];
+    var factIndex = 0;
+    function showFact(index) {
+      factIndex = (index + FACTS.length) % FACTS.length;
+      var fact = document.getElementById('fun-fact');
+      if (!fact) return;
+      fact.classList.remove('fact-visible');
+      setTimeout(function () { fact.textContent = FACTS[factIndex]; fact.classList.add('fact-visible'); }, 170);
+      var dots = document.getElementById('fact-dots');
+      dots.innerHTML = '';
+      FACTS.forEach(function (_, i) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'fact-dot' + (i === factIndex ? ' selected' : '');
+        b.setAttribute('aria-label', 'Show fun fact ' + (i + 1));
+        b.addEventListener('click', function () { showFact(i); });
+        dots.appendChild(b);
       });
-      grid.appendChild(b);
+    }
+    showFact(0);
+    setInterval(function () { showFact(factIndex + 1); }, 5500);
+
+    /* ================= HELPERS ================= */
+    function $(s, r) { return (r || document).querySelector(s); }
+    function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+
+    function el(tag, props) {
+      var e = document.createElement(tag);
+      props = props || {};
+      Object.keys(props).forEach(function (k) {
+        var v = props[k];
+        if (k === 'class') e.className = v;
+        else if (k === 'text') e.textContent = v;
+        else if (k === 'html') e.innerHTML = v;
+        else if (k.indexOf('on') === 0) e.addEventListener(k.slice(2), v);
+        else e.setAttribute(k, v);
+      });
+      for (var i = 2; i < arguments.length; i++) {
+        var c = arguments[i];
+        if (c == null) continue;
+        e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+      }
+      return e;
+    }
+
+    var toastTimer;
+    function toast(text) {
+      var t = $('#toast');
+      t.textContent = text;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2300);
+    }
+
+    function has(arr, v) { return arr.indexOf(v) !== -1; }
+    function toggle(arr, v) { var i = arr.indexOf(v); if (i === -1) arr.push(v); else arr.splice(i, 1); }
+    function saveProfile() { return store(PKEY, profile); }
+
+    var ICON_HEART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-9-9.2C1.8 7.6 3.6 4.5 6.8 4.5c2 0 3.3 1 5.2 3 1.9-2 3.2-3 5.2-3 3.2 0 5 3.1 3.8 6.3C19 15.6 12 20 12 20Z"/></svg>';
+    var ICON_TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
+    var ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+    var ICON_TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>';
+
+    /* ================= HIBISCUS SYMBOL ================= */
+    (function () {
+      var ns = 'http://www.w3.org/2000/svg';
+      var sym = $('#hibiscus');
+      var petal = 'M100 100 C62 84 48 40 76 20 C90 10 110 10 124 20 C152 40 138 84 100 100Z';
+      [0, 72, 144, 216, 288].forEach(function (a) {
+        var g = document.createElementNS(ns, 'g');
+        g.setAttribute('transform', 'rotate(' + a + ' 100 100)');
+        g.innerHTML = '<path d="' + petal + '" fill="url(#petalGrad)"/><path d="M100 98 C98 70 98 50 100 32" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/>';
+        sym.appendChild(g);
+      });
+      var s = document.createElementNS(ns, 'g');
+      s.innerHTML = '<circle cx="100" cy="100" r="9" fill="#B02A7E"/><path d="M100 100 C108 80 122 60 140 44" fill="none" stroke="#D842A0" stroke-width="4" stroke-linecap="round"/><g fill="#D842A0"><circle cx="140" cy="44" r="5"/><circle cx="151" cy="52" r="4"/><circle cx="131" cy="36" r="4"/><circle cx="147" cy="35" r="4"/></g>';
+      sym.appendChild(s);
+    })();
+
+    /* ================= GREETING ================= */
+    function renderGreeting() {
+      var h = new Date().getHours();
+      var g = h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat tengah hari' : h < 19 ? 'Selamat petang' : 'Selamat malam';
+      var first = (session.name || uid).trim().split(/\s+/)[0];
+      $('#greet').textContent = g;
+      var hello = $('#hello');
+      hello.textContent = 'Hi, ';
+      hello.appendChild(el('em', { text: first + '.' }));
+      $('#avatar').textContent = first.charAt(0).toUpperCase();
+    }
+
+    /* ================= GETTING STARTED ================= */
+    function renderStart() {
+      var box = $('#start');
+      var active = load('terooka_active_journey_' + uid, null);
+      box.innerHTML = '';
+      var hero = el('div', { class: 'story-hero rise d2' });
+      hero.appendChild(el('p', { class: 'hero-kicker', text: active ? 'YOUR ACTIVE JOURNEY' : 'YOUR ADVENTURE BEGINS HERE' }));
+      hero.appendChild(el('h2', { text: active ? 'Discover ' + active.destination : 'Every place has a story.' }));
+      hero.appendChild(el('p', { class: 'hero-copy', text: active ? 'Your cultural journey is ready. Explore places, complete missions and collect memories.' : 'Explore the culture, traditions and hidden stories that make Malaysia special.' }));
+      hero.appendChild(el('button', { class: 'hero-action', type: 'button', text: active ? 'View Journey' : 'Start a Journey', onclick: openJourney }));
+      box.appendChild(hero);
+      $('#stat-books').textContent = String(memories.length ? 1 : 0);
+      $('#stat-places').textContent = '0';
+      $('#stat-stamps').textContent = '0';
+    }
+
+    function openJourney() {
+      var active = load('terooka_active_journey_' + uid, null);
+      if (active) {
+        openSheet([el('h2', { text: 'Your ' + active.destination + ' journey' }),
+          el('p', { class: 'sub', text: 'Your journey is active! Missions, stamps and location-based activities will appear here once the Journey page is connected.' }),
+          el('button', { class: 'btn ghost full', type: 'button', text: 'End demo journey', onclick: function () {
+              localStorage.removeItem('terooka_active_journey_' + uid); closeSheet(); renderStart();
+            } })]);
+        return;
+      }
+      var select = el('select', { id: 'journey-destination', style: 'width:100%;height:48px;border-radius:14px;border:1px solid #e2d3ee;background:#fff;padding:0 12px;font:600 13px var(--sans);color:var(--ink);margin-bottom:14px' });
+      PLACES.forEach(function (p) { select.appendChild(el('option', { value: p.name, text: p.name + ', ' + p.state })); });
+      openSheet([el('h2', { text: 'Where to next?' }),
+        el('p', { class: 'sub', text: 'Choose a destination to begin your cultural journey.' }),
+        select,
+        el('button', { class: 'btn full', type: 'button', text: 'Start Journey', onclick: function () {
+            store('terooka_active_journey_' + uid, { destination: select.value, startedAt: new Date().toISOString() });
+            closeSheet(); renderStart(); toast('Journey started in ' + select.value + '!');
+          } })]);
+    }
+
+    /* ================= DISCOVER ================= */
+    function renderCats() {
+      var wrap = $('#cats');
+      wrap.innerHTML = '';
+      [{ id: 'all', label: 'All' }].concat(CATS).forEach(function (c) {
+        wrap.appendChild(el('button', { class: 'chip', type: 'button', text: c.label,
+          'aria-pressed': String(cat === c.id), onclick: function () { cat = c.id; renderCats(); renderPlaces(); } }));
+      });
+    }
+
+    function score(p) { return p.cats.filter(function (c) { return has(profile.interests, c); }).length; }
+
+    function renderPlaces() {
+      var rail = $('#places');
+      rail.innerHTML = '';
+      var q = query.trim().toLowerCase();
+
+      var list = PLACES.filter(function (p) {
+        if (cat !== 'all' && !has(p.cats, cat)) return false;
+        if (!q) return true;
+        return (p.name + ' ' + p.state + ' ' + p.blurb + ' ' + p.cats.map(function (c) { return CAT_LABEL[c]; }).join(' ')).toLowerCase().indexOf(q) !== -1;
+      });
+      list = list.map(function (p, i) { return { p: p, i: i }; }).sort(function (a, b) {
+        return (score(b.p) - score(a.p)) || (a.i - b.i);
+      }).map(function (x) { return x.p; });
+
+      $('#place-count').textContent = list.length + (list.length === 1 ? ' place' : ' places');
+
+      if (!list.length) {
+        rail.appendChild(el('div', { class: 'none pad', text: 'No places match that yet. Try another word or category.' }));
+        return;
+      }
+
+      list.forEach(function (p) {
+        var saved = has(profile.saved, p.id);
+        var tags = el('div', { class: 'tags' });
+        if (score(p) > 0) tags.appendChild(el('span', { class: 'tag fy', text: 'For you' }));
+        p.cats.slice(0, score(p) > 0 ? 1 : 2).forEach(function (c) { tags.appendChild(el('span', { class: 'tag', text: CAT_LABEL[c] })); });
+
+        var heart = el('button', { class: 'heart', type: 'button', html: ICON_HEART,
+          'aria-pressed': String(saved), 'aria-label': (saved ? 'Remove ' : 'Save ') + p.name + (saved ? ' from saved' : ''),
+          onclick: function () {
+            toggle(profile.saved, p.id); saveProfile();
+            toast(has(profile.saved, p.id) ? p.name + ' saved' : p.name + ' removed');
+            renderStart(); renderPlaces();
+          } });
+
+        rail.appendChild(el('article', { class: 'place' },
+          el('div', { class: 'cover', style: 'background:' + p.grad }, tags, heart, el('div', { class: 'state', text: p.state })),
+          el('div', { class: 'body' }, el('h3', { text: p.name }), el('p', { text: p.blurb }))));
+      });
+    }
+
+    /* ================= EXPERIENCES ================= */
+    function renderExps() {
+      var wrap = $('#exps');
+      wrap.innerHTML = '';
+      var q = query.trim().toLowerCase();
+      var list = EXPS.filter(function (x) { return !q || (x.title + ' ' + x.meta).toLowerCase().indexOf(q) !== -1; });
+      if (!list.length) { wrap.appendChild(el('div', { class: 'none', text: 'No experiences match that search.' })); return; }
+      list.forEach(function (x) {
+        wrap.appendChild(el('button', { class: 'exp', type: 'button', onclick: function () { toast('Booking opens soon. This is sample content.'); } },
+          el('span', { class: 'exp-ic', style: 'background:' + x.color + ';color:' + x.ink,
+            html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + x.icon + '</svg>' }),
+          el('span', {}, el('h3', { text: x.title }), el('small', { text: x.meta })),
+          el('span', { class: 'arrow', text: '\u2192', 'aria-hidden': 'true' })));
+      });
+    }
+
+    /* ================= TRAVELOGUE ================= */
+    function fmtDate(iso) {
+      try { return new Date(iso).toLocaleDateString('en-MY', { day: 'numeric', month: 'short', year: 'numeric' }); }
+      catch (e) { return ''; }
+    }
+
+    function renderMemories() {
+      var wrap = $('#memories');
+      wrap.innerHTML = '';
+      $('#add-top').style.display = memories.length ? '' : 'none';
+
+      if (!memories.length) {
+        wrap.appendChild(el('div', { class: 'empty glass' },
+          el('div', { html: '<svg viewBox="0 0 200 200" aria-hidden="true"><use href="#hibiscus"/></svg>' }),
+          el('h3', { text: 'Your travelogue is empty' }),
+          el('p', { text: 'Jot down a place you visited, a dish you loved or a story someone shared with you.' }),
+          el('button', { class: 'btn', type: 'button', text: 'Write your first memory', onclick: openMemory })));
+        return;
+      }
+
+      var list = el('div', { class: 'mem-list' });
+      memories.forEach(function (m) {
+        var meta = [m.place, fmtDate(m.date)].filter(Boolean).join(' \u00B7 ');
+        list.appendChild(el('article', { class: 'mem glass' },
+          el('button', { class: 'del', type: 'button', html: ICON_TRASH, 'aria-label': 'Delete memory ' + m.title, onclick: function () {
+              if (!confirm('Delete this memory?')) return;
+              memories = memories.filter(function (x) { return x.id !== m.id; });
+              store(TKEY, memories); renderMemories(); renderStart(); renderProfileStats();
+            } }),
+          el('h3', { text: m.title }),
+          meta ? el('p', { class: 'meta', text: meta }) : null,
+          m.note ? el('p', { text: m.note }) : null));
+      });
+      wrap.appendChild(list);
+      wrap.appendChild(el('div', { style: 'margin-top:14px' }, el('button', { class: 'btn ghost full', type: 'button', text: '+ Add another memory', onclick: openMemory })));
+    }
+
+    /* ================= SHEETS ================= */
+    var overlay = $('#overlay'), sheet = $('#sheet'), lastFocus = null;
+
+    function openSheet(nodes) {
+      lastFocus = document.activeElement;
+      sheet.innerHTML = '';
+      sheet.appendChild(el('div', { class: 'grab' }));
+      nodes.forEach(function (n) { sheet.appendChild(n); });
+      sheet.scrollTop = 0;
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+      var first = $('input, textarea, button', sheet);
+      setTimeout(function () { if (first) first.focus({ preventScroll: true }); }, 350);
+    }
+    function closeSheet() {
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeSheet(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('open')) closeSheet(); });
+
+    function field(id, label, tag, ph) {
+      var input = el(tag, { id: id, placeholder: ph || '', autocomplete: 'off' });
+      if (tag === 'input') input.type = 'text';
+      return { wrap: el('div', { class: 'f' }, el('label', { for: id, text: label }), input, el('span', { class: 'err', id: 'err-' + id })), input: input };
+    }
+
+    function openMemory() {
+      var t = field('m-title', 'Title', 'input', 'e.g. Batik day in Kota Bharu');
+      var p = field('m-place', 'Place (optional)', 'input', 'e.g. Kelantan');
+      var n = field('m-note', 'What do you want to remember? (optional)', 'textarea', 'The people, the food, the little details…');
+      t.input.maxLength = 80; p.input.maxLength = 60; n.input.maxLength = 1500;
+
+      var form = el('form', { novalidate: 'novalidate', onsubmit: function (e) {
+          e.preventDefault();
+          var title = t.input.value.trim();
+          t.wrap.classList.remove('invalid'); $('#err-m-title').textContent = '';
+          if (!title) { t.wrap.classList.add('invalid'); $('#err-m-title').textContent = 'Give your memory a title.'; t.input.focus(); return; }
+          memories.unshift({ id: Date.now(), title: title, place: p.input.value.trim(), note: n.input.value.trim(), date: new Date().toISOString() });
+          if (!store(TKEY, memories)) { memories.shift(); return; }
+          closeSheet(); renderMemories(); renderStart();
+          toast('Memory added to your travelogue');
+          setTimeout(function () { goTo('sec-remember'); }, 320);
+        } }, t.wrap, p.wrap, n.wrap, el('button', { class: 'btn full', type: 'submit', text: 'Save memory' }));
+
+      openSheet([el('h2', { text: 'New memory' }), el('p', { class: 'sub', text: 'Saved privately in this browser.' }), form]);
+    }
+
+    var statsEls = {};
+    function renderProfileStats() {
+      if (statsEls.saved) statsEls.saved.textContent = profile.saved.length;
+      if (statsEls.mem) statsEls.mem.textContent = memories.length;
+    }
+
+    function openProfile() {
+      var first = (session.name || uid).trim().split(/\s+/)[0];
+      var sv = el('b', { text: String(profile.saved.length) });
+      var mm = el('b', { text: String(memories.length) });
+      statsEls = { saved: sv, mem: mm };
+
+      openSheet([
+        el('div', { class: 'who' },
+          el('div', { class: 'avatar', text: first.charAt(0).toUpperCase(), 'aria-hidden': 'true' }),
+          el('div', {}, el('b', { text: session.name || uid }), el('span', { text: '@' + uid + (session.email ? ' \u00B7 ' + session.email : '') }))),
+        el('div', { class: 'stats' },
+          el('div', { class: 'stat glass' }, sv, el('span', { text: 'Saved places' })),
+          el('div', { class: 'stat glass' }, mm, el('span', { text: 'Memories' }))),
+        el('div', { class: 'stack' },
+
+          el('button', { class: 'btn danger full', type: 'button', text: 'Log out', onclick: function () {
+              try { localStorage.removeItem('terooka_session'); } catch (e) {}
+              location.href = 'auth.html';
+            } }))
+      ]);
+    }
+
+    /* ================= NAV ================= */
+    var scroller = $('#scroll');
+    var SECTIONS = ['sec-home', 'sec-discover', 'sec-remember'];
+
+    function goTo(id) {
+      var s = document.getElementById(id);
+      if (!s) return;
+      scroller.scrollTo({ top: id === 'sec-home' ? 0 : Math.max(0, s.offsetTop - 56), behavior: 'smooth' });
+    }
+
+    $$('.nav button').forEach(function (b) { b.addEventListener('click', function () { var target = b.getAttribute('data-go'); if (target === 'sec-discover') window.location.href = 'discover.html'; else if (target === 'journey') openJourney(); else if (target === 'profile') openProfile(); else goTo(target); }); });
+
+    var ticking = false;
+    function syncNav() {
+      ticking = false;
+      var y = scroller.scrollTop + 140;
+      var active = SECTIONS[0];
+      SECTIONS.forEach(function (id) { if (document.getElementById(id).offsetTop <= y) active = id; });
+      if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 8) active = SECTIONS[SECTIONS.length - 1];
+      $$('.nav button').forEach(function (b) { b.setAttribute('aria-current', String(b.getAttribute('data-go') === active)); });
+    }
+    scroller.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(syncNav); } });
+
+    /* ================= WIRE UP ================= */
+    $('#avatar').addEventListener('click', openProfile);
+    $('#nearby').addEventListener('click', function () { window.location.href = 'discover.html'; });
+    $('#add-top').addEventListener('click', openMemory);
+    $('#q').addEventListener('input', function (e) {
+      query = e.target.value;
+      renderPlaces();
     });
+
+    renderGreeting();
+    renderStart();
+    renderCats();
+    renderPlaces();
+
+    renderMemories();
+    syncNav();
+
+    /* ================= PHONE SCALING ================= */
+    var stage = $('#stage');
+    function fit() {
+      if (window.innerWidth <= 500) { stage.style.transform = ''; return; }
+      var s = Math.min(1, (window.innerHeight - 28) / 868, (window.innerWidth - 28) / 414);
+      stage.style.transform = 'scale(' + s + ')';
+    }
+    fit();
+    window.addEventListener('resize', fit);
   })();
 </script>
 </body>
 </html>
+
+```

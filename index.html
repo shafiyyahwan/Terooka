@@ -346,6 +346,29 @@
       border-radius: 20px;
     }
 
+    .bloom {
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+      height: auto;
+      object-fit: contain;
+      user-select: none;
+    }
+    .bloom-top {
+      width: 195px;
+      top: 72px;
+      right: -80px;
+      opacity: 0.27;
+      transform: rotate(23deg) scaleX(-1);
+    }
+    .bloom-bottom {
+      width: 270px;
+      bottom: -65px;
+      left: -105px;
+      opacity: .31;
+      transform: rotate(-22deg);
+    }
+
     /* =========================
        MOBILE RESPONSIVE
     ========================= */
@@ -416,6 +439,9 @@
 <div class="stage" id="stage">
   <div class="phone">
     <div class="screen">
+
+      <img class="bloom bloom-top" src="img/hibiscus.png" alt="" aria-hidden="true">
+      <img class="bloom bloom-bottom" src="img/hibiscus.png" alt="" aria-hidden="true">
 
       <div class="island"></div>
 
@@ -502,7 +528,7 @@
 
         <!-- START BUTTON -->
         <div class="bottom">
-          <a class="cta" href="auth.html">
+          <a class="cta" href="auth.html#signup">
             Start Exploring
             <span aria-hidden="true">→</span>
           </a>

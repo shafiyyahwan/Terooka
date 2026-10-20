@@ -1,11 +1,12 @@
+```
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#EDE4F5">
-
-  <title>Sign in — Terooka</title>
+  <title>Sign In — Terooka</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +25,11 @@
     }
 
     * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+    }
 
     body {
       background: var(--outer);
@@ -36,196 +41,596 @@
       overflow: hidden;
     }
 
-    /* ===== PHONE FRAME ===== */
-    .stage { width: 414px; height: 868px; flex-shrink: 0; transform-origin: center; }
+    /* PHONE FRAME */
+    .stage {
+      width: 414px;
+      height: 868px;
+      flex-shrink: 0;
+      transform-origin: center;
+    }
 
     .phone {
-      width: 414px; height: 868px; padding: 12px;
-      background: #111015; border-radius: 62px; position: relative;
-      box-shadow: 0 24px 70px rgba(54,25,88,.23), 0 0 0 2px #343039;
+      width: 414px;
+      height: 868px;
+      padding: 12px;
+      background: #111015;
+      border-radius: 62px;
+      position: relative;
+      box-shadow: 0 24px 70px rgba(54,25,88,.23),
+      0 0 0 2px #343039;
     }
-    .phone::before, .phone::after {
-      content: ""; position: absolute; left: -5px; width: 4px;
-      background: #302b35; border-radius: 4px;
+
+    .phone::before,
+    .phone::after {
+      content: "";
+      position: absolute;
+      left: -5px;
+      width: 4px;
+      background: #302b35;
+      border-radius: 4px;
     }
-    .phone::before { top: 155px; height: 52px; }
-    .phone::after  { top: 228px; height: 69px; }
+
+    .phone::before {
+      top: 155px;
+      height: 52px;
+    }
+
+    .phone::after {
+      top: 228px;
+      height: 69px;
+    }
 
     .screen {
-      width: 390px; height: 844px; border-radius: 50px;
-      position: relative; overflow: hidden;
-      background: linear-gradient(160deg, #F0E4FB 0%, #F9EAF5 35%, #FFF9F7 70%, #FFECE5 100%);
+      width: 390px;
+      height: 844px;
+      border-radius: 50px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(
+        160deg,
+        #F0E4FB 0%,
+        #F9EAF5 35%,
+        #FFF9F7 70%,
+        #FFECE5 100%
+      );
     }
-    .screen::before, .screen::after {
-      content: ""; position: absolute; border-radius: 50%;
-      filter: blur(50px); pointer-events: none;
-    }
-    .screen::before { width: 240px; height: 240px; top: -70px; right: -80px; background: rgba(216,66,160,.20); }
-    .screen::after  { width: 260px; height: 260px; bottom: 60px; left: -110px; background: rgba(136,52,185,.15); }
 
+    .screen::before,
+    .screen::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(50px);
+      pointer-events: none;
+    }
+
+    .screen::before {
+      width: 240px;
+      height: 240px;
+      top: -70px;
+      right: -80px;
+      background: rgba(216,66,160,.20);
+    }
+
+    .screen::after {
+      width: 260px;
+      height: 260px;
+      bottom: 60px;
+      left: -110px;
+      background: rgba(136,52,185,.15);
+    }
+
+    /* HIBISCUS BACKGROUND */
     .bloom {
-      position: absolute; z-index: 1; pointer-events: none; height: auto;
-      width: 230px; bottom: -50px; right: -80px; opacity: .13; transform: rotate(-18deg);
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+      height: auto;
+      object-fit: contain;
+      user-select: none;
     }
 
+    .bloom-top {
+      width: 195px;
+      top: 72px;
+      right: -80px;
+      opacity: 0.27;
+      transform: rotate(23deg) scaleX(-1);
+    }
+
+    .bloom-bottom {
+      width: 270px;
+      bottom: -65px;
+      left: -105px;
+      opacity: 0.31;
+      transform: rotate(-22deg);
+    }
+
+    /* PHONE DETAILS */
     .island {
-      position: absolute; z-index: 10; top: 11px; left: 50%; transform: translateX(-50%);
-      height: 34px; width: 118px; background: #08070a; border-radius: 30px;
+      position: absolute;
+      z-index: 10;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 34px;
+      width: 118px;
+      background: #08070a;
+      border-radius: 30px;
     }
+
     .status {
-      position: absolute; top: 18px; left: 34px; right: 30px; z-index: 9;
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 14px; font-weight: 800;
+      position: absolute;
+      top: 18px;
+      left: 34px;
+      right: 30px;
+      z-index: 9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 800;
     }
+
     .homebar {
-      position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
-      width: 126px; height: 5px; background: #2F2837; border-radius: 20px; z-index: 5;
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 126px;
+      height: 5px;
+      background: #2F2837;
+      border-radius: 20px;
+      z-index: 5;
     }
 
-    /* ===== CONTENT (scrolls if the keyboard / small screens need it) ===== */
+    /* CONTENT */
     .content {
-      position: relative; z-index: 2; height: 100%;
-      display: flex; flex-direction: column; align-items: center;
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 62px 28px 30px;
-      overflow-y: auto; scrollbar-width: none;
+      overflow-y: auto;
+      scrollbar-width: none;
     }
-    .content::-webkit-scrollbar { display: none; }
 
-    .logo { display: block; width: 150px; height: 70px; object-fit: contain; flex-shrink: 0; }
+    .content::-webkit-scrollbar {
+      display: none;
+    }
 
-    .heading { text-align: center; margin-top: 12px; }
+    .logo {
+      display: block;
+      width: 150px;
+      height: 70px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .heading {
+      text-align: center;
+      margin-top: 12px;
+    }
+
     .eyebrow {
-      font-size: 10px; font-weight: 800; letter-spacing: .22em;
-      text-transform: uppercase; color: var(--pink); margin: 0 0 8px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin: 0 0 8px;
     }
-    h1 {
-      font-family: var(--serif); font-size: 31px; font-weight: 600;
-      line-height: 1.1; letter-spacing: -.025em; color: #32145B; margin: 0;
-    }
-    h1 em {
-      font-style: italic; font-weight: 500; padding-right: .06em;
-      background: linear-gradient(100deg, var(--purple), var(--pink));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    .sub { font-size: 12px; color: var(--muted); margin: 8px 0 0; line-height: 1.5; }
 
-    /* ===== TABS ===== */
+    h1 {
+      font-family: var(--serif);
+      font-size: 31px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -.025em;
+      color: #32145B;
+      margin: 0;
+    }
+
+    h1 em {
+      font-style: italic;
+      font-weight: 500;
+      padding-right: .06em;
+      background: linear-gradient(
+        100deg,
+        var(--purple),
+        var(--pink)
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 8px 0 0;
+      line-height: 1.5;
+    }
+
+    /* TABS */
     .tabs {
-      position: relative; display: grid; grid-template-columns: 1fr 1fr;
-      width: 100%; margin-top: 18px; padding: 4px;
-      background: rgba(255,255,255,.45); border: 1px solid rgba(255,255,255,.7);
-      border-radius: 16px; flex-shrink: 0;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      margin-top: 18px;
+      padding: 4px;
+      background: rgba(255,255,255,.45);
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 16px;
+      flex-shrink: 0;
     }
+
     .tab {
-      position: relative; z-index: 1; border: 0; background: none; cursor: pointer;
-      font: 700 13px var(--sans); color: var(--muted);
-      padding: 10px 0; border-radius: 12px; transition: color .25s;
-    }
-    .tab[aria-selected="true"] { color: #fff; }
-    .tab:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
-    .pill {
-      position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px);
+      position: relative;
+      z-index: 1;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font: 700 13px var(--sans);
+      color: var(--muted);
+      padding: 10px 0;
       border-radius: 12px;
-      background: linear-gradient(105deg, var(--purple), #8834B9 52%, var(--pink));
+      transition: color .25s;
+    }
+
+    .tab[aria-selected="true"] {
+      color: #fff;
+    }
+
+    .pill {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      border-radius: 12px;
+      background: linear-gradient(
+        105deg,
+        var(--purple),
+        #8834B9 52%,
+        var(--pink)
+      );
       box-shadow: 0 6px 14px rgba(112,42,159,.25);
       transition: transform .3s cubic-bezier(.2,.7,.2,1);
     }
-    form[data-mode="signup"] ~ .never {}
-    .tabs[data-mode="signup"] .pill { transform: translateX(100%); }
 
-    /* ===== FORM ===== */
-    form { width: 100%; margin-top: 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .tabs[data-mode="signup"] .pill {
+      transform: translateX(100%);
+    }
+
+    /* FORM */
+    form {
+      width: 100%;
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
 
     .field label {
-      display: block; font-size: 11px; font-weight: 700; margin: 0 0 5px 3px; color: #4a3566;
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      margin: 0 0 5px 3px;
+      color: #4a3566;
     }
-    .input-wrap { position: relative; }
+
+    .input-wrap {
+      position: relative;
+    }
+
     .input-wrap input {
-      width: 100%; height: 46px; padding: 0 14px;
-      font: 500 14px var(--sans); color: var(--ink);
-      background: rgba(255,255,255,.6); border: 1.5px solid rgba(255,255,255,.9);
-      border-radius: 14px; outline: none;
+      width: 100%;
+      height: 46px;
+      padding: 0 14px;
+      font: 500 14px var(--sans);
+      color: var(--ink);
+      background: rgba(255,255,255,.6);
+      border: 1.5px solid rgba(255,255,255,.9);
+      border-radius: 14px;
+      outline: none;
       box-shadow: 0 4px 14px rgba(87,36,163,.04);
-      transition: border-color .2s, box-shadow .2s, background .2s;
+      transition: border-color .2s,
+      box-shadow .2s,
+      background .2s;
     }
-    .input-wrap input::placeholder { color: #aa9db6; }
+
+    .input-wrap input::placeholder {
+      color: #aa9db6;
+    }
+
     .input-wrap input:focus {
-      background: rgba(255,255,255,.85); border-color: #B77BDB;
+      background: rgba(255,255,255,.85);
+      border-color: #B77BDB;
       box-shadow: 0 0 0 4px rgba(184,123,219,.18);
     }
-    .field.invalid input { border-color: var(--error); }
-    .field.invalid input:focus { box-shadow: 0 0 0 4px rgba(192,34,79,.12); }
-    .has-toggle input { padding-right: 46px; }
+
+    .field.invalid input {
+      border-color: var(--error);
+    }
+
+    .has-toggle input {
+      padding-right: 46px;
+    }
 
     .toggle {
-      position: absolute; top: 50%; right: 6px; transform: translateY(-50%);
-      width: 34px; height: 34px; border: 0; background: none; cursor: pointer;
-      display: grid; place-items: center; color: var(--muted); border-radius: 10px;
+      position: absolute;
+      top: 50%;
+      right: 6px;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 34px;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      border-radius: 10px;
     }
-    .toggle:hover { color: var(--purple); }
-    .toggle:focus-visible { outline: 3px solid var(--pink); }
-    .toggle svg { width: 19px; height: 19px; }
 
-    .err { display: block; min-height: 0; font-size: 10.5px; font-weight: 600; color: var(--error); margin: 4px 0 0 3px; }
-    .err:empty { display: none; }
+    .toggle svg {
+      width: 19px;
+      height: 19px;
+    }
 
-    .signup-only { display: none; }
-    form[data-mode="signup"] .signup-only { display: block; }
+    .err {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--error);
+      margin: 4px 0 0 3px;
+    }
 
+    .err:empty {
+      display: none;
+    }
+
+    .signup-only {
+      display: none;
+    }
+
+    form[data-mode="signup"] .signup-only {
+      display: block;
+    }
+
+    /* PRIVACY POLICY */
+    .policy {
+      font-size: 10.5px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .policy label {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      cursor: pointer;
+    }
+
+    .policy input {
+      accent-color: var(--purple);
+      width: 15px;
+      height: 15px;
+      flex: 0 0 15px;
+      margin-top: 2px;
+    }
+
+    .policy a {
+      color: var(--purple);
+      font-weight: 700;
+    }
+
+    /* FORGOT PASSWORD */
+    .forgot-line {
+      text-align: right;
+      margin-top: -4px;
+    }
+
+    .forgot-line button {
+      border: 0;
+      background: none;
+      color: var(--purple);
+      font: 700 11px var(--sans);
+      cursor: pointer;
+    }
+
+    /* MESSAGES */
     .form-msg {
-      font-size: 12px; font-weight: 600; text-align: center; color: var(--error);
-      background: rgba(192,34,79,.07); border-radius: 12px; padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      color: var(--error);
+      background: rgba(192,34,79,.07);
+      border-radius: 12px;
+      padding: 10px 12px;
     }
-    .form-msg:empty { display: none; }
-    .form-msg.ok { color: #1F7A4D; background: rgba(31,122,77,.09); }
 
+    .form-msg:empty {
+      display: none;
+    }
+
+    .form-msg.ok {
+      color: #1F7A4D;
+      background: rgba(31,122,77,.09);
+    }
+
+    /* BUTTON */
     .cta {
-      margin-top: auto; flex-shrink: 0;
-      display: flex; justify-content: center; align-items: center; gap: 10px;
-      min-height: 54px; width: 100%; border: 0; border-radius: 17px; cursor: pointer;
-      background: linear-gradient(105deg, var(--purple), #8834B9 52%, var(--pink));
-      color: #fff; font: 800 14px var(--sans); letter-spacing: .01em;
+      border-radius: 999px;
+      margin-top: 2px;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 54px;
+      width: 100%;
+      border: 0;
+      border-radius: 17px;
+      cursor: pointer;
+      background: linear-gradient(
+        105deg,
+        var(--purple),
+        #8834B9 52%,
+        var(--pink)
+      );
+      color: #fff;
+      font: 800 14px var(--sans);
+      letter-spacing: .01em;
       box-shadow: 0 12px 24px rgba(112,42,159,.2);
-      transition: transform .25s, filter .25s, opacity .25s;
+      transition: transform .25s,
+      filter .25s,
+      opacity .25s;
     }
-    .cta:hover { transform: translateY(-3px); filter: brightness(1.08); }
-    .cta:focus-visible { outline: 3px solid var(--pink); outline-offset: 4px; }
-    .cta[disabled] { opacity: .65; cursor: wait; transform: none; }
 
-    .switch { text-align: center; font-size: 12px; color: var(--muted); margin: 14px 0 6px; flex-shrink: 0; }
+    .cta:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.08);
+    }
+
+    .cta:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
+
+    .switch {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 14px 0 6px;
+      flex-shrink: 0;
+    }
+
     .switch button {
-      border: 0; background: none; padding: 0; cursor: pointer;
-      font: 800 12px var(--sans); color: var(--purple);
-      text-decoration: underline; text-underline-offset: 3px;
+      border: 0;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+      font: 800 12px var(--sans);
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
-    .back {
-      position: absolute; z-index: 6; top: 56px; left: 20px;
-      width: 36px; height: 36px; display: grid; place-items: center;
-      background: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.8);
-      border-radius: 12px; color: var(--purple); text-decoration: none;
-    }
-    .back:hover { background: rgba(255,255,255,.85); }
-    .back:focus-visible { outline: 3px solid var(--pink); }
-    .back svg { width: 18px; height: 18px; }
 
-    /* ===== MOBILE ===== */
+    .back {
+      position: absolute;
+      z-index: 6;
+      top: 56px;
+      left: 20px;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 12px;
+      color: var(--purple);
+      text-decoration: none;
+    }
+
+    .back svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* RESPONSIVE */
     @media (max-width: 500px) {
-      body { display: block; overflow: auto; }
-      .stage, .phone { width: 100%; height: 100dvh; transform: none !important; }
-      .phone { padding: 0; border-radius: 0; box-shadow: none; }
-      .phone::before, .phone::after, .island, .status, .homebar { display: none; }
-      .screen { width: 100%; height: 100%; min-height: 650px; border-radius: 0; }
-      .content { padding-top: 40px; }
-      .back { top: 22px; }
+      body {
+        display: block;
+        overflow: auto;
+      }
+
+      .stage,
+      .phone {
+        width: 100%;
+        height: 100dvh;
+        transform: none !important;
+      }
+
+      .phone {
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .phone::before,
+      .phone::after,
+      .island,
+      .status,
+      .homebar {
+        display: none;
+      }
+
+      .screen {
+        width: 100%;
+        height: 100%;
+        min-height: 650px;
+        border-radius: 0;
+      }
+
+      .content {
+        padding-top: 40px;
+      }
+
+      .back {
+        top: 22px;
+      }
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      .heading, .tabs, form { opacity: 0; transform: translateY(12px); animation: rise .6s cubic-bezier(.2,.7,.2,1) forwards; }
-      .tabs { animation-delay: .1s; }
-      form { animation-delay: .2s; }
+      .heading,
+      .tabs,
+      form {
+        opacity: 0;
+        transform: translateY(12px);
+        animation: rise .6s cubic-bezier(.2,.7,.2,1) forwards;
+      }
+
+      .tabs {
+        animation-delay: .1s;
+      }
+
+      form {
+        animation-delay: .2s;
+      }
     }
-    @keyframes rise { to { opacity: 1; transform: none; } }
-    @media (prefers-reduced-motion: reduce) { .pill, .cta, .tab { transition: none; } }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pill,
+      .cta,
+      .tab {
+        transition: none;
+      }
+    }
+
+    /* Sign-in extras */
+    .remember-forgot { display:flex;align-items:center;justify-content:space-between;gap:8px;margin:1px 0 5px; }
+    .remember-row { display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer; }
+    .remember-row input { width:15px;height:15px;accent-color:var(--purple); }
+    .remember-forgot .forgot-line { margin:0; }
+    .divider-row { display:flex;align-items:center;gap:10px;margin:7px 0 1px; }
+    .divider-line { height:1px;flex:1;background:rgba(87,36,163,.16); }
+    .divider-text {font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap;}
+    .social-row {display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+    .btn-social {min-height:45px;border-radius:999px;border:1px solid rgba(87,36,163,.13);background:rgba(255,255,255,.7);font:700 12px var(--sans);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;}
+    .btn-social:hover {background:white;}
+    .btn-social svg {width:17px;height:17px;}
   </style>
 </head>
 
@@ -234,27 +639,36 @@
   <div class="phone">
     <div class="screen">
 
-      <!-- hibiscus watermark (built by script below) -->
-      <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="petalGrad" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0" stop-color="#D842A0"/><stop offset="1" stop-color="#F58AA6"/>
-          </linearGradient>
-          <symbol id="hibiscus" viewBox="0 0 200 200"></symbol>
-        </defs>
-      </svg>
-      <svg class="bloom" viewBox="0 0 200 200" aria-hidden="true"><use href="#hibiscus"/></svg>
+      <!-- HIBISCUS -->
+      <img
+        class="bloom bloom-top"
+        src="img/hibiscus.png"
+        alt=""
+        aria-hidden="true"
+      >
 
+      <img
+        class="bloom bloom-bottom"
+        src="img/hibiscus.png"
+        alt=""
+        aria-hidden="true"
+      >
+
+      <!-- PHONE STATUS -->
       <div class="island"></div>
+
       <div class="status">
         <span>9:41</span>
-        <svg width="70" height="15" viewBox="0 0 70 15" fill="none" aria-label="Signal, Wi-Fi and battery">
+        <svg width="70" height="15" viewBox="0 0 70 15" fill="none">
           <g fill="#32204B">
-            <rect x="0" y="10" width="3" height="5" rx="1"/><rect x="5" y="7" width="3" height="8" rx="1"/>
-            <rect x="10" y="4" width="3" height="11" rx="1"/><rect x="15" y="1" width="3" height="14" rx="1"/>
+            <rect x="0" y="10" width="3" height="5" rx="1"/>
+            <rect x="5" y="7" width="3" height="8" rx="1"/>
+            <rect x="10" y="4" width="3" height="11" rx="1"/>
+            <rect x="15" y="1" width="3" height="14" rx="1"/>
           </g>
           <g stroke="#32204B" stroke-width="1.8" stroke-linecap="round">
-            <path d="M27 5Q34-1 41 5"/><path d="M30 9Q34 5 38 9"/>
+            <path d="M27 5Q34-1 41 5"/>
+            <path d="M30 9Q34 5 38 9"/>
           </g>
           <circle cx="34" cy="12" r="1.5" fill="#32204B"/>
           <rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/>
@@ -263,69 +677,200 @@
         </svg>
       </div>
 
-      <a class="back" href="index.html" aria-label="Back to welcome page">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      <!-- BACK -->
+      <a class="back" href="index.html" aria-label="Back">
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
       </a>
 
       <main class="content">
-        <img src="img/terooka.png" alt="Terooka" class="logo">
 
+        <!-- LOGO -->
+        <img
+          src="img/terooka.png"
+          alt="Terooka"
+          class="logo"
+        >
+
+        <!-- HEADING -->
         <header class="heading" aria-live="polite">
           <p class="eyebrow" id="eyebrow">Welcome back</p>
-          <h1 id="title">Good to see <em>you again.</em></h1>
-          <p class="sub" id="sub">Sign in to continue your cultural journey.</p>
+
+          <h1 id="title">
+            Good to see <em>you again.</em>
+          </h1>
+
+          <p class="sub" id="sub">
+            Sign in to continue your cultural journey.
+          </p>
         </header>
 
-        <div class="tabs" id="tabs" role="tablist" aria-label="Account" data-mode="signin">
+        <!-- TABS -->
+        <div class="tabs" id="tabs" role="tablist"
+             aria-label="Account" data-mode="signin">
+
           <span class="pill" aria-hidden="true"></span>
-          <button class="tab" role="tab" id="tab-signin" aria-selected="true" aria-controls="form" type="button" data-mode="signin">Sign In</button>
-          <button class="tab" role="tab" id="tab-signup" aria-selected="false" aria-controls="form" type="button" data-mode="signup">Sign Up</button>
+
+          <button
+            class="tab"
+            id="tab-signin"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="form"
+            data-mode="signin">
+            Sign In
+          </button>
+
+          <button
+            class="tab"
+            id="tab-signup"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="form"
+            data-mode="signup">
+            Sign Up
+          </button>
         </div>
 
-        <form id="form" role="tabpanel" data-mode="signin" novalidate aria-labelledby="tab-signin">
+        <!-- FORM -->
+        <form
+          id="form"
+          role="tabpanel"
+          data-mode="signin"
+          novalidate
+          aria-labelledby="tab-signin">
 
+          <!-- FULL NAME -->
           <div class="field signup-only" data-field="name">
             <label for="name">Full name</label>
-            <div class="input-wrap"><input id="name" name="name" type="text" autocomplete="name" placeholder="e.g. Aisyah Rahman"></div>
+            <div class="input-wrap">
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                placeholder="e.g. Aisyah Rahman"
+              >
+            </div>
             <span class="err" id="err-name"></span>
           </div>
 
-          <div class="field" data-field="username">
-            <label for="username">Username</label>
-            <div class="input-wrap"><input id="username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="e.g. aisyah_r"></div>
-            <span class="err" id="err-username"></span>
-          </div>
 
-          <div class="field signup-only" data-field="email">
+
+          <!-- EMAIL -->
+          <div class="field" data-field="email">
             <label for="email">Email</label>
-            <div class="input-wrap"><input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com"></div>
+            <div class="input-wrap">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="your@email.com"
+                value="demo@terooka.app"
+              >
+            </div>
             <span class="err" id="err-email"></span>
           </div>
 
+          <!-- PASSWORD -->
           <div class="field" data-field="password">
             <label for="password">Password</label>
             <div class="input-wrap has-toggle">
-              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="At least 8 characters">
-              <button class="toggle" type="button" aria-label="Show password" data-target="password"></button>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter password"
+                value="Demo1234"
+              >
+              <button
+                class="toggle"
+                type="button"
+                aria-label="Show password"
+                data-target="password">
+              </button>
             </div>
             <span class="err" id="err-password"></span>
           </div>
 
+          <!-- CONFIRM PASSWORD -->
           <div class="field signup-only" data-field="confirm">
             <label for="confirm">Confirm password</label>
             <div class="input-wrap has-toggle">
-              <input id="confirm" name="confirm" type="password" autocomplete="new-password" placeholder="Re-enter your password">
-              <button class="toggle" type="button" aria-label="Show password" data-target="confirm"></button>
+              <input
+                id="confirm"
+                name="confirm"
+                type="password"
+                autocomplete="new-password"
+                placeholder="Re-enter your password"
+              >
+              <button
+                class="toggle"
+                type="button"
+                aria-label="Show password"
+                data-target="confirm">
+              </button>
             </div>
             <span class="err" id="err-confirm"></span>
           </div>
 
+          <!-- PRIVACY POLICY -->
+          <div class="signup-only policy" id="policy-row">
+            <label>
+              <input type="checkbox" id="policy">
+              <span>
+                  I agree to the
+                  <a href="privacy.html" target="_blank" rel="noopener">
+                    Privacy Policy
+                  </a>
+                  and
+                  <a href="terms.html" target="_blank" rel="noopener">
+                    Terms of Use
+                  </a>.
+                </span>
+            </label>
+            <span class="err" id="err-policy"></span>
+          </div>
+
+          <!-- REMEMBER ME / FORGOT PASSWORD -->
+          <div class="signin-only remember-forgot">
+            <label class="remember-row"><input type="checkbox" id="remember" checked> Remember me</label>
+            <div class="forgot-line"><button type="button" id="forgot">Forgot password?</button></div>
+          </div>
+
+          <!-- MESSAGE -->
           <div class="form-msg" id="msg" role="alert"></div>
 
-          <button class="cta" id="submit" type="submit">Sign In <span aria-hidden="true">→</span></button>
+          <!-- SUBMIT -->
+          <button class="cta" id="submit" type="submit">
+            Sign In
+          </button>
+
+          <div class="signin-only divider-row" aria-label="Other sign in options">
+            <span class="divider-line"></span><span class="divider-text">or continue with</span><span class="divider-line"></span>
+          </div>
+          <div class="signin-only social-row">
+            <button class="btn-social" type="button" data-social="Google"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.35 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.23a4.47 4.47 0 0 1-1.94 2.93v2.44h3.14c1.84-1.7 2.92-4.2 2.92-7.38Z"/><path fill="#34A853" d="M12 21.5c2.63 0 4.84-.87 6.45-2.37l-3.14-2.44c-.87.59-1.98.94-3.31.94a5.99 5.99 0 0 1-5.64-4.15H3.13v2.52A9.5 9.5 0 0 0 12 21.5Z"/><path fill="#FBBC05" d="M6.36 13.48a5.7 5.7 0 0 1 0-3.01V7.95H3.13a9.5 9.5 0 0 0 0 8.05l3.23-2.52Z"/><path fill="#EA4335" d="M12 6.37c1.43 0 2.71.49 3.72 1.46l2.79-2.79A9.1 9.1 0 0 0 12 2.5a9.5 9.5 0 0 0-8.87 5.45l3.23 2.52A5.99 5.99 0 0 1 12 6.37Z"/></svg> Google</button>
+            <button class="btn-social" type="button" data-social="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#1877F2"/><path fill="#fff" d="M13.4 19v-6h2l.3-2.4h-2.3V9.1c0-.7.2-1.2 1.2-1.2h1.2V5.7c-.2 0-1-.1-1.9-.1-2 0-3.3 1.2-3.3 3.4v1.6H8.7V13h1.9v6h2.8Z"/></svg> Facebook</button>
+          </div>
+
         </form>
 
-        <p class="switch" id="switch">New to Terooka? <button type="button" id="switch-btn">Create an account</button></p>
+        <!-- SWITCH -->
+        <p class="switch" id="switch">
+          New to Terooka?
+          <button type="button" id="switch-btn">
+            Create an account
+          </button>
+        </p>
+
       </main>
 
       <div class="homebar"></div>
@@ -337,263 +882,515 @@
   (function () {
     'use strict';
 
-    /* ---------- storage keys ---------- */
-    var USERS_KEY = 'terooka_users';
-    var SESSION_KEY = 'terooka_session';
-    var HOME = 'home.html';
+    /* STORAGE */
+    const USERS_KEY = 'terooka_users';
+    const SESSION_KEY = 'terooka_session';
+    const HOME = 'home.html';
 
-    /* ---------- tiny helpers ---------- */
-    var $ = function (s, r) { return (r || document).querySelector(s); };
-    var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+    const $ = (selector, root = document) =>
+      root.querySelector(selector);
+
+    const $$ = (selector, root = document) =>
+      Array.from(root.querySelectorAll(selector));
 
     function readUsers() {
-      try { return JSON.parse(localStorage.getItem(USERS_KEY)) || []; }
-      catch (e) { return []; }
-    }
-    function writeUsers(list) { localStorage.setItem(USERS_KEY, JSON.stringify(list)); }
-    function setSession(user) {
-      localStorage.setItem(SESSION_KEY, JSON.stringify({ username: user.username, email: user.email, name: user.name, at: Date.now() }));
-    }
-    function getSession() {
-      try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch (e) { return null; }
+      try {
+        return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+      } catch {
+        return [];
+      }
     }
 
+    function writeUsers(users) {
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+    }
+
+    function setSession(user) {
+      localStorage.setItem(
+        SESSION_KEY,
+        JSON.stringify({
+          email: user.email,
+          name: user.name,
+          at: Date.now()
+        })
+      );
+    }
+
+    function getSession() {
+      try {
+        return JSON.parse(localStorage.getItem(SESSION_KEY));
+      } catch {
+        return null;
+      }
+    }
+
+    /* PROTOTYPE PASSWORD HASHING */
     function makeSalt() {
       if (window.crypto && crypto.getRandomValues) {
-        return Array.prototype.map.call(crypto.getRandomValues(new Uint8Array(12)), function (b) {
-          return b.toString(16).padStart(2, '0');
-        }).join('');
+        return Array.from(
+          crypto.getRandomValues(new Uint8Array(12)),
+          byte => byte.toString(16).padStart(2, '0')
+        ).join('');
       }
-      return Math.random().toString(36).slice(2) + Date.now().toString(36);
+
+      return Math.random().toString(36).slice(2);
     }
 
-    /* SHA-256 with a per-user salt; falls back to a simple hash if SubtleCrypto is unavailable.
-       NOTE: localStorage auth is for prototypes only, not real security. */
-    function hashPassword(pw, salt) {
-      var text = salt + pw;
+    async function hashPassword(password, salt) {
+      const text = salt + password;
+
       if (window.crypto && crypto.subtle && window.TextEncoder) {
-        return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(function (buf) {
-          return Array.prototype.map.call(new Uint8Array(buf), function (b) {
-            return b.toString(16).padStart(2, '0');
-          }).join('');
-        });
+        const buffer = await crypto.subtle.digest(
+          'SHA-256',
+          new TextEncoder().encode(text)
+        );
+
+        return Array.from(
+          new Uint8Array(buffer),
+          byte => byte.toString(16).padStart(2, '0')
+        ).join('');
       }
-      var h = 5381;
-      for (var i = 0; i < text.length; i++) h = ((h << 5) + h + text.charCodeAt(i)) | 0;
-      return Promise.resolve('f' + (h >>> 0).toString(16));
+
+      let hash = 5381;
+
+      for (let i = 0; i < text.length; i++) {
+        hash = ((hash << 5) + hash + text.charCodeAt(i)) | 0;
+      }
+
+      return 'f' + (hash >>> 0).toString(16);
     }
 
-    /* ---------- already signed in? ---------- */
-    try { if (getSession()) { location.replace(HOME); return; } } catch (e) {}
+    /* LOCAL DEMO ACCOUNT — prototype only */
+    async function ensureDemoUser() {
+      const users = readUsers();
+      if (users.some(u => u.email === 'demo@terooka.app')) return;
+      const salt = makeSalt();
+      const hash = await hashPassword('Demo1234', salt);
+      users.push({ name: 'Demo Traveller', email: 'demo@terooka.app', salt, hash, createdAt: Date.now() });
+      writeUsers(users);
+    }
 
-    /* ---------- build hibiscus watermark ---------- */
-    (function buildBloom() {
-      var ns = 'http://www.w3.org/2000/svg';
-      var sym = $('#hibiscus');
-      var petal = 'M100 100 C62 84 48 40 76 20 C90 10 110 10 124 20 C152 40 138 84 100 100Z';
-      var vein = 'M100 98 C98 70 98 50 100 32';
-      [0, 72, 144, 216, 288].forEach(function (a) {
-        var g = document.createElementNS(ns, 'g');
-        g.setAttribute('transform', 'rotate(' + a + ' 100 100)');
-        g.innerHTML = '<path d="' + petal + '" fill="url(#petalGrad)"/>' +
-          '<path d="' + vein + '" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/>';
-        sym.appendChild(g);
-      });
-      var stamen = document.createElementNS(ns, 'g');
-      stamen.innerHTML = '<circle cx="100" cy="100" r="9" fill="#B02A7E"/>' +
-        '<path d="M100 100 C108 80 122 60 140 44" fill="none" stroke="#D842A0" stroke-width="4" stroke-linecap="round"/>' +
-        '<g fill="#D842A0"><circle cx="140" cy="44" r="5"/><circle cx="151" cy="52" r="4"/><circle cx="131" cy="36" r="4"/><circle cx="147" cy="35" r="4"/></g>';
-      sym.appendChild(stamen);
-    })();
+    /* REDIRECT IF SIGNED IN */
+    if (getSession()) {
+      window.location.replace(HOME);
+      return;
+    }
 
-    /* ---------- eye icons ---------- */
-    var EYE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>';
-    var EYE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17.9 17.9A10.4 10.4 0 0 1 12 19C5.6 19 2 12 2 12a18.6 18.6 0 0 1 4.1-5.2M9.9 5.2A9.9 9.9 0 0 1 12 5c6.4 0 10 7 10 7a18.5 18.5 0 0 1-2.2 3.2M1 1l22 22"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+    /* PASSWORD VISIBILITY */
+    const EYE = `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      `;
 
-    $$('.toggle').forEach(function (btn) {
-      btn.innerHTML = EYE;
-      btn.addEventListener('click', function () {
-        var input = document.getElementById(btn.getAttribute('data-target'));
-        var show = input.type === 'password';
+    const EYE_OFF = `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.9 17.9A10.4 10.4 0 0 1 12 19C5.6 19 2 12 2 12a18.6 18.6 0 0 1 4.1-5.2M9.9 5.2A9.9 9.9 0 0 1 12 5c6.4 0 10 7 10 7a18.5 18.5 0 0 1-2.2 3.2M1 1l22 22"/>
+        </svg>
+      `;
+
+    $$('.toggle').forEach(button => {
+      button.innerHTML = EYE;
+
+      button.addEventListener('click', () => {
+        const input = document.getElementById(
+          button.dataset.target
+        );
+
+        const show = input.type === 'password';
+
         input.type = show ? 'text' : 'password';
-        btn.innerHTML = show ? EYE_OFF : EYE;
-        btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+        button.innerHTML = show ? EYE_OFF : EYE;
+        button.setAttribute(
+          'aria-label',
+          show ? 'Hide password' : 'Show password'
+        );
       });
     });
 
-    /* ---------- mode switching ---------- */
-    var form = $('#form'), tabs = $('#tabs'), msg = $('#msg'), submitBtn = $('#submit');
-    var COPY = {
+    /* FORM MODES */
+    const form = $('#form');
+    const tabs = $('#tabs');
+    const msg = $('#msg');
+    const submitBtn = $('#submit');
+
+    const COPY = {
       signin: {
-        eyebrow: 'Welcome back', title: 'Good to see <em>you again.</em>',
+        eyebrow: 'Welcome back',
+        title: 'Good to see <em>you again.</em>',
         sub: 'Sign in to continue your cultural journey.',
-        btn: 'Sign In', sw: 'New to Terooka? ', swBtn: 'Create an account',
-        pwAuto: 'current-password', doc: 'Sign in — Terooka'
+        btn: 'Sign In',
+        sw: 'New to Terooka? ',
+        swBtn: 'Create an account',
+        pwAuto: 'current-password',
+        doc: 'Sign In — Terooka'
       },
+
       signup: {
-        eyebrow: 'Join the journey', title: 'Create your <em>account.</em>',
+        eyebrow: 'Join the journey',
+        title: 'Create your <em>account.</em>',
         sub: 'Save places, plan experiences and keep your travelogue.',
-        btn: 'Create Account', sw: 'Already have an account? ', swBtn: 'Sign in',
-        pwAuto: 'new-password', doc: 'Sign up — Terooka'
+        btn: 'Create Account',
+        sw: 'Already have an account? ',
+        swBtn: 'Sign in',
+        pwAuto: 'new-password',
+        doc: 'Sign Up — Terooka'
       }
     };
 
     function clearErrors() {
-      $$('.field').forEach(function (f) { f.classList.remove('invalid'); });
-      $$('.err').forEach(function (e) { e.textContent = ''; });
-      msg.textContent = ''; msg.className = 'form-msg';
+      $$('.field').forEach(field => {
+        field.classList.remove('invalid');
+      });
+
+      $$('.err').forEach(error => {
+        error.textContent = '';
+      });
+
+      msg.textContent = '';
+      msg.className = 'form-msg';
     }
 
     function setMode(mode) {
-      var c = COPY[mode];
-      form.setAttribute('data-mode', mode);
-      tabs.setAttribute('data-mode', mode);
+      const content = COPY[mode];
+
+      const previousMode = form.dataset.mode;
+      form.dataset.mode = mode;
+      tabs.dataset.mode = mode;
+      if (previousMode !== mode) {
+        $('#password').value = mode === 'signin' ? 'Demo1234' : '';
+        $('#email').value = mode === 'signin' ? (localStorage.getItem('terooka_remembered_email') || 'demo@terooka.app') : '';
+      }
       form.setAttribute('aria-labelledby', 'tab-' + mode);
-      $$('.tab').forEach(function (t) { t.setAttribute('aria-selected', String(t.getAttribute('data-mode') === mode)); });
-      $('#eyebrow').textContent = c.eyebrow;
-      $('#title').innerHTML = c.title;
-      $('#sub').textContent = c.sub;
-      submitBtn.innerHTML = c.btn + ' <span aria-hidden="true">→</span>';
-      $('#switch').firstChild.nodeValue = c.sw;
-      $('#switch-btn').textContent = c.swBtn;
-      $('#password').setAttribute('autocomplete', c.pwAuto);
-      document.title = c.doc;
+
+      $$('.tab').forEach(tab => {
+        tab.setAttribute(
+          'aria-selected',
+          String(tab.dataset.mode === mode)
+        );
+      });
+
+      $('#eyebrow').textContent = content.eyebrow;
+      $('#title').innerHTML = content.title;
+      $('#sub').textContent = content.sub;
+
+      submitBtn.textContent = content.btn;
+
+      $('#switch').firstChild.nodeValue = content.sw;
+      $('#switch-btn').textContent = content.swBtn;
+
+      $('#password').setAttribute(
+        'autocomplete',
+        content.pwAuto
+      );
+
+      $('#policy-row').style.display =
+        mode === 'signup' ? 'block' : 'none';
+
+      $$('.signin-only').forEach(node => {
+        node.style.display = mode === 'signin' ? (node.classList.contains('social-row') ? 'grid' : node.classList.contains('remember-forgot') || node.classList.contains('divider-row') ? 'flex' : 'block') : 'none';
+      });
+
+      document.title = content.doc;
+
       clearErrors();
+
       history.replaceState(null, '', '#' + mode);
     }
 
-    $$('.tab').forEach(function (t) {
-      t.addEventListener('click', function () { setMode(t.getAttribute('data-mode')); });
-    });
-    $('#switch-btn').addEventListener('click', function () {
-      setMode(form.getAttribute('data-mode') === 'signin' ? 'signup' : 'signin');
+    $$('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        setMode(tab.dataset.mode);
+      });
     });
 
-    /* ---------- validation ---------- */
-    function fieldError(name, text) {
-      var f = $('[data-field="' + name + '"]');
-      f.classList.add('invalid');
-      $('#err-' + name).textContent = text;
+    $('#switch-btn').addEventListener('click', () => {
+      setMode(
+        form.dataset.mode === 'signin' ? 'signup' : 'signin'
+      );
+    });
+
+    /* FORGOT PASSWORD — DEMO */
+    $('#forgot').addEventListener('click', () => {
+      msg.className = 'form-msg';
+      msg.textContent =
+        'Password reset requires a verified email service. ' +
+        'This prototype cannot securely reset passwords yet.';
+
+      msg.scrollIntoView({
+        block: 'nearest',
+        behavior: 'smooth'
+      });
+    });
+
+    /* VALIDATION */
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    function fieldError(name, message) {
+      const field = document.querySelector(
+        '[data-field="' + name + '"]'
+      );
+
+      if (field) {
+        field.classList.add('invalid');
+      }
+
+      const error = $('#err-' + name);
+
+      if (error) {
+        error.textContent = message;
+      }
     }
 
-    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    var USER_RE = /^[a-z0-9_.]{3,20}$/;
+    function validate(mode, values) {
+      let valid = true;
 
-    function validate(mode, v) {
-      var ok = true;
-      if (mode === 'signup' && v.name.length < 2) { fieldError('name', 'Please enter your name.'); ok = false; }
       if (mode === 'signup') {
-        if (!USER_RE.test(v.username)) { fieldError('username', '3\u201320 characters: letters, numbers, . or _'); ok = false; }
-        if (!EMAIL_RE.test(v.email)) { fieldError('email', 'Enter a valid email address.'); ok = false; }
-      } else if (!v.username) {
-        fieldError('username', 'Enter your username.'); ok = false;
-      }
-      if (mode === 'signup') {
-        if (v.password.length < 8) { fieldError('password', 'Use at least 8 characters.'); ok = false; }
-        else if (!/[A-Za-z]/.test(v.password) || !/\d/.test(v.password)) {
-          fieldError('password', 'Include at least one letter and one number.'); ok = false;
+        if (values.name.length < 2) {
+          fieldError('name', 'Please enter your full name.');
+          valid = false;
         }
-        if (v.confirm !== v.password) { fieldError('confirm', 'Passwords don\u2019t match.'); ok = false; }
-      } else if (!v.password) {
-        fieldError('password', 'Enter your password.'); ok = false;
+
+        if (!EMAIL_RE.test(values.email)) {
+          fieldError('email', 'Enter a valid email address.');
+          valid = false;
+        }
+
+        if (!$('#policy').checked) {
+          $('#err-policy').textContent =
+            'Please agree to the Privacy Policy and Terms of Use.';
+          valid = false;
+        }
+
+        if (values.password.length < 8) {
+          fieldError(
+            'password',
+            'Password must contain at least 8 characters.'
+          );
+          valid = false;
+        } else if (
+          !/[A-Za-z]/.test(values.password) ||
+          !/\d/.test(values.password)
+        ) {
+          fieldError(
+            'password',
+            'Include at least one letter and one number.'
+          );
+          valid = false;
+        }
+
+        if (values.confirm !== values.password) {
+          fieldError('confirm', 'Passwords do not match.');
+          valid = false;
+        }
+
+      } else {
+        if (!EMAIL_RE.test(values.email)) {
+          fieldError('email', 'Enter a valid email address.');
+          valid = false;
+        }
+
+        if (!values.password) {
+          fieldError('password', 'Enter your password.');
+          valid = false;
+        }
       }
-      return ok;
+
+      return valid;
     }
 
-    /* ---------- submit ---------- */
-    function busy(on) {
-      submitBtn.disabled = on;
-      if (on) submitBtn.textContent = 'Please wait…';
+    /* SUBMIT BUTTON STATE */
+    function busy(isBusy) {
+      submitBtn.disabled = isBusy;
+
+      if (isBusy) {
+        submitBtn.textContent = 'Please wait…';
+      } else {
+        submitBtn.textContent = COPY[form.dataset.mode].btn;
+      }
     }
 
+    /* SUCCESS */
     function finish(user) {
       msg.className = 'form-msg ok';
-      msg.textContent = 'Welcome, ' + user.name.split(' ')[0] + '! Taking you in…';
-      setTimeout(function () { location.href = HOME; }, 700);
+
+      msg.textContent =
+        'Welcome, ' +
+        user.name.split(' ')[0] +
+        '! Taking you in…';
+
+      setTimeout(() => {
+        window.location.href = HOME;
+      }, 700);
     }
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+    /* SIGN IN / SIGN UP */
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+
       clearErrors();
 
-      var mode = form.getAttribute('data-mode');
-      var v = {
+      const mode = form.dataset.mode;
+
+      const values = {
         name: $('#name').value.trim(),
-        username: $('#username').value.trim().toLowerCase(),
         email: $('#email').value.trim().toLowerCase(),
         password: $('#password').value,
         confirm: $('#confirm').value
       };
-      if (!validate(mode, v)) {
-        var first = $('.field.invalid input');
-        if (first) first.focus();
+
+      if (!validate(mode, values)) {
+        const firstInvalid = $('.field.invalid input');
+
+        if (firstInvalid) {
+          firstInvalid.focus();
+        }
+
         return;
       }
 
       busy(true);
-      var done = function () { busy(false); submitBtn.innerHTML = COPY[mode].btn + ' <span aria-hidden="true">→</span>'; };
 
       try {
-        var users = readUsers();
-        var existing = users.filter(function (u) { return u.username === v.username; })[0];
+        await ensureDemoUser();
+        const users = readUsers();
+
+        const existing = users.find(
+          user => user.email === values.email
+        );
 
         if (mode === 'signup') {
-          if (existing) { fieldError('username', 'That username is already taken.'); done(); return; }
-          if (users.some(function (u) { return u.email === v.email; })) {
-            fieldError('email', 'An account with this email already exists.'); done(); return;
+
+          if (users.some(
+            user => user.email === values.email
+          )) {
+            fieldError(
+              'email',
+              'An account with this email already exists.'
+            );
+            return;
           }
-          var salt = makeSalt();
-          hashPassword(v.password, salt).then(function (hash) {
-            var user = { name: v.name, username: v.username, email: v.email, salt: salt, hash: hash, createdAt: Date.now() };
-            users.push(user);
-            writeUsers(users);
-            setSession(user);
-            finish(user);
-          }).catch(function () {
-            msg.textContent = 'Something went wrong. Please try again.'; done();
-          });
+
+          const salt = makeSalt();
+          const hash = await hashPassword(
+            values.password,
+            salt
+          );
+
+          const user = {
+            name: values.name,
+            email: values.email,
+            salt,
+            hash,
+            createdAt: Date.now()
+          };
+
+          users.push(user);
+          writeUsers(users);
+          setSession(user);
+          finish(user);
+
         } else {
+
           if (!existing) {
-            msg.textContent = 'Incorrect email or password.'; done(); return;
+            msg.textContent = 'Incorrect email or password.';
+            return;
           }
-          hashPassword(v.password, existing.salt).then(function (hash) {
-            if (hash !== existing.hash) {
-              msg.textContent = 'Incorrect email or password.'; done(); return;
-            }
-            setSession(existing);
-            finish(existing);
-          }).catch(function () {
-            msg.textContent = 'Something went wrong. Please try again.'; done();
-          });
+
+          const hash = await hashPassword(
+            values.password,
+            existing.salt
+          );
+
+          if (hash !== existing.hash) {
+            msg.textContent = 'Incorrect email or password.';
+            return;
+          }
+
+          setSession(existing);
+          finish(existing);
         }
-      } catch (err) {
-        msg.textContent = 'Your browser is blocking local storage, so accounts can\u2019t be saved. Turn off private mode and try again.';
-        done();
+
+      } catch (error) {
+        msg.textContent =
+          'Something went wrong. Please check that browser storage is enabled.';
+        console.error(error);
+
+      } finally {
+        busy(false);
       }
     });
 
-    /* clear a field's error as the user fixes it */
-    $$('input').forEach(function (inp) {
-      inp.addEventListener('input', function () {
-        var f = inp.closest('.field');
-        f.classList.remove('invalid');
-        $('.err', f).textContent = '';
+    /* CLEAR INPUT ERRORS */
+    $$('input').forEach(input => {
+      input.addEventListener('input', () => {
+        const field = input.closest('.field');
+
+        if (field) {
+          field.classList.remove('invalid');
+
+          const error = $('.err', field);
+
+          if (error) {
+            error.textContent = '';
+          }
+        }
+
+        if (input.id === 'policy') {
+          $('#err-policy').textContent = '';
+        }
+
         msg.textContent = '';
       });
     });
 
-    /* open on the right tab (e.g. auth.html#signup) */
-    setMode(location.hash === '#signup' ? 'signup' : 'signin');
+    $('#policy').addEventListener('change', () => {
+      $('#err-policy').textContent = '';
+    });
 
-    /* ---------- phone scaling (desktop preview) ---------- */
-    var stage = $('#stage');
+    ensureDemoUser().catch(console.error);
+
+    // Remember the email only, never the password.
+    const rememberedEmail = localStorage.getItem('terooka_remembered_email');
+    if (rememberedEmail) $('#email').value = rememberedEmail;
+    $$('.btn-social').forEach(button => button.addEventListener('click', () => {
+      msg.className = 'form-msg';
+      msg.textContent = button.dataset.social + ' sign-in is a demo placeholder. Connect OAuth to enable it.';
+    }));
+
+    /* INITIAL TAB */
+    setMode(
+      window.location.hash === '#signup'
+        ? 'signup'
+        : 'signin'
+    );
+
+    /* DESKTOP PHONE SCALING */
+    const stage = $('#stage');
+
     function fit() {
-      if (window.innerWidth <= 500) { stage.style.transform = ''; return; }
-      var s = Math.min(1, (window.innerHeight - 28) / 868, (window.innerWidth - 28) / 414);
-      stage.style.transform = 'scale(' + s + ')';
+      if (window.innerWidth <= 500) {
+        stage.style.transform = '';
+        return;
+      }
+
+      const scale = Math.min(
+        1,
+        (window.innerHeight - 28) / 868,
+        (window.innerWidth - 28) / 414
+      );
+
+      stage.style.transform = `scale(${scale})`;
     }
+
     fit();
     window.addEventListener('resize', fit);
+
   })();
 </script>
 </body>
