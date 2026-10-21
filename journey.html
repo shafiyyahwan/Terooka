@@ -1,58 +1,1691 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#EDE4F5"><title>My Journeys — Terooka</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Journeys — Terooka</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    :root{--purple:#5724A3;--pink:#D842A0;--ink:#32204B;--muted:#796B85;--serif:'Fraunces',Georgia,serif;--sans:'Plus Jakarta Sans',sans-serif;--grad:linear-gradient(105deg,#5724A3,#8834B9 52%,#D842A0)}*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:#EDE4F5;color:var(--ink);font-family:var(--sans);min-height:100dvh;display:grid;place-items:center;overflow:hidden}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.stage{width:414px;height:868px;transform-origin:center}.phone{width:414px;height:868px;padding:12px;background:#111015;border-radius:62px;position:relative;box-shadow:0 24px 70px #36195838,0 0 0 2px #343039}.phone:before,.phone:after{content:"";position:absolute;left:-5px;width:4px;background:#302b35;border-radius:4px}.phone:before{top:155px;height:52px}.phone:after{top:228px;height:69px}.screen{width:390px;height:844px;border-radius:50px;position:relative;overflow:hidden;background:linear-gradient(160deg,#F0E4FB,#F9EAF5 35%,#FFF9F7 70%,#FFECE5)}.glow{position:absolute;border-radius:50%;filter:blur(55px);pointer-events:none}.glow.one{width:240px;height:240px;top:-70px;right:-80px;background:#d842a033}.glow.two{width:260px;height:260px;top:430px;left:-120px;background:#8834b924}.island{position:absolute;z-index:30;top:11px;left:50%;transform:translateX(-50%);height:34px;width:118px;background:#08070a;border-radius:30px}.status{position:absolute;top:18px;left:34px;right:30px;z-index:29;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:800}.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:126px;height:5px;background:#2F2837;border-radius:20px;z-index:30}.scroll{position:absolute;inset:0;z-index:2;overflow-y:auto;scrollbar-width:none;padding:67px 0 117px}.scroll::-webkit-scrollbar,.sheet::-webkit-scrollbar{display:none}.pad{padding:0 22px}svg{width:20px;height:20px;flex-shrink:0}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.eyebrow{font-size:10px;font-weight:800;letter-spacing:.16em;color:var(--pink);margin:0 0 5px}h1{font:600 32px/1.1 var(--serif);color:#32145B;margin:0}h2{font:600 21px var(--serif);color:#32145B;margin:0 0 10px}h3{font:600 17px var(--serif);color:#32145B;margin:0}p{font-size:11px;line-height:1.65;color:#685677;margin:0}.icon-button{width:40px;height:40px;display:grid;place-items:center;background:#ffffffba;border:1px solid #fff;border-radius:13px;color:var(--purple)}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:5px;background:#ffffffb5;border:1px solid white;border-radius:16px;margin-bottom:17px}.tabs button{border:0;border-radius:12px;padding:11px 5px;background:transparent;color:#9482a2;font-size:11px;font-weight:800}.tabs button.active{background:#f1e3f8;color:var(--purple);box-shadow:0 3px 10px #5724a314}.card{background:#ffffffa1;border:1px solid #ffffffe6;border-radius:21px;padding:17px;margin-bottom:15px;box-shadow:0 7px 20px #5724a30d;backdrop-filter:blur(12px)}.hero{border-radius:17px;padding:20px;color:white;min-height:139px;display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(circle at 90% 0,#ffffff3c,transparent 42%),linear-gradient(115deg,#55239f,#9940b5 60%,#d842a0)}.hero small{font-size:10px;font-weight:800;letter-spacing:.1em;color:#fff9}.hero h2{font-size:26px;color:white;margin:6px 0}.hero p{color:#fffde;font-size:11px}.badge{display:inline-block;border-radius:20px;background:#e5f5e9;color:#31834d;font-size:9px;font-weight:800;padding:6px 9px}.badge.complete{background:#f1e8f7;color:#765393}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.muted{color:var(--muted);font-size:10px}.section-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.section-heading h2{margin:0}.progress{height:8px;background:#eaddf0;border-radius:20px;overflow:hidden;margin:11px 0 7px}.progress>div{height:100%;background:var(--grad);border-radius:20px;transition:width .3s}.primary{width:100%;border:0;background:var(--grad);color:white;border-radius:14px;padding:13px;font-size:11px;font-weight:800;box-shadow:0 8px 18px #5724a324}.outline{width:100%;background:#fff;color:var(--purple);border:1px solid #e4d2ed;border-radius:14px;padding:12px;font-size:11px;font-weight:800}.plain{background:transparent;border:0;color:var(--purple);font-size:10px;font-weight:800;padding:5px}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0}.quick button{background:#ffffffb5;border:1px solid #fff;border-radius:17px;min-height:92px;padding:10px 5px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;color:var(--purple)}.quick svg{width:25px;height:25px}.quick span{font-size:10px;font-weight:800}.stamp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px 7px}.stamp{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}.stamp-circle{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;border:2px dashed #d8c5e4;background:#f6f0fa;color:#bca9c9}.stamp-circle svg{width:30px;height:30px}.stamp.earned .stamp-circle{border:2px solid #b387d8;background:linear-gradient(135deg,#e6d4f6,#ffe7f4);color:var(--purple);box-shadow:0 4px 12px #5724a315}.stamp span{font-size:9px;font-weight:700;color:#806f8e;line-height:1.4}.stamp.earned span{color:#50366a}.place-row{display:flex;align-items:center;gap:11px;padding:12px 0;border-top:1px solid #eadff0}.place-row:first-child{border-top:0;padding-top:0}.place-icon{width:38px;height:38px;flex-shrink:0;display:grid;place-items:center;background:#f2e6fa;border-radius:12px;color:var(--purple)}.place-info{flex:1;min-width:0}.place-info strong{display:block;font-size:11px;margin-bottom:4px}.place-info small{display:block;color:var(--muted);font-size:9px}.place-row .plain{flex-shrink:0}.empty{text-align:center;padding:25px 12px}.empty svg{width:42px;height:42px;color:#ac8ac7;margin-bottom:12px}.empty h2{margin-bottom:8px}.history-card{cursor:pointer}.history-card h3{margin:0 0 5px}.history-meta{display:flex;gap:13px;margin-top:12px;flex-wrap:wrap}.history-meta span{font-size:10px;color:#705d84}.field-label{font-size:11px;font-weight:800;display:block;margin:15px 0 7px}.field{width:100%;border:1px solid #e4d4ed;background:#fff;border-radius:12px;padding:12px;font-size:12px;color:var(--ink)}.overlay{position:absolute;inset:0;z-index:40;background:#28124270;display:none;align-items:flex-end}.overlay.open{display:flex}.sheet{width:100%;max-height:85%;overflow-y:auto;scrollbar-width:none;background:linear-gradient(170deg,#fbf4ff,#fff7f5);border-radius:30px 30px 0 0;padding:18px 22px 36px}.sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.sheet-head h2{margin:0}.close{width:34px;height:34px;border:0;background:#efe1f6;color:var(--purple);border-radius:10px}.scan{width:186px;height:186px;margin:20px auto;border:3px solid #a87bce;border-radius:22px;display:grid;place-items:center;background:repeating-linear-gradient(45deg,#ffffffa8,#ffffffa8 10px,#f6ebfb 10px,#f6ebfb 20px);color:var(--purple)}.scan svg{width:85px;height:85px}.success-icon{width:74px;height:74px;margin:18px auto;border-radius:50%;display:grid;place-items:center;background:#e3f6e9;color:#31824d}.success-icon svg{width:38px;height:38px}.detail{background:#fff;border:1px solid #e8d9ee;border-radius:15px;padding:13px;margin:16px 0}.detail .row{padding:7px 0;font-size:11px}.detail .row span{color:var(--muted)}.detail .row strong{text-align:right}.danger{width:100%;border:1px solid #f0c8d3;background:#fff;color:#b94769;border-radius:14px;padding:12px;font-size:11px;font-weight:800}.toast{position:absolute;z-index:50;left:50%;top:58px;transform:translateX(-50%);background:#32204b;color:#fff;font-size:11px;font-weight:700;padding:11px 16px;border-radius:14px;display:none;max-width:86%;text-align:center}.toast.show{display:block}.nav{position:absolute;z-index:20;left:16px;right:16px;bottom:22px;height:66px;padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:#ffffff9e;border:1px solid #ffffffe6;border-radius:24px;backdrop-filter:blur(24px);box-shadow:0 14px 34px #5724a329}.nav a{color:#9886ab;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:18px;font-size:9px;font-weight:700}.nav a.active{background:#d842a01a;color:var(--purple)}.nav svg{width:21px;height:21px;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}@media(max-width:500px){body{display:block;overflow:auto}.stage,.phone{width:100%;height:100dvh;transform:none!important}.phone{padding:0;border-radius:0;box-shadow:none}.phone:before,.phone:after,.island,.status,.homebar{display:none}.screen{width:100%;height:100%;min-height:650px;border-radius:0}.scroll{padding-top:30px}.nav{bottom:13px}.toast{top:24px}}
+    :root {
+      --purple: #5724a3;
+      --pink: #d842a0;
+      --ink: #32204b;
+      --muted: #796b85;
+      --line: #e8daf0;
+      --gradient: linear-gradient(110deg,#5724a3,#a448b7,#d842a0);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #ede4f5;
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { opacity: .5; cursor: default; }
+
+    button:focus-visible, a:focus-visible {
+      outline: 3px solid var(--pink);
+      outline-offset: 3px;
+    }
+
+    /* PHONE FRAME */
+    .stage {
+      position: relative;
+      width: 414px;
+      height: 868px;
+      margin: auto;
+      transform-origin: center center;
+    }
+
+    .phone {
+      position: absolute;
+      inset: 0;
+      padding: 12px;
+      background: #111015;
+      border-radius: 62px;
+      box-shadow: 0 24px 70px #3619583b, 0 0 0 2px #343039;
+    }
+
+    .phone::before,
+    .phone::after {
+      content: "";
+      position: absolute;
+      left: -5px;
+      width: 4px;
+      background: #302b35;
+      border-radius: 4px;
+    }
+
+    .phone::before { top: 155px; height: 52px; }
+    .phone::after { top: 228px; height: 69px; }
+
+    .screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 50px;
+      background: linear-gradient(160deg,#f3e8fc,#fff8fb 65%,#fff4ee);
+    }
+
+    .island {
+      position: absolute;
+      z-index: 10;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 118px;
+      height: 34px;
+      border-radius: 30px;
+      background: #100c15;
+    }
+
+    .status {
+      position: absolute;
+      z-index: 9;
+      top: 18px;
+      left: 34px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .homebar {
+      position: absolute;
+      z-index: 9;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 126px;
+      height: 5px;
+      border-radius: 20px;
+      background: #2f2837;
+    }
+
+    .scroll {
+      height: 100%;
+      overflow-y: auto;
+      padding: 67px 20px 118px;
+      scrollbar-width: none;
+    }
+
+    .scroll::-webkit-scrollbar { display: none; }
+
+    h1, h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      margin: 0;
+    }
+
+    h1 { font-size: 29px; }
+    h2 { font-size: 23px; }
+
+    .sub {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .linkbtn {
+      flex-shrink: 0;
+      border: 0;
+      border-radius: 13px;
+      padding: 11px 14px;
+      background: #f0e4f8;
+      color: var(--purple);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    /* JOURNEY CARD */
+    .hero {
+      padding: 22px;
+      border-radius: 24px;
+      background: var(--gradient);
+      color: white;
+      box-shadow: 0 12px 24px #6b2b9830;
+    }
+
+    .hero h2 {
+      margin: 14px 0 6px;
+      font-size: 25px;
+    }
+
+    .hero .sub { color: #ffffffdb; }
+
+    .pill {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 30px;
+      background: #ffffff32;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .destinations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 18px;
+    }
+
+    .destination {
+      padding: 8px 11px;
+      border: 1px solid #ffffff50;
+      border-radius: 30px;
+      background: #ffffff25;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    /* BUTTONS */
+    .btn {
+      min-height: 48px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .primary {
+      background: var(--gradient);
+      color: white;
+    }
+
+    .secondary {
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--purple);
+    }
+
+    .full { width: 100%; }
+
+    .action-area { margin-top: 15px; }
+
+    .scan-btn {
+      width: 100%;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1.5px solid var(--purple);
+      border-radius: 15px;
+      background: white;
+      color: var(--purple);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .scan-btn svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    /* TABS */
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      margin: 24px 0 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 3px;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      background: transparent;
+      color: #9c8bac;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .tab svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .tab.active {
+      color: var(--purple);
+      border-bottom-color: var(--pink);
+    }
+
+    /* EMPTY STATE */
+    .empty {
+      padding: 29px 18px;
+      border: 1px dashed #d9c4e9;
+      border-radius: 20px;
+      background: #ffffffaa;
+      text-align: center;
+    }
+
+    .empty svg {
+      width: 35px;
+      height: 35px;
+      margin-bottom: 12px;
+      color: var(--purple);
+    }
+
+    .empty strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .empty p {
+      margin: 9px 0 17px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    /* PHOTOS */
+    .day {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0 10px;
+      font-size: 12px;
+    }
+
+    .day span { color: var(--muted); }
+
+    .photos {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 5px;
+    }
+
+    .photo {
+      aspect-ratio: 1;
+      padding: 0;
+      border: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #eee1f3;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* STAMPS — THREE PER ROW */
+    .stamps {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 18px 8px;
+      align-items: start;
+    }
+
+    .stamp {
+      min-width: 0;
+      text-align: center;
+    }
+
+    .stamp img {
+      display: block;
+      width: 100%;
+      height: 112px;
+      object-fit: contain;
+    }
+
+    .stamp strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 9px;
+      line-height: 1.4;
+    }
+
+    .stamp span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 8px;
+    }
+
+    /* BOOKINGS AND PAST JOURNEYS */
+    .listcard,
+    .pastitem {
+      display: block;
+      width: 100%;
+      margin-bottom: 11px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: white;
+      color: var(--ink);
+      text-align: left;
+      text-decoration: none;
+    }
+
+    .listcard strong,
+    .pastitem strong {
+      font-size: 13px;
+    }
+
+    .listcard p,
+    .pastitem p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .cardrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cardrow > div:nth-child(2) {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cardicon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #f2e8f9;
+      color: var(--purple);
+      flex-shrink: 0;
+    }
+
+    .cardicon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .chevron {
+      color: var(--purple);
+      font-size: 22px;
+    }
+
+    .back {
+      margin-bottom: 18px;
+      padding: 5px 0;
+      border: 0;
+      background: transparent;
+      color: var(--purple);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .danger {
+      width: 100%;
+      margin-top: 25px;
+      border: 1px solid #f5d6e0;
+      background: #fff0f3;
+      color: #b33361;
+    }
+
+    .delete-journey {
+      display: block;
+      margin: 15px auto 4px;
+      padding: 9px 14px;
+      border: 0;
+      background: transparent;
+      color: #b33361;
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* BOTTOM NAVIGATION */
+    .nav {
+      position: absolute;
+      z-index: 5;
+      bottom: 22px;
+      left: 16px;
+      right: 16px;
+      height: 66px;
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      gap: 2px;
+      padding: 6px;
+      border: 1px solid #ffffffe6;
+      border-radius: 24px;
+      background: #ffffffae;
+      box-shadow: 0 14px 34px #5724a329;
+      backdrop-filter: blur(24px);
+    }
+
+    .nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      border-radius: 18px;
+      color: #9886ab;
+      text-decoration: none;
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .nav svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .nav a.active {
+      background: #d842a01a;
+      color: var(--purple);
+    }
+
+    /* MODAL */
+    .overlay {
+      position: absolute;
+      z-index: 20;
+      inset: 0;
+      display: none;
+      align-items: flex-end;
+      background: #1c0d2c99;
+    }
+
+    .overlay.show { display: flex; }
+
+    .sheet {
+      width: 100%;
+      max-height: 85%;
+      overflow-y: auto;
+      padding: 25px 22px 35px;
+      border-radius: 28px 28px 0 0;
+      background: #fff9fd;
+    }
+
+    .sheet h2 { margin-bottom: 9px; }
+
+    .field {
+      width: 100%;
+      margin: 9px 0;
+      padding: 13px;
+      border: 1px solid #e4d4ef;
+      border-radius: 13px;
+      background: white;
+      font-size: 13px;
+    }
+
+    .form-label {
+      display: block;
+      margin-top: 13px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .option {
+      width: 100%;
+      margin: 5px 0;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: white;
+      text-align: left;
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .option strong { display: block; }
+
+    .option small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+    }
+
+    .preview {
+      position: absolute;
+      z-index: 30;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: #180d25ed;
+    }
+
+    .preview.show { display: flex; }
+
+    .preview img {
+      max-width: 100%;
+      max-height: 75%;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .preview button {
+      align-self: flex-end;
+      margin-bottom: 20px;
+      padding: 9px 15px;
+      border: 0;
+      border-radius: 30px;
+      background: white;
+    }
+
+    .preview p {
+      margin-top: 15px;
+      color: white;
+      font-size: 12px;
+    }
+
+    /* MOBILE */
+    @media (max-width:500px) {
+      body {
+        display: block;
+        background: white;
+      }
+
+      .stage,
+      .phone {
+        width: 100%;
+        height: 100dvh;
+        transform: none !important;
+      }
+
+      .phone {
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .phone::before,
+      .phone::after,
+      .island,
+      .status,
+      .homebar {
+        display: none;
+      }
+
+      .screen { border-radius: 0; }
+      .scroll { padding-top: 30px; }
+      .nav { bottom: 13px; }
+    }
   </style>
 </head>
-<body><div class="stage" id="stage"><div class="phone"><div class="screen">
-  <div class="glow one"></div><div class="glow two"></div><div class="island"></div><div class="status"><span>9:41</span><svg style="width:70px;height:15px" viewBox="0 0 70 15" fill="none"><g fill="#32204B"><rect x="0" y="10" width="3" height="5" rx="1"/><rect x="5" y="7" width="3" height="8" rx="1"/><rect x="10" y="4" width="3" height="11" rx="1"/><rect x="15" y="1" width="3" height="14" rx="1"/></g><g stroke="#32204B" stroke-width="1.8" stroke-linecap="round"><path d="M27 5Q34-1 41 5"/><path d="M30 9Q34 5 38 9"/></g><circle cx="34" cy="12" r="1.5" fill="#32204B"/><rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/><rect x="50" y="4" width="15" height="7" rx="1.6" fill="#32204B"/><path d="M69 5v5" stroke="#32204B" stroke-width="2"/></svg></div>
-  <main class="scroll" id="scroll"><div class="pad"><header class="top"><div><p class="eyebrow">TEROOKA · YOUR ADVENTURES</p><h1>My Journeys</h1></div><button class="icon-button" id="home-button" aria-label="Go home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8M5 10v10h14V10"/></svg></button></header><div class="tabs"><button id="tab-active" class="active" type="button">Active Journey</button><button id="tab-past" type="button">Past Journeys</button></div><div id="content"></div></div></main>
-  <nav class="nav" aria-label="Main navigation"><a href="home.html"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="m3 11 9-8 9 8M5 10v10h14V10"/></svg>Home</a><a href="discover.html"><svg viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 4-4 2 2-4z"/></svg>Discover</a><a href="camera.html"><svg viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="6" width="18" height="15" rx="3"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8 6l1.5-3h5L16 6"/></svg>Camera</a><a href="journal.html"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></svg>Journal</a><a href="profile.html"><svg viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 16-5 16 0"/></svg>Profile</a></nav>
-  <div class="overlay" id="overlay"><div class="sheet" id="sheet"></div></div><div class="toast" id="toast" role="status"></div><div class="homebar"></div></div></div></div>
+
+<body>
+
+<div class="stage" id="stage">
+  <div class="phone">
+    <div class="screen">
+
+      <div class="island"></div>
+
+      <div class="status">
+        <span>9:41</span>
+        <svg width="70" height="15" viewBox="0 0 70 15" fill="none">
+          <g fill="#32204B">
+            <rect x="0" y="10" width="3" height="5" rx="1"/>
+            <rect x="5" y="7" width="3" height="8" rx="1"/>
+            <rect x="10" y="4" width="3" height="11" rx="1"/>
+            <rect x="15" y="1" width="3" height="14" rx="1"/>
+          </g>
+          <g stroke="#32204B" stroke-width="1.8" stroke-linecap="round">
+            <path d="M27 5Q34-1 41 5"/>
+            <path d="M30 9Q34 5 38 9"/>
+          </g>
+          <circle cx="34" cy="12" r="1.5" fill="#32204B"/>
+          <rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/>
+          <rect x="50" y="4" width="15" height="7" rx="1.6" fill="#32204B"/>
+          <path d="M69 5v5" stroke="#32204B" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="homebar"></div>
+
+      <main class="scroll" id="main"></main>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="home.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 11 9-8 9 8M5 10v10h14V10"/>
+          </svg>
+          Home
+        </a>
+
+        <a href="discover.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="m15 9-2 4-4 2 2-4z"/>
+          </svg>
+          Discover
+        </a>
+
+        <a href="camera.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="6" width="18" height="15" rx="3"/>
+            <circle cx="12" cy="13.5" r="3.5"/>
+            <path d="M8 6l1.5-3h5L16 6"/>
+          </svg>
+          Camera
+        </a>
+
+        <a href="journal.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/>
+            <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>
+          </svg>
+          Journal
+        </a>
+
+        <a href="profile.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-5 16-5 16 0"/>
+          </svg>
+          Profile
+        </a>
+      </nav>
+
+      <div class="overlay" id="overlay">
+        <div class="sheet" id="sheet"></div>
+      </div>
+
+      <div class="preview" id="preview">
+        <button id="closePreview">Close</button>
+        <img id="previewImg" alt="Journey photo">
+        <p id="previewText"></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<input type="file" id="photoInput" accept="image/*" multiple hidden>
+
+<script src="places.js"></script>
+
 <script>
-  (()=>{'use strict';
-    const $=s=>document.querySelector(s);
-    const icons={scan:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zm7 0v3m-7 4h3m4 0v-2"/>',stamp:'<path d="M7 15h10v5H7zM9 15v-3c-2-1-3-3-3-5a6 6 0 0 1 12 0c0 2-1 4-3 5v3M5 21h14"/>',map:'<path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15m6-12v15"/>',pin:'<path d="M12 21s7-5.5 7-12a7 7 0 0 0-14 0c0 6.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2"/>',lock:'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',check:'<path d="m5 12 5 5L20 7"/>',plus:'<path d="M12 5v14M5 12h14"/>',arrow:'<path d="M5 12h14m-6-6 6 6-6 6"/>'};
-    function svg(name,size=20){return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${icons[name]}</svg>`}
-    function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-    function get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}
-    function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch{toast('Could not save browser data');return false}}
-    function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-    function niceDate(d){if(!d)return '—';const a=new Date(d.length===10?d+'T12:00:00':d);return isNaN(a)?d:a.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}
-    function toast(t){$('#toast').textContent=t;$('#toast').classList.add('show');setTimeout(()=>$('#toast').classList.remove('show'),2200)}
-    function sheet(html){$('#sheet').innerHTML=`<div class="sheet-head"><h2>${html.title}</h2><button class="close" id="close-sheet" aria-label="Close">×</button></div>${html.body}`;$('#overlay').classList.add('open');$('#close-sheet').onclick=closeSheet}
-    function closeSheet(){$('#overlay').classList.remove('open')}
-    $('#overlay').onclick=e=>{if(e.target===$('#overlay'))closeSheet()};document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});$('#home-button').onclick=()=>location.href='home.html';
-    const places=[{id:'riverstory',name:'Riverfront Heritage Walk',city:'Kuching',cat:'Heritage'},{id:'laksa',name:'Rasa Sarawak Kitchen',city:'Kuching',cat:'Food'},{id:'beads',name:'Borneo Bead Studio',city:'Kuching',cat:'Crafts'},{id:'culturehouse',name:'Stories of Borneo Gallery',city:'Kuching',cat:'Museum'},{id:'weaving',name:'Anyaman Heritage Workshop',city:'Kuching',cat:'Crafts'},{id:'keklapis',name:'Kek Lapis Corner',city:'Kuching',cat:'Food'},{id:'baucraft',name:'Bau Heritage Craft House',city:'Bau',cat:'Crafts'},{id:'serian',name:'Serian Cultural Stories',city:'Serian',cat:'Heritage'}];
-    let session=get('terooka_session',null);const uid=session?.username||session?.email||'guest';const journeyKey='terooka_journeys_'+uid,stampKey='terooka_stamps_'+uid,bookingKey='terooka_bookings_'+uid;
-    let journeys=get(journeyKey,[]),stamps=get(stampKey,[]),bookings=get(bookingKey,[]),tab='active';if(!Array.isArray(journeys))journeys=[];if(!Array.isArray(stamps))stamps=[];
-    function active(){return journeys.find(j=>j.status==='active')}
-    function earned(j){return stamps.filter(s=>j.placeIds.includes(s.placeId)&&(!s.journeyId||s.journeyId===j.id))}
-    function earnedIds(j){return new Set(earned(j).map(s=>s.placeId))}
-    function render(){ $('#tab-active').classList.toggle('active',tab==='active');$('#tab-past').classList.toggle('active',tab==='past');$('#content').innerHTML=tab==='active'?renderActive():renderPast();wire()}
-    $('#tab-active').onclick=()=>{tab='active';render()};$('#tab-past').onclick=()=>{tab='past';render()};
-    function renderActive(){const j=active();if(!j)return `<div class="card empty">${svg('map',42)}<h2>Your next adventure awaits</h2><p>Start a journey to track cultural places, collect digital stamps and save your trip progress.</p><button class="primary" id="start" style="margin-top:20px">Start New Journey</button></div><div class="card"><h2>How it works</h2><p>1. Create a journey and add places.<br>2. Visit participating venues and scan their QR codes.<br>3. Collect stamps and end your journey whenever you're ready.</p></div>`;
-      const count=j.placeIds.length,done=earnedIds(j).size,pct=count?Math.round(done/count*100):0;
-      return `<div class="hero"><div><small>YOUR CURRENT ADVENTURE</small><h2>${esc(j.name)}</h2><p>${esc(j.destination)} · Started ${niceDate(j.startedAt)}</p></div><div><span class="badge">ACTIVE JOURNEY</span></div></div>
-<div class="card" style="margin-top:15px"><div class="row"><h2 style="margin:0">Journey Progress</h2><strong style="font-size:11px">${done} / ${count} places</strong></div><div class="progress"><div style="width:${pct}%"></div></div><div class="row"><span class="muted">${done} stamp${done===1?'':'s'} collected</span><span class="muted">${pct}%</span></div></div>
-<div class="quick"><button id="scan">${svg('scan',25)}<span>Scan QR</span></button><button id="go-stamps">${svg('stamp',25)}<span>My Stamps</span></button><button id="add-place">${svg('plus',25)}<span>Add Place</span></button></div>
-<div class="card" id="stamp-section"><div class="section-heading"><h2>Digital Stamps</h2><span class="muted">${done} / ${count}</span></div>${stampGrid(j)}<p style="margin-top:15px;font-size:10px">Demo stamps are unlocked using simulated QR verification.</p></div>
-<div class="card"><div class="section-heading"><h2>Places in Your Journey</h2><button class="plain" id="add-place-inline">+ Add</button></div>${j.placeIds.length?j.placeIds.map(id=>placeRow(j,id)).join(''):'<div class="empty"><p>No places yet. Add a place to start exploring.</p></div>'}</div>
-<div class="card"><h2>Ready to wrap up?</h2><p>End your trip when you are ready. Your stamps and visited places will remain available in Past Journeys.</p><button class="danger" id="end-journey" style="margin-top:14px">End Journey</button></div>`}
-    function stampGrid(j){if(!j.placeIds.length)return '<p>No places added yet.</p>';const done=earnedIds(j);return `<div class="stamp-grid">${j.placeIds.map(id=>{const p=places.find(x=>x.id===id);return `<div class="stamp ${done.has(id)?'earned':''}"><div class="stamp-circle">${svg(done.has(id)?'stamp':'lock',30)}</div><span>${esc(p?.name||id)}</span></div>`}).join('')}</div>`}
-    function placeRow(j,id){const p=places.find(x=>x.id===id),done=earnedIds(j).has(id);return `<div class="place-row"><div class="place-icon">${svg(done?'check':'pin')}</div><div class="place-info"><strong>${esc(p?.name||id)}</strong><small>${done?'Stamp collected':esc(p?.cat||'Place')+' · Not collected'}</small></div><button class="plain" data-place="${esc(id)}">View</button></div>`}
-    function renderPast(){const past=journeys.filter(j=>j.status==='completed').slice().reverse();if(!past.length)return `<div class="card empty">${svg('stamp',42)}<h2>No past journeys yet</h2><p>When you end an active journey, its recap and collected stamps will appear here.</p><button class="outline" id="view-active" style="margin-top:20px">Go to Active Journey</button></div>`;return `<p style="margin:0 0 14px">Relive your cultural adventures and view your collected stamps.</p>${past.map(j=>`<div class="card history-card" data-recap="${esc(j.id)}"><div class="row"><h3>${esc(j.name)}</h3><span class="badge complete">Completed</span></div><p>${esc(j.destination)} · ${niceDate(j.startedAt)} – ${niceDate(j.endedAt)}</p><div class="history-meta"><span>${svg('pin',15)} ${j.placeIds.length} planned places</span><span>${svg('stamp',15)} ${earnedIds(j).size} stamps</span></div><button class="outline" data-recap="${esc(j.id)}" style="margin-top:14px">View Journey Recap →</button></div>`).join('')}`}
-    function wire(){const on=(id,fn)=>{const el=$('#'+id);if(el)el.onclick=fn};on('start',startSheet);on('scan',scanSheet);on('go-stamps',()=>$('#stamp-section')?.scrollIntoView({behavior:'smooth',block:'center'}));on('add-place',addPlaceSheet);on('add-place-inline',addPlaceSheet);on('end-journey',endSheet);on('view-active',()=>{tab='active';render()});document.querySelectorAll('[data-place]').forEach(b=>b.onclick=()=>location.href='place.html?id='+encodeURIComponent(b.dataset.place));document.querySelectorAll('[data-recap]').forEach(b=>b.onclick=()=>recap(b.dataset.recap))}
-    function startSheet(){sheet({title:'Start New Journey',body:`<p>Create an adventure and start collecting cultural memories.</p><label class="field-label" for="journey-name">Journey Name</label><input id="journey-name" class="field" maxlength="60" placeholder="e.g. Kuching Cultural Trail"><label class="field-label" for="destination">Destination</label><select id="destination" class="field"><option value="Kuching, Sarawak">Kuching, Sarawak</option><option value="Bau, Sarawak">Bau, Sarawak</option><option value="Serian, Sarawak">Serian, Sarawak</option><option value="Sarawak, Malaysia">Across Sarawak</option></select><button class="primary" id="create" style="margin-top:20px">Start Journey</button>`});$('#create').onclick=()=>{if(active()){toast('End your current journey first');return}const name=$('#journey-name').value.trim(),destination=$('#destination').value;if(!name){toast('Enter a journey name');return}const j={id:'J-'+Date.now().toString(36),name,destination,startedAt:new Date().toISOString(),endedAt:null,status:'active',placeIds:[]};const next=[...journeys,j];if(!save(journeyKey,next))return;journeys=next;closeSheet();render();toast('Journey started!')}}
-    function addPlaceSheet(){const j=active();if(!j)return;const available=places.filter(p=>!j.placeIds.includes(p.id));sheet({title:'Add Places',body:`<p>Choose cultural places to include in your current journey.</p><div style="margin-top:15px">${available.length?available.map(p=>`<div class="place-row"><div class="place-icon">${svg('pin')}</div><div class="place-info"><strong>${esc(p.name)}</strong><small>${esc(p.city)} · ${esc(p.cat)}</small></div><button class="plain" data-add="${esc(p.id)}">+ Add</button></div>`).join(''):'<p>All available demo places have been added.</p>'}</div>`});document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{const next=journeys.map(x=>x.id===j.id?{...x,placeIds:[...x.placeIds,b.dataset.add]}:x);if(!save(journeyKey,next))return;journeys=next;closeSheet();render();toast('Place added to journey')})}
-    function scanSheet(){const j=active();if(!j)return;if(!j.placeIds.length){toast('Add a place to your journey first');return}const pending=j.placeIds.filter(id=>!earnedIds(j).has(id));sheet({title:'Scan Venue QR',body:`<p style="text-align:center">Scan the official QR code at a participating cultural venue to unlock its stamp.</p><div class="scan">${svg('scan',85)}</div><p style="text-align:center">Camera scanning is not connected in this hackathon prototype.</p>${pending.length?`<label class="field-label" for="demo-venue">Demo venue to verify</label><select id="demo-venue" class="field">${pending.map(id=>`<option value="${esc(id)}">${esc(places.find(p=>p.id===id)?.name||id)}</option>`).join('')}</select><button class="primary" id="simulate" style="margin-top:16px">Simulate QR Verification</button>`:'<div class="empty"><p>All planned places already have stamps!</p></div>'}<p style="margin-top:12px;text-align:center;font-size:9px">Demo only — does not verify a real visit or workshop completion.</p>`});const b=$('#simulate');if(b)b.onclick=()=>{const id=$('#demo-venue').value;if(earnedIds(j).has(id))return;const item={placeId:id,placeName:places.find(p=>p.id===id)?.name||id,journeyId:j.id,collectedAt:new Date().toISOString(),verification:'demo-simulated'};const next=[...stamps,item];if(!save(stampKey,next))return;stamps=next;stampSuccess(item)}}
-    function stampSuccess(item){sheet({title:'Digital Stamp',body:`<div class="success-icon">${svg('stamp',38)}</div><h2 style="text-align:center;font-size:25px">Stamp Unlocked!</h2><p style="text-align:center">${esc(item.placeName)} is now in your stamp collection.</p><div class="detail"><div class="row"><span>Collected</span><strong>${niceDate(item.collectedAt)}</strong></div><div class="row"><span>Verification</span><strong>Demo simulation</strong></div></div><button class="primary" id="done-stamp">Continue Journey</button>`});$('#done-stamp').onclick=()=>{closeSheet();render()}}
-    function endSheet(){const j=active();if(!j)return;sheet({title:'End Journey?',body:`<p>Are you sure you want to end <strong>${esc(j.name)}</strong>?</p><div class="detail"><div class="row"><span>Planned places</span><strong>${j.placeIds.length}</strong></div><div class="row"><span>Collected stamps</span><strong>${earnedIds(j).size}</strong></div></div><p>Your trip recap and stamps will remain in Past Journeys. Your Journal is separate and will not be deleted.</p><button class="danger" id="confirm-end" style="margin-top:18px">Yes, End Journey</button><button class="outline" id="cancel-end" style="margin-top:9px">Keep Exploring</button>`});$('#cancel-end').onclick=closeSheet;$('#confirm-end').onclick=()=>{const next=journeys.map(x=>x.id===j.id?{...x,status:'completed',endedAt:new Date().toISOString()}:x);if(!save(journeyKey,next))return;journeys=next;closeSheet();tab='past';render();recap(j.id);toast('Journey completed!')}}
-    function recap(id){const j=journeys.find(x=>x.id===id);if(!j)return;sheet({title:'Journey Recap',body:`<div class="hero" style="min-height:110px"><div><small>COMPLETED ADVENTURE</small><h2>${esc(j.name)}</h2><p>${esc(j.destination)}</p></div></div><div class="detail"><div class="row"><span>Started</span><strong>${niceDate(j.startedAt)}</strong></div><div class="row"><span>Completed</span><strong>${niceDate(j.endedAt)}</strong></div><div class="row"><span>Places planned</span><strong>${j.placeIds.length}</strong></div><div class="row"><span>Stamps collected</span><strong>${earnedIds(j).size}</strong></div></div><h2>Collected Stamps</h2>${stampGrid(j)}<h2 style="margin-top:20px">Places in This Journey</h2>${j.placeIds.length?j.placeIds.map(pid=>placeRow(j,pid)).join(''):'<p>No places were added.</p>'}<button class="outline" id="journal-link" style="margin-top:17px">Open Journal Library →</button><p style="margin-top:10px;font-size:9px">Journal books are managed separately from journey history.</p>`});document.querySelectorAll('#sheet [data-place]').forEach(b=>b.onclick=()=>location.href='place.html?id='+encodeURIComponent(b.dataset.place));$('#journal-link').onclick=()=>location.href='journal.html'}
-    const stage=$('#stage');function fit(){if(innerWidth<=500){stage.style.transform='';return}stage.style.transform='scale('+Math.min(1,(innerWidth-28)/414,(innerHeight-28)/868)+')'}fit();addEventListener('resize',fit);if(new URLSearchParams(location.search).get('tab')==='past')tab='past';render();
+  (() => {
+    'use strict';
+
+    const $ = selector => document.querySelector(selector);
+
+    const icon = (name, size = 24) => {
+      const paths = {
+        camera: '<rect x="3" y="6" width="18" height="15" rx="3"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8 6l1.5-3h5L16 6"/>',
+        stamp: '<path d="M7 14h10l2 3v3H5v-3zM9 14v-3c-2-2-2-6 3-6s5 4 3 6v3M4 22h16"/>',
+        bookings: '<path d="M3 6h18v4a2 2 0 0 0 0 4v4H3v-4a2 2 0 0 0 0-4z"/><path d="M12 6v12" stroke-dasharray="2 2"/>',
+        map: '<path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"/>',
+        book: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>'
+      };
+
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24"
+      fill="none" stroke="currentColor" stroke-width="1.8"
+      stroke-linecap="round" stroke-linejoin="round">
+      ${paths[name] || paths.map}
+    </svg>`;
+    };
+
+    const qrIcon = `
+    <svg viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3M21 16v3a2 2 0 0 1-2 2h-3"/>
+      <rect x="7" y="7" width="4" height="4"/>
+      <path d="M15 7h2v4h-2M7 15h4v2H7M15 15h2v2h-2"/>
+    </svg>
+  `;
+
+    function getUser() {
+      try {
+        const session = JSON.parse(
+          localStorage.getItem('terooka_session') || 'null'
+        );
+        return session?.username || session?.email || 'guest';
+      } catch {
+        return 'guest';
+      }
+    }
+
+    const uid = getUser();
+
+    const journeyKey = 'terooka_journeys_' + uid;
+    const stampKey = 'terooka_stamps_' + uid;
+    const photoKey = 'terooka_journey_photos_' + uid;
+    const bookingKey = 'terooka_bookings_' + uid;
+
+    const places = window.TerookaData?.places || [];
+
+    const stampImages = {
+      riverstory: 'riverfront_heritage_walk.png',
+      laksa: 'rasa_sarawak_kitchen.png',
+      beads: 'borneo_bead_studio.png',
+      culturehouse: 'stories_of_borneo_gallery.png',
+      weaving: 'anyaman_heritage_workshop.png',
+      keklapis: 'kek_lapis_corner.png',
+      baucraft: 'bau_heritage_craft_house.png',
+      serian: 'serian_cultural_stories.png'
+    };
+
+    function read(key, fallback = []) {
+      try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function write(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+      } catch {
+        alert('Browser storage is full.');
+        return false;
+      }
+    }
+
+    function esc(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
+    }
+
+    function fmt(value) {
+      const date = new Date(value);
+      return isNaN(date)
+        ? 'Unknown date'
+        : date.toLocaleDateString('en-GB', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        });
+    }
+
+    function journeys() {
+      return read(journeyKey);
+    }
+
+    function active() {
+      return journeys().find(j =>
+        j.status === 'active' ||
+        j.status === 'ongoing' ||
+        (!j.status && !j.endedAt)
+      );
+    }
+
+    function past() {
+      return journeys().filter(j =>
+        j.status === 'completed' || j.endedAt
+      );
+    }
+
+    function belongs(item, journey) {
+      return String(item.journeyId ?? item.journey_id ?? '') ===
+        String(journey.id);
+    }
+
+    function photos(journey) {
+      return read(photoKey).filter(p => belongs(p, journey));
+    }
+
+    function stamps(journey) {
+      return read(stampKey).filter(s => belongs(s, journey));
+    }
+
+    function bookings(journey) {
+      return read(bookingKey).filter(b => belongs(b, journey));
+    }
+
+    function destinations(journey) {
+      if (Array.isArray(journey.destinations) &&
+        journey.destinations.length) {
+        return journey.destinations;
+      }
+
+      return String(journey.destination || journey.city || 'Malaysia')
+        .split(',')
+        .map(x => x.trim())
+        .filter(Boolean);
+    }
+
+    function travelDay(journey, photo) {
+      const a = new Date(
+        journey.startDate || journey.startedAt || journey.date
+      );
+      const b = new Date(
+        photo.takenAt || photo.createdAt || photo.date
+      );
+
+      if (isNaN(a) || isNaN(b)) return 1;
+
+      a.setHours(0, 0, 0, 0);
+      b.setHours(0, 0, 0, 0);
+
+      return Math.max(
+        1,
+        Math.round((b - a) / 86400000) + 1
+      );
+    }
+
+    let view = 'active';
+    let selected = null;
+    let tab = 'photos';
+
+    function emptyState(symbol, title, description, action = '') {
+      return `
+      <div class="empty">
+        ${icon(symbol, 35)}
+        <strong>${title}</strong>
+        <p>${description}</p>
+        ${action}
+      </div>
+    `;
+    }
+
+    function render() {
+      if (view === 'pastList') {
+        renderPast();
+        return;
+      }
+
+      const old = view === 'pastDetail';
+      const journey = old ? selected : active();
+
+      if (!journey) {
+        $('#main').innerHTML = `
+        <div class="header">
+          <div>
+            <h1>My Journeys</h1>
+            <p class="sub">Your cultural adventures in one place.</p>
+          </div>
+          <button class="linkbtn" data-action="past">See all</button>
+        </div>
+
+        ${emptyState(
+          'map',
+          'No active journey yet',
+          'Start a journey to discover culture, collect stamps and save your memories.',
+          '<button class="btn primary" data-action="start">Start Journey</button>'
+        )}
+      `;
+        return;
+      }
+
+      $('#main').innerHTML = `
+      ${old
+        ? '<button class="back" data-action="past">← Past Journeys</button>'
+        : ''
+      }
+
+      <div class="header">
+        <div>
+          <h1>${old ? 'Journey Memories' : 'My Journeys'}</h1>
+          <p class="sub">
+            ${old
+        ? 'Revisit your cultural adventure.'
+        : 'Capture every cultural experience.'}
+          </p>
+        </div>
+
+        ${old
+        ? ''
+        : '<button class="linkbtn" data-action="past">See all</button>'
+      }
+      </div>
+
+      <section class="hero">
+        <span class="pill">
+          ${old ? 'Completed Journey' : 'Active Journey'}
+        </span>
+
+        <h2>${esc(journey.name || journey.title || 'My Adventure')}</h2>
+
+        <p class="sub">
+          Started ${fmt(
+        journey.startDate ||
+        journey.startedAt ||
+        journey.date
+      )}
+        </p>
+
+        <div class="destinations">
+          ${destinations(journey).map(destination => `
+            <span class="destination">${esc(destination)}</span>
+          `).join('')}
+        </div>
+      </section>
+
+      ${old ? '' : `
+        <div class="action-area">
+          <button class="scan-btn" data-action="scan">
+            ${qrIcon}
+            Scan QR · Collect Stamp
+          </button>
+        </div>
+      `}
+
+      <div class="tabs">
+        ${[
+        ['photos', 'Photos', 'camera'],
+        ['bookings', 'Bookings', 'bookings'],
+        ['stamps', 'Stamps', 'stamp']
+      ].map(([key, label, symbol]) => `
+          <button
+            class="tab ${tab === key ? 'active' : ''}"
+            data-tab="${key}"
+          >
+            ${icon(symbol, 20)}
+            ${label}
+          </button>
+        `).join('')}
+      </div>
+
+      <div id="tabContent"></div>
+
+      ${old ? `
+        <button class="delete-journey" data-action="delete">
+          Delete Journey
+        </button>
+      ` : `
+        <button class="btn danger" data-action="end">
+          End Journey
+        </button>
+
+        <button class="delete-journey" data-action="delete">
+          Delete Journey
+        </button>
+      `}
+    `;
+
+      renderTab(journey, old);
+    }
+
+    function renderTab(journey, old) {
+      const target = $('#tabContent');
+
+      if (tab === 'photos') {
+        const list = photos(journey);
+
+        if (!list.length) {
+          target.innerHTML = emptyState(
+            'camera',
+            'No photos yet',
+            'Your journey photos will appear here, organised by travel day.',
+            old ? '' :
+              '<button class="btn primary" data-action="photo">Add Photos</button>'
+          );
+          return;
+        }
+
+        const groups = {};
+
+        list.forEach(photo => {
+          const day = travelDay(journey, photo);
+          (groups[day] ??= []).push(photo);
+        });
+
+        target.innerHTML = Object.keys(groups)
+          .sort((a, b) => Number(b) - Number(a))
+          .map(day => `
+          <div class="day">
+            <strong>Day ${day}</strong>
+            <span>${groups[day].length} photos</span>
+          </div>
+
+          <div class="photos">
+            ${groups[day].map(photo => `
+              <button
+                class="photo"
+                data-preview="${esc(photo.id)}"
+              >
+                <img
+                  src="${esc(photo.src || photo.image)}"
+                  alt="Journey photo"
+                >
+              </button>
+            `).join('')}
+          </div>
+        `).join('');
+
+        return;
+      }
+
+      if (tab === 'bookings') {
+        const list = bookings(journey);
+
+        if (!list.length) {
+          target.innerHTML = emptyState(
+            'bookings',
+            'No bookings yet',
+            'Your booked cultural experiences and workshops will appear here.',
+            old ? '' :
+              '<button class="btn primary" data-action="discover">Explore Activities</button>'
+          );
+          return;
+        }
+
+        target.innerHTML = list.map(booking => `
+        <div class="listcard">
+          <div class="cardrow">
+            <div class="cardicon">${icon('bookings')}</div>
+
+            <div>
+              <strong>
+                ${esc(
+          booking.placeName ||
+          booking.activity ||
+          booking.name ||
+          'Cultural Experience'
+        )}
+              </strong>
+
+              <p>
+                ${fmt(
+          booking.date ||
+          booking.bookingDate ||
+          booking.createdAt
+        )}
+                · ${esc(booking.time || 'Time not specified')}
+              </p>
+
+              <p>${esc(booking.status || 'Booked')}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+        return;
+      }
+
+      if (tab === 'stamps') {
+        const list = stamps(journey);
+
+        if (!list.length) {
+          target.innerHTML = emptyState(
+            'stamp',
+            'No stamps collected',
+            'Visit cultural places and collect their digital stamps.',
+            old ? '' :
+              '<button class="btn primary" data-action="scan">Scan QR</button>'
+          );
+          return;
+        }
+
+        target.innerHTML = `
+        <div class="stamps">
+          ${list.map(stamp => {
+          const id = stamp.placeId || stamp.id;
+          const place = places.find(p => p.id === id);
+          const image = stampImages[id];
+
+          return `
+              <div class="stamp">
+                ${image
+            ? `<img src="img/${esc(image)}" alt="Digital stamp">`
+            : icon('stamp', 50)
+          }
+
+                <strong>
+                  ${esc(stamp.placeName || place?.name || 'Digital Stamp')}
+                </strong>
+
+                <span>
+                  ${fmt(stamp.collectedAt || stamp.date)}
+                </span>
+              </div>
+            `;
+        }).join('')}
+        </div>
+      `;
+
+        return;
+      }
+    }
+
+    function renderPast() {
+      const list = past().slice().reverse();
+
+      $('#main').innerHTML = `
+      <button class="back" data-action="home">
+        ← My Journeys
+      </button>
+
+      <h1>Past Journeys</h1>
+
+      <p class="sub" style="margin-bottom:22px">
+        Your completed cultural adventures.
+      </p>
+
+      ${list.length
+        ? list.map(journey => `
+          <button
+            class="pastitem"
+            data-past="${esc(journey.id)}"
+          >
+            <div class="cardrow">
+              <div class="cardicon">${icon('book')}</div>
+
+              <div>
+                <strong>
+                  ${esc(journey.name || journey.title || 'My Adventure')}
+                </strong>
+
+                <p>
+                  ${esc(destinations(journey).join(', '))}
+                </p>
+
+                <p>
+                  ${fmt(journey.startedAt || journey.startDate)}
+                  —
+                  ${fmt(journey.endedAt)}
+                </p>
+
+                <p>
+                  ${photos(journey).length} photos ·
+                  ${stamps(journey).length} stamps
+                </p>
+              </div>
+
+              <span class="chevron">›</span>
+            </div>
+          </button>
+        `).join('')
+        : emptyState(
+          'book',
+          'No past journeys yet',
+          'Completed journeys will appear here.'
+        )
+      }
+    `;
+    }
+
+    function openSheet(html) {
+      $('#sheet').innerHTML = html;
+      $('#overlay').classList.add('show');
+    }
+
+    function closeSheet() {
+      $('#overlay').classList.remove('show');
+    }
+
+    $('#overlay').addEventListener('click', event => {
+      if (event.target.id === 'overlay') closeSheet();
+    });
+
+    function startJourney() {
+      openSheet(`
+      <h2>Start a Journey</h2>
+
+      <p class="sub">
+        Where will your adventure take you?
+      </p>
+
+      <form id="startForm">
+        <label class="form-label">Journey Name</label>
+
+        <input
+          class="field"
+          name="name"
+          maxlength="60"
+          placeholder="e.g. Discover Sarawak"
+          required
+        >
+
+        <label class="form-label">Destinations</label>
+
+        <input
+          class="field"
+          name="destination"
+          maxlength="200"
+          placeholder="e.g. Kuching, Bau, Serian"
+          required
+        >
+
+        <p class="sub">
+          You can add multiple destinations separated by commas.
+        </p>
+
+        <button
+          class="btn primary full"
+          style="margin-top:15px"
+          type="submit"
+        >
+          Start Journey
+        </button>
+      </form>
+    `);
+
+      $('#startForm').onsubmit = event => {
+        event.preventDefault();
+
+        if (active()) return;
+
+        const data = new FormData(event.target);
+        const name = String(data.get('name') || '').trim();
+
+        const destinations = [
+          ...new Set(
+            String(data.get('destination') || '')
+              .split(',')
+              .map(value => value.trim())
+              .filter(Boolean)
+          )
+        ];
+
+        if (!name || !destinations.length) return;
+
+        const journey = {
+          id: 'J-' + Date.now(),
+          name,
+          destination: destinations.join(', '),
+          destinations,
+          startedAt: new Date().toISOString(),
+          status: 'active',
+          placeIds: []
+        };
+
+        const list = journeys();
+        list.push(journey);
+
+        if (write(journeyKey, list)) {
+          closeSheet();
+          view = 'active';
+          tab = 'photos';
+          render();
+        }
+      };
+    }
+
+    function scanQR() {
+      const journey = active();
+      if (!journey) return;
+
+      const collected = new Set(
+        stamps(journey).map(s => s.placeId || s.id)
+      );
+
+      openSheet(`
+      <h2>Scan Location QR</h2>
+
+      <p class="sub">
+        Prototype: select the location you visited to collect its stamp.
+      </p>
+
+      ${places.map(place => `
+        <button
+          class="option"
+          data-collect="${esc(place.id)}"
+          ${collected.has(place.id) ? 'disabled' : ''}
+        >
+          <strong>
+            ${esc(place.name)}
+            ${collected.has(place.id) ? '✓' : ''}
+          </strong>
+          <small>${esc(place.city)}</small>
+        </button>
+      `).join('')}
+
+      <button
+        class="btn secondary full"
+        data-action="close"
+        style="margin-top:12px"
+      >
+        Cancel
+      </button>
+    `);
+    }
+
+    function collectStamp(id) {
+      const journey = active();
+      const place = places.find(p => p.id === id);
+
+      if (!journey || !place) return;
+
+      if (stamps(journey).some(s =>
+        (s.placeId || s.id) === id
+      )) return;
+
+      const list = read(stampKey);
+
+      list.push({
+        placeId: id,
+        placeName: place.name,
+        city: place.city,
+        journeyId: journey.id,
+        collectedAt: new Date().toISOString(),
+        verification: 'prototype-collection'
+      });
+
+      if (write(stampKey, list)) {
+        closeSheet();
+        tab = 'stamps';
+        render();
+      }
+    }
+
+    function addPhoto() {
+      $('#photoInput').click();
+    }
+
+    function resizeImage(file) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        const url = URL.createObjectURL(file);
+
+        image.onload = () => {
+          const scale = Math.min(
+            1,
+            650 / Math.max(image.width, image.height)
+          );
+
+          const canvas = document.createElement('canvas');
+
+          canvas.width = Math.max(
+            1,
+            Math.round(image.width * scale)
+          );
+
+          canvas.height = Math.max(
+            1,
+            Math.round(image.height * scale)
+          );
+
+          canvas.getContext('2d').drawImage(
+            image, 0, 0, canvas.width, canvas.height
+          );
+
+          URL.revokeObjectURL(url);
+          resolve(canvas.toDataURL('image/jpeg', 0.65));
+        };
+
+        image.onerror = () => {
+          URL.revokeObjectURL(url);
+          reject(new Error('Invalid image'));
+        };
+
+        image.src = url;
+      });
+    }
+
+    $('#photoInput').onchange = async event => {
+      const journey = active();
+      if (!journey) return;
+
+      const files = [...event.target.files].slice(0, 6);
+      event.target.value = '';
+
+      const list = read(photoKey);
+
+      for (const file of files) {
+        try {
+          const src = await resizeImage(file);
+
+          list.push({
+            id: 'P-' + Date.now() + '-' +
+              Math.random().toString(36).slice(2, 7),
+            journeyId: journey.id,
+            src,
+            takenAt: new Date().toISOString()
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      if (write(photoKey, list)) {
+        tab = 'photos';
+        render();
+      }
+    };
+
+    function previewPhoto(id) {
+      const journey = view === 'pastDetail'
+        ? selected
+        : active();
+
+      if (!journey) return;
+
+      const photo = photos(journey).find(
+        item => String(item.id) === String(id)
+      );
+
+      if (!photo) return;
+
+      $('#previewImg').src = photo.src || photo.image;
+
+      $('#previewText').textContent =
+        'Day ' + travelDay(journey, photo) +
+        ' · ' + fmt(photo.takenAt || photo.createdAt);
+
+      $('#preview').classList.add('show');
+    }
+
+    $('#closePreview').onclick = () => {
+      $('#preview').classList.remove('show');
+    };
+
+    function endJourney() {
+      const journey = active();
+
+      if (!journey) return;
+
+      if (!confirm(
+        'End this journey? Your memories will remain in Past Journeys.'
+      )) return;
+
+      const list = journeys();
+
+      const target = list.find(
+        item => String(item.id) === String(journey.id)
+      );
+
+      if (!target) return;
+
+      target.status = 'completed';
+      target.endedAt = new Date().toISOString();
+
+      if (write(journeyKey, list)) {
+        view = 'pastList';
+        render();
+      }
+    }
+
+    function deleteJourney() {
+      const journey = view === 'pastDetail'
+        ? selected
+        : active();
+
+      if (!journey) return;
+
+      const confirmed = confirm(
+        'Delete this journey permanently? Its photos, stamps and bookings will also be removed. This cannot be undone.'
+      );
+
+      if (!confirmed) return;
+
+      const remainingJourneys = journeys().filter(
+        item => String(item.id) !== String(journey.id)
+      );
+
+      const remainingPhotos = read(photoKey).filter(
+        item => !belongs(item, journey)
+      );
+
+      const remainingStamps = read(stampKey).filter(
+        item => !belongs(item, journey)
+      );
+
+      const remainingBookings = read(bookingKey).filter(
+        item => !belongs(item, journey)
+      );
+
+      try {
+        localStorage.setItem(
+          journeyKey,
+          JSON.stringify(remainingJourneys)
+        );
+
+        localStorage.setItem(
+          photoKey,
+          JSON.stringify(remainingPhotos)
+        );
+
+        localStorage.setItem(
+          stampKey,
+          JSON.stringify(remainingStamps)
+        );
+
+        localStorage.setItem(
+          bookingKey,
+          JSON.stringify(remainingBookings)
+        );
+
+        selected = null;
+        view = 'active';
+        tab = 'photos';
+
+        render();
+
+      } catch (error) {
+        alert('Unable to delete journey. Please try again.');
+        console.error(error);
+      }
+    }
+
+    document.addEventListener('click', event => {
+      const element = event.target.closest(
+        '[data-action],[data-tab],[data-past],[data-collect],[data-preview]'
+      );
+
+      if (!element) return;
+
+      if (element.dataset.tab) {
+        tab = element.dataset.tab;
+        render();
+        return;
+      }
+
+      if (element.dataset.past) {
+        selected = past().find(
+          journey => String(journey.id) === element.dataset.past
+        );
+
+        if (selected) {
+          view = 'pastDetail';
+          tab = 'photos';
+          render();
+        }
+        return;
+      }
+
+      if (element.dataset.collect) {
+        collectStamp(element.dataset.collect);
+        return;
+      }
+
+      if (element.dataset.preview) {
+        previewPhoto(element.dataset.preview);
+        return;
+      }
+
+      switch (element.dataset.action) {
+        case 'home':
+          view = 'active';
+          selected = null;
+          tab = 'photos';
+          render();
+          break;
+
+        case 'past':
+          view = 'pastList';
+          selected = null;
+          render();
+          break;
+
+        case 'start':
+          startJourney();
+          break;
+
+        case 'scan':
+          scanQR();
+          break;
+
+        case 'photo':
+          addPhoto();
+          break;
+
+        case 'end':
+          endJourney();
+          break;
+
+        case 'delete':
+          deleteJourney();
+          break;
+
+        case 'close':
+          closeSheet();
+          break;
+
+        case 'discover':
+          location.href = 'discover.html';
+          break;
+      }
+    });
+
+    /* RESPONSIVE PHONE — NO FIXED SCALE(.88) */
+    function resizePhone() {
+      const stage = document.getElementById('stage');
+
+      if (window.matchMedia('(max-width:500px)').matches) {
+        stage.style.transform = 'none';
+        return;
+      }
+
+      const scale = Math.min(
+        (window.innerWidth - 24) / 414,
+        (window.innerHeight - 24) / 868,
+        1
+      );
+
+      stage.style.transform =
+        `scale(${Math.max(0.35, scale)})`;
+    }
+
+    window.addEventListener('resize', resizePhone);
+
+    resizePhone();
+    render();
+
   })();
 </script>
-</body></html>
+
+</body>
+</html>

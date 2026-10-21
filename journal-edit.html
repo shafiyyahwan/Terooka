@@ -1,0 +1,2032 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#EDE4F5">
+  <title>Edit Journal — Terooka</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --purple:#5724A3;
+      --pink:#D842A0;
+      --ink:#32204B;
+      --muted:#796B85;
+      --outer:#EDE4F5;
+      --error:#C0224F;
+      --serif:'Fraunces',Georgia,serif;
+      --sans:'Plus Jakarta Sans',sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%}
+    button,input,textarea{font-family:inherit}
+    body{
+      background:var(--outer);
+      font-family:var(--sans);
+      color:var(--ink);
+      min-height:100dvh;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+    }
+    .stage{
+      width:414px;
+      height:868px;
+      flex-shrink:0;
+      transform-origin:center center;
+    }
+    .phone{
+      width:414px;
+      height:868px;
+      padding:12px;
+      background:#111015;
+      border-radius:62px;
+      position:relative;
+      box-shadow:0 24px 70px #3619583b,0 0 0 2px #343039;
+    }
+    .screen{
+      width:390px;
+      height:844px;
+      border-radius:50px;
+      position:relative;
+      overflow:hidden;
+      background:#2B1650;
+    }
+    .island{
+      position:absolute;
+      z-index:50;
+      top:11px;
+      left:50%;
+      transform:translateX(-50%);
+      height:34px;
+      width:118px;
+      background:#08070a;
+      border-radius:30px;
+    }
+    .status{
+      position:absolute;
+      top:18px;
+      left:34px;
+      z-index:49;
+      font-size:14px;
+      font-weight:800;
+      color:white;
+    }
+    .homebar{
+      position:absolute;
+      bottom:8px;
+      left:50%;
+      transform:translateX(-50%);
+      width:126px;
+      height:5px;
+      background:#E9DDF6;
+      border-radius:20px;
+      opacity:.7;
+      z-index:60;
+    }
+    button:focus-visible,a:focus-visible{
+      outline:3px solid var(--pink);
+      outline-offset:2px;
+    }
+    .viewer{
+      position:absolute;
+      inset:0;
+      z-index:45;
+      display:flex;
+      flex-direction:column;
+      padding:56px 14px 26px;
+      color:white;
+      background:radial-gradient(120% 70% at 50% 36%,#5a2a98,#341768 55%,#1f0f40);
+    }
+    .vh{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .vh .t{
+      flex:1;
+      font:600 17px var(--serif);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      text-align:center;
+    }
+    .ib{
+      min-width:44px;
+      height:44px;
+      padding:0 12px;
+      border:0;
+      border-radius:14px;
+      background:#ffffff24;
+      color:white;
+      font:700 12px var(--sans);
+      cursor:pointer;
+    }
+    .body{
+      flex:1;
+      min-height:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:14px;
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .lbl{
+      flex:1;
+      text-align:center;
+      font-size:12px;
+      font-weight:700;
+      color:#E3D2F6;
+    }
+    .nb{
+      width:44px;
+      height:44px;
+      border:0;
+      border-radius:50%;
+      background:#ffffff24;
+      color:white;
+      font:700 24px/1 var(--sans);
+      cursor:pointer;
+    }
+    .nb:disabled{opacity:.3;cursor:default}
+    .deck{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:none;
+    }
+    .hint{
+      margin:0;
+      text-align:center;
+      font-size:12px;
+      color:#D9C5F0;
+    }
+    .edhost{
+      display:none;
+      flex:1;
+      min-height:0;
+      align-items:center;
+      justify-content:center;
+    }
+    .viewer.editing .edhost{display:flex;position:relative;width:100%;overflow:visible}
+    .viewer.editing .edhost>.nb{position:absolute;top:50%;transform:translateY(-50%);z-index:10;width:32px;height:42px;border-radius:14px}
+    .viewer.editing .edhost>.nb:first-child{left:0}
+    .viewer.editing .edhost>.nb:nth-child(2){right:0}
+    .viewer.editing .nav .nb{display:none}
+    .viewer.editing .nav{justify-content:center}
+    .viewer.editing .nav .lbl{flex:none}
+    .viewer.editing .deck,
+    .viewer.editing .strip,
+    .viewer.editing .hint{display:none}
+    .viewer.editing .body{justify-content:flex-start}
+    .viewer:not(.editing) .tools,
+    .viewer:not(.editing) .tray,
+    .viewer:not(.editing) .editrow{display:none!important}
+
+    /* BOOK */
+    .book{
+      --k:.5;
+      --c:0;
+      --s:0;
+      --sl:3px;
+      --sr:3px;
+      position:relative;
+      flex:none;
+      perspective:1800px;
+      touch-action:none;
+      user-select:none;
+      cursor:grab;
+    }
+    .bd{
+      position:absolute;
+      top:-6px;
+      bottom:-6px;
+      background:linear-gradient(135deg,#7d32b8,#46197f);
+      box-shadow:0 20px 34px #0007;
+    }
+    .bd.l{
+      left:-6px;
+      width:calc(50% + 6px);
+      border-radius:12px 0 0 12px;
+      opacity:calc(1 - var(--c));
+    }
+    .bd.r{
+      right:-6px;
+      width:calc(50% + 6px);
+      border-radius:0 12px 12px 0;
+    }
+    .pw{
+      position:absolute;
+      top:0;
+      width:50%;
+      height:100%;
+      overflow:hidden;
+      background:#FFFDF8;
+    }
+    .pw.l{
+      left:0;
+      border-radius:5px 0 0 5px;
+      box-shadow:calc(var(--sl)*-1) 1px 0 #efe6dd,calc(var(--sl)*-2) 2px 0 #d9cdd6;
+    }
+    .pw.r{
+      left:50%;
+      border-radius:0 5px 5px 0;
+      box-shadow:var(--sr) 1px 0 #efe6dd,calc(var(--sr)*2) 2px 0 #d9cdd6;
+    }
+    .pw.empty{background:none;box-shadow:none}
+    .pw::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      z-index:2;
+      pointer-events:none;
+      background:linear-gradient(90deg,transparent 78%,#32204b33);
+    }
+    .pw.r::after{
+      background:linear-gradient(270deg,transparent 78%,#32204b33);
+    }
+    .pw.empty::after{display:none}
+    .leaf{
+      position:absolute;
+      left:50%;
+      top:0;
+      width:50%;
+      height:100%;
+      display:none;
+      z-index:4;
+      transform-origin:0 50%;
+      transform-style:preserve-3d;
+    }
+    .leaf.on{display:block}
+    .f{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+      background:#FFFDF8;
+      backface-visibility:hidden;
+      -webkit-backface-visibility:hidden;
+      border-radius:0 5px 5px 0;
+    }
+    .f.b{
+      transform:rotateY(180deg);
+      border-radius:5px 0 0 5px;
+    }
+    .pw .pgv,.f .pgv{
+      transform:scale(var(--k));
+      transform-origin:0 0;
+    }
+
+    /* JOURNAL PAGE */
+    .pgv{
+      position:absolute;
+      top:0;
+      left:0;
+      width:300px;
+      height:420px;
+      overflow:hidden;
+      background:#FFFDF8;
+    }
+    .pn{
+      position:absolute;
+      top:10px;
+      font:600 10px var(--sans);
+      color:#b3a3be;
+    }
+    .pn.l{left:14px}
+    .pn.r{right:14px}
+    .blank{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font:italic 15px var(--serif);
+      color:#b3a3be;
+    }
+    .cover{
+      background:linear-gradient(155deg,#6a2cb0,#9036b9 58%,#d842a0);
+      color:white;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      gap:6px;
+      padding:0 30px 40px 38px;
+    }
+    .cover::before{
+      content:'';
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:20px;
+      background:linear-gradient(90deg,#0005,#ffffff26 70%,transparent);
+    }
+    .cover::after{
+      content:'';
+      position:absolute;
+      inset:16px 16px 16px 30px;
+      border:1.5px solid #ffffff4d;
+      border-radius:6px;
+      pointer-events:none;
+    }
+    .emb{
+      position:absolute;
+      top:46px;
+      left:50%;
+      margin-left:-28px;
+      width:64px;
+      height:64px;
+      border:3px double #ffffffaa;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font:italic 600 13px var(--serif);
+    }
+    .ct{
+      font:600 32px/1.1 var(--serif);
+      overflow-wrap:anywhere;
+    }
+    .cp{
+      font:500 13px var(--sans);
+      opacity:.85;
+      overflow-wrap:anywhere;
+    }
+    .items{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+    }
+    .it{
+      position:absolute;
+      pointer-events:auto;
+      touch-action:none;
+      cursor:grab;
+      user-select:none;
+      line-height:1;
+      text-align:center;
+    }
+    .ro .it{pointer-events:none}
+    .it.sel{
+      outline:2px dashed var(--pink);
+      outline-offset:3px;
+    }
+    .it img{
+      width:100%;
+      display:block;
+      pointer-events:none;
+    }
+    .it.photo{
+      box-shadow:0 2px 8px #32145b33;
+      aspect-ratio:1.15;
+    }
+    .it.photo img{
+      height:100%;
+      object-fit:cover;
+    }
+    .it.photo.frame-classic{
+      background:white;
+      padding:7px;
+      border:2px solid #ddd1c7;
+    }
+    .it.photo.frame-rounded{
+      background:white;
+      padding:7px;
+      border-radius:19px;
+      overflow:hidden;
+    }
+    .it.photo.frame-film{
+      background:#24202c;
+      padding:10px 7px;
+      border-top:7px dashed white;
+      border-bottom:7px dashed white;
+    }
+    .it.photo.frame-polaroid{
+      background:white;
+      padding:8px 8px 30px;
+      box-shadow:0 4px 12px #32204b45;
+    }
+    .it.photo.frame-none{
+      padding:0;
+      border:0;
+      background:transparent;
+      box-shadow:none;
+    }
+    .it.tape{
+      height:22px;
+      opacity:.88;
+      border-radius:3px;
+    }
+    .it.tape.pattern-dots{
+      background-image:radial-gradient(#ffffffb8 2px,transparent 3px)!important;
+      background-size:13px 13px!important;
+    }
+    .it.tape.pattern-stripes{
+      background-image:repeating-linear-gradient(45deg,#ffffff77 0 5px,transparent 5px 11px)!important;
+    }
+    .it.label{
+      padding:9px 10px;
+      background:#fce6ed;
+      color:#69385a;
+      border:1px solid #f2bacb;
+      font:700 12px var(--sans);
+    }
+    .it.text .inline-text{
+      display:block;
+      min-height:1.5em;
+      outline:none;
+      cursor:text;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+    }
+    .it.text .inline-text:focus{
+      background:#fff4e9;
+      box-shadow:0 0 0 2px #D842A077;
+    }
+    .it.text{
+      font:italic 500 17px/1.35 var(--serif);
+      color:#4a3a5c;
+      text-align:left;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+      padding:2px;
+    }
+    .it .fb{
+      display:flex;
+      aspect-ratio:1;
+      border:3px double var(--purple);
+      color:var(--purple);
+      border-radius:50%;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      padding:8%;
+    }
+
+    /* THUMBNAILS */
+    .strip{
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+      padding:4px 6px;
+      scrollbar-width:none;
+    }
+    .strip::-webkit-scrollbar{display:none}
+    .th{
+      flex:none;
+      position:relative;
+      width:40px;
+      height:57px;
+      padding:0;
+      border:0;
+      border-radius:4px;
+      overflow:hidden;
+      background:#FFFDF8;
+      cursor:pointer;
+      opacity:.75;
+    }
+    .th .pgv{
+      transform:scale(.135);
+      transform-origin:0 0;
+    }
+    .th.on{
+      opacity:1;
+      outline:2px solid var(--pink);
+      outline-offset:2px;
+    }
+    .th.add{
+      background:#ffffff24;
+      color:white;
+      font:400 22px var(--sans);
+      opacity:1;
+    }
+
+    /* EDITOR */
+    .edwrap{
+      position:relative;
+      flex:none;
+    }
+    .ed{
+      overflow:visible;
+      transform:scale(var(--ek));
+      transform-origin:0 0;
+      border-radius:4px 12px 12px 4px;
+      box-shadow:0 18px 40px #0006;
+    }
+    .editrow{
+      display:none;
+      gap:8px;
+      margin-top:8px;
+    }
+    .viewer.editing .editrow{display:flex}
+    .editrow button{
+      flex:1;
+      border:0;
+      border-radius:10px;
+      padding:11px;
+      font-weight:700;
+      font-size:13px;
+      background:#ffffff25;
+      color:white;
+      cursor:pointer;
+    }
+    .ctl{
+      position:absolute;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0;
+      text-align:center;
+      font-family:var(--sans);
+      border:0;
+      cursor:pointer;
+      line-height:1;
+      z-index:5;
+      color:white;
+    }
+    .ctl.x{
+      top:-18px;
+      right:-18px;
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      background:var(--error);
+      font-size:16px;
+    }
+    .ctl.fr{
+      top:-18px;
+      left:-18px;
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      background:var(--purple);
+      font-size:14px;
+    }
+    .ctl.rs{
+      right:-14px;
+      bottom:-14px;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:var(--pink);
+      border:3px solid white;
+      touch-action:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0;
+      font-size:19px;
+      font-weight:800;
+    }
+    .ctl.rot{
+      left:-16px;
+      top:50%;
+      transform:translateY(-50%);
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:var(--purple);
+      border:2px solid white;
+      font-size:17px;
+      touch-action:none;
+    }
+    .ctl.ai{
+      top:-18px;
+      left:50%;
+      transform:translateX(-50%);
+      width:42px;
+      height:30px;
+      border-radius:15px;
+      background:#D842A0;
+      font:800 11px var(--sans);
+    }
+    .ctl.font-down,.ctl.font-up{bottom:-17px;width:31px;height:27px;border-radius:10px;background:var(--purple);font-size:12px;font-weight:800}
+    .ctl.font-down{left:0}
+    .ctl.font-up{left:38px}
+    .ctl.edittxt{
+      top:-18px;
+      left:-18px;
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      background:var(--purple);
+      font-size:14px;
+    }
+    .tray{
+      display:none;
+      gap:8px;
+      overflow-x:auto;
+      padding:10px 4px 2px;
+      scrollbar-width:none;
+    }
+    .tray.show{display:flex}
+    .tray .note{
+      color:#D9C5F0;
+      font-size:12px;
+      padding:14px 0;
+    }
+    .tray button{
+      flex:none;
+      min-width:48px;
+      min-height:48px;
+      border:0;
+      border-radius:14px;
+      background:#ffffffed;
+      color:var(--purple);
+      cursor:pointer;
+      padding:0 8px;
+    }
+    .tray button.option{
+      font-size:11px;
+      font-weight:700;
+      padding:9px 13px;
+      min-width:75px;
+    }
+    .tray button.option.active{
+      outline:2px solid var(--pink);
+    }
+    .tray .st{
+      width:64px;
+      height:64px;
+      padding:4px;
+      font:800 9px var(--sans);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .tray .st img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+    .tools{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:6px;
+      margin-top:10px;
+    }
+    .tools button{
+      border:0;
+      border-radius:14px;
+      min-height:52px;
+      background:#ffffff24;
+      color:white;
+      font:700 10px var(--sans);
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+    }
+    .tools svg{
+      display:block;
+      width:20px;
+      height:20px;
+      flex-shrink:0;
+    }
+    .tools button{line-height:1.2;text-align:center}
+    .picker{
+      position:absolute;
+      inset:0;
+      z-index:90;
+      background:#fdf8ff;
+      color:var(--ink);
+      display:flex;
+      flex-direction:column;
+      padding:56px 18px 25px;
+      gap:13px;
+    }
+    .picker h2{
+      font:600 22px var(--serif);
+      margin:0;
+    }
+    .picker .grid{
+      overflow:auto;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:7px;
+      align-content:start;
+    }
+    .picker .grid button{
+      padding:0;
+      border:0;
+      border-radius:8px;
+      overflow:hidden;
+      background:#eee;
+      aspect-ratio:1;
+    }
+    .picker .grid img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    .picker .close{
+      align-self:flex-end;
+      background:var(--purple);
+      color:white;
+      border:0;
+      border-radius:12px;
+      padding:10px 16px;
+    }
+    .picker .note{
+      font-size:12px;
+      color:var(--muted);
+      margin:0;
+    }
+    .toast{
+      position:absolute;
+      z-index:100;
+      left:50%;
+      top:58px;
+      transform:translate(-50%,-20px);
+      background:var(--ink);
+      color:white;
+      font-size:12px;
+      font-weight:700;
+      padding:11px 16px;
+      border-radius:14px;
+      opacity:0;
+      pointer-events:none;
+      transition:.3s;
+      max-width:86%;
+      text-align:center;
+    }
+    .toast.show{
+      opacity:1;
+      transform:translate(-50%,0);
+    }
+    @media(max-width:500px){
+      body{
+        display:block;
+        min-height:100dvh;
+        overflow:auto;
+      }
+      .stage,.phone{
+        width:100%;
+        height:100dvh;
+        transform:none!important;
+      }
+      .phone{
+        padding:0;
+        border-radius:0;
+        box-shadow:none;
+      }
+      .screen{
+        width:100%;
+        height:100%;
+        border-radius:0;
+      }
+      .island,.status,.homebar{display:none}
+      .viewer{
+        padding-top:24px;
+        padding-bottom:max(18px,env(safe-area-inset-bottom));
+      }
+      .picker{padding-top:24px}
+      .toast{top:24px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .toast{transition:none}
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="status">9:41</div>
+      <section class="viewer" id="viewer" aria-label="Journal editor"></section>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <div class="homebar"></div>
+    </div>
+  </div>
+</div>
+
+<script src="journal-store.js"></script>
+<script>
+  (function(){
+    'use strict';
+    if(!session)return;
+
+    const V=$('#viewer');
+    const PW=300,PH=420;
+
+    let cur,pi=0,L=-2,sel=null;
+    let editing=false,busy=false,F=null,raf=0,mode='';
+    let book,pwL,pwR,leafEl,front,back,deck,edHost,strip,lbl,hint,prevB,nextB,tray,ed,layer;
+
+    function storage(key){
+      try{
+        const data=JSON.parse(localStorage.getItem(key))||[];
+        return Array.isArray(data)?data:[];
+      }catch(e){
+        return [];
+      }
+    }
+
+    function journeys(){
+      return storage('terooka_journeys_'+uid);
+    }
+
+    function journey(){
+      return journeys().find(j=>String(j.id)===String(cur.journeyId));
+    }
+
+    function destinations(j){
+      if(!j)return [];
+      if(Array.isArray(j.destinations)&&j.destinations.length){
+        return j.destinations.map(d=>{
+          if(typeof d==='string')return d;
+          return d.name||d.title||d.city||d.destination||'';
+        }).filter(Boolean);
+      }
+      return [j.destination||j.city||''].filter(Boolean);
+    }
+
+    function journeyRecords(key){
+      return storage(key+'_'+uid).filter(x=>
+        x.journeyId!=null &&
+        String(x.journeyId)===String(cur.journeyId)
+      );
+    }
+
+    function ensureJourney(){
+      if(cur.journeyId!=null&&journey())return true;
+      showToast('This journal needs a linked journey.');
+      return false;
+    }
+
+    const stampFiles={
+      riverstory:'riverfront_heritage_walk.png',
+      laksa:'rasa_sarawak_kitchen.png',
+      beads:'borneo_bead_studio.png',
+      culturehouse:'stories_of_borneo_gallery.png',
+      weaving:'anyaman_heritage_workshop.png',
+      keklapis:'kek_lapis_corner.png',
+      baucraft:'bau_heritage_craft_house.png',
+      serian:'serian_cultural_stories.png'
+    };
+
+    function stampPath(id){
+      return 'img/'+(stampFiles[id]||id+'.png');
+    }
+
+    function photoRecords(){
+      return journeyRecords('terooka_journey_photos');
+    }
+
+    function stampRecords(){
+      return journeyRecords('terooka_stamps');
+    }
+
+    function pg(){
+      return cur.pages[pi];
+    }
+
+    function showToast(message){
+      const n=$('#toast');
+      n.textContent=message;
+      n.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer=setTimeout(()=>n.classList.remove('show'),2600);
+    }
+
+    function closeBook(){
+      save();
+      location.href='journal.html';
+    }
+
+    /* PAGE CONTENT */
+
+    function coverNode(){
+      return el('div',{class:'pgv cover'},
+        el('div',{class:'emb',text:'Terooka'}),
+        el('div',{class:'ct',text:cur.title||'Untitled journal'}),
+        el('div',{class:'cp',text:cur.place||''})
+      );
+    }
+
+    function styleIt(n,it){
+      const fs=(it.w||30)/100*PW;
+      n.style.left=(it.x||0)+'%';
+      n.style.top=(it.y||0)+'%';
+      n.style.width=(it.w||30)+'%';
+      n.style.transform='rotate('+(it.r||0)+'deg)';
+      if(it.t==='text')n.style.fontSize=(it.fontSize||17)+'px';
+      if(it.t==='stamp')n.style.fontSize=(fs*.13)+'px';
+    }
+
+    function itemEl(it,readOnly){
+      const n=el('div',{
+        class:'it '+it.t+(it.t==='photo'
+          ?' frame-'+(it.frameStyle||(it.frame?'polaroid':'none'))
+          :'')
+      });
+
+      n._it=it;
+
+      if(it.t==='photo'){
+        n.appendChild(el('img',{
+          src:it.src,
+          alt:'Journal photo',
+          draggable:'false'
+        }));
+      }else if(it.t==='text'){
+        const span=el('span',{class:'inline-text',text:it.txt||''});
+        if(!readOnly){
+          span.contentEditable='true';
+          span.setAttribute('role','textbox');
+          span.setAttribute('aria-label','Edit journal text');
+          span.addEventListener('pointerdown',e=>e.stopPropagation());
+          span.addEventListener('input',()=>{it.txt=span.innerText.slice(0,400);save();});
+          span.addEventListener('blur',()=>{it.txt=span.innerText.slice(0,400);save();});
+        }
+        n.appendChild(span);
+      }else if(it.t==='label'){
+        n.textContent=it.txt||'';
+      }else if(it.t==='tape'){
+        n.style.backgroundColor=it.color||'#F5A9BA';
+        n.classList.add('pattern-'+(it.pattern||'plain'));
+      }else{
+        const im=el('img',{
+          src:it.img||stampPath(it.id),
+          alt:(it.name||'')+' stamp',
+          draggable:'false'
+        });
+        im.onerror=()=>{
+          im.replaceWith(el('span',{
+            class:'fb',
+            text:it.name||'Stamp'
+          }));
+        };
+        n.appendChild(im);
+      }
+
+      styleIt(n,it);
+
+      if(!readOnly)drag(n,it);
+      return n;
+    }
+
+    function pageNode(i){
+      if(i===-2)return el('div',{});
+      if(i===-1)return coverNode();
+
+      const p=cur.pages[i];
+      const n=el('div',{class:'pgv paper ro'});
+
+      if(!p){
+        n.appendChild(el('div',{
+          class:'blank',
+          text:'Empty page'
+        }));
+        return n;
+      }
+
+      const lay=el('div',{class:'items'});
+      (p.items||[]).forEach(it=>lay.appendChild(itemEl(it,true)));
+
+      n.appendChild(el('span',{
+        class:'pn '+(i%2?'r':'l'),
+        text:i+1
+      }));
+      n.appendChild(lay);
+
+      return n;
+    }
+
+    /* ICONS — NO EMOJI */
+
+    const icons={
+      photo:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 5"/>',
+      text:'<path d="M4 6h16M12 6v14M8 20h8"/>',
+      stamp:'<circle cx="12" cy="10" r="5"/><path d="m9 15-2 6 5-3 5 3-2-6"/>',
+      decor:'<path d="M4 5h16v14H4zM8 5v14M4 10h16"/>',
+      plus:'<path d="M12 5v14M5 12h14"/>'
+    };
+
+    function tool(iconName,label,fn){
+      const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      svg.setAttribute('viewBox','0 0 24 24');
+      svg.setAttribute('fill','none');
+      svg.setAttribute('stroke','currentColor');
+      svg.setAttribute('stroke-width','1.8');
+      svg.setAttribute('stroke-linecap','round');
+      svg.setAttribute('stroke-linejoin','round');
+      svg.setAttribute('aria-hidden','true');
+      svg.innerHTML=icons[iconName];
+
+      return el('button',{
+        type:'button',
+        onclick:fn
+      },svg,label);
+    }
+
+    /* BUILD */
+
+    function build(){
+      V.innerHTML='';
+      mode='';
+
+      prevB=el('button',{
+        class:'nb',
+        type:'button',
+        'aria-label':'Previous',
+        text:'‹',
+        onclick:()=>step(-1)
+      });
+
+      nextB=el('button',{
+        class:'nb',
+        type:'button',
+        'aria-label':'Next',
+        text:'›',
+        onclick:()=>step(1)
+      });
+
+      lbl=el('div',{class:'lbl'});
+
+      front=el('div',{class:'f'});
+      back=el('div',{class:'f b'});
+      leafEl=el('div',{class:'leaf'},front,back);
+
+      pwL=el('div',{
+        class:'pw l',
+        tabindex:'0',
+        role:'button',
+        'aria-label':'Edit left page'
+      });
+
+      pwR=el('div',{
+        class:'pw r',
+        tabindex:'0',
+        role:'button',
+        'aria-label':'Edit right page'
+      });
+
+      pwL.addEventListener('keydown',e=>{
+        if(e.key==='Enter'||e.key===' '){
+          e.preventDefault();
+          tapSide(false);
+        }
+      });
+
+      pwR.addEventListener('keydown',e=>{
+        if(e.key==='Enter'||e.key===' '){
+          e.preventDefault();
+          tapSide(true);
+        }
+      });
+
+      book=el('div',{
+          class:'book',
+          role:'group',
+          'aria-label':'Journal book'
+        },
+        el('div',{class:'bd l'}),
+        el('div',{class:'bd r'}),
+        pwL,pwR,leafEl
+      );
+
+      deck=el('div',{class:'deck'},book);
+      edHost=el('div',{class:'edhost'});
+      strip=el('div',{class:'strip'});
+      hint=el('p',{class:'hint'});
+      tray=el('div',{class:'tray'});
+
+      V.appendChild(el('div',{class:'vh'},
+        el('button',{
+          class:'ib',
+          type:'button',
+          text:'‹',
+          'aria-label':'Back to journals',
+          onclick:closeBook
+        }),
+        el('div',{class:'t',text:cur.title}),
+        el('button',{
+          class:'ib',
+          type:'button',
+          text:'Delete',
+          onclick:()=>{
+            if(!confirm('Delete this whole journal?'))return;
+            books=books.filter(b=>String(b.id)!==String(cur.id));
+            save();
+            location.href='journal.html';
+          }
+        })
+      ));
+
+      V.appendChild(el('div',{class:'body'},
+        el('div',{class:'nav'},prevB,lbl,nextB),
+        deck,edHost,strip,hint
+      ));
+
+      V.appendChild(el('div',{class:'editrow'},
+        el('button',{
+          type:'button',
+          text:'Back to book',
+          onclick:leaveEdit
+        }),
+        el('button',{
+          type:'button',
+          text:'Delete page',
+          onclick:delPage
+        })
+      ));
+
+      V.appendChild(tray);
+
+      V.appendChild(el('div',{class:'tools'},
+        tool('photo','Photos',pickJourneyPhoto),
+        tool('text','Caption',()=>showTray('caption')),
+        tool('stamp','Stamps',()=>showTray('stamp')),
+        tool('decor','Decor',()=>showTray('tape')),
+        tool('plus','Page',()=>{
+          cur.pages.push({caption:'',items:[]});
+          pi=cur.pages.length-1;
+          save();
+          renderPage();
+        })
+      ));
+
+      bindBook();
+      refresh();
+    }
+
+    function refresh(){
+      V.classList.toggle('editing',editing);
+      if(editing){
+        edHost.append(prevB,nextB);
+        renderPage();
+      }else{
+        const nav=V.querySelector('.nav');
+        nav.insertBefore(prevB,lbl);
+        nav.appendChild(nextB);
+        layout();
+        renderBook();
+      }
+    }
+
+    function layout(){
+      if(editing||!book)return;
+
+      const w=Math.min(deck.clientWidth-20,440);
+      book.style.width=w+'px';
+      book.style.height=w*.7+'px';
+      book.style.setProperty('--k',w/2/PW);
+      deck.style.height=(w*.7+30)+'px';
+    }
+
+    function updateNav(){
+      const n=cur.pages.length;
+
+      if(editing){
+        lbl.textContent='Page '+(pi+1)+' of '+n;
+        prevB.disabled=pi<=0;
+        nextB.disabled=pi>=n-1;
+        return;
+      }
+
+      lbl.textContent=L<0
+        ?'Cover'
+        :(L+2<=n?'Pages '+(L+1)+'–'+(L+2):'Page '+(L+1))+' of '+n;
+
+      prevB.disabled=L<=-2;
+      nextB.disabled=L+2>n-1;
+
+      hint.textContent=L<0
+        ?'Tap the cover to open'
+        :'Swipe to turn · tap a page to edit';
+    }
+
+    /* FLIPBOOK */
+
+    function setStat(a,b){
+      pwL.replaceChildren(pageNode(a));
+      pwR.replaceChildren(pageNode(b));
+      pwL.classList.toggle('empty',a<0);
+    }
+
+    function renderBook(){
+      const n=cur.pages.length;
+      const c=L<0?1:0;
+
+      setStat(L,L+1);
+      leafEl.classList.remove('on');
+
+      book.style.setProperty('--s',0);
+      book.style.setProperty('--c',c);
+      book.style.transform='translateX('+(-25*c)+'%)';
+      book.style.setProperty('--sl',L<0?'0px':'3px');
+      book.style.setProperty('--sr','3px');
+
+      updateNav();
+      renderStrip();
+    }
+
+    function renderStrip(){
+      strip.innerHTML='';
+
+      cur.pages.forEach((p,i)=>{
+        const active=L>=0&&(i===L||i===L+1);
+
+        strip.appendChild(el('button',{
+          class:'th'+(active?' on':''),
+          type:'button',
+          'aria-label':'Go to page '+(i+1),
+          onclick:()=>go(Math.floor(i/2)*2)
+        },pageNode(i)));
+      });
+
+      strip.appendChild(el('button',{
+        class:'th add',
+        type:'button',
+        text:'+',
+        'aria-label':'Add page',
+        onclick:addPage
+      }));
+    }
+
+    function addPage(){
+      if(busy)return;
+      cur.pages.push({caption:'',items:[]});
+      save();
+      go(Math.floor((cur.pages.length-1)/2)*2);
+    }
+
+    function startFlip(to){
+      const n=cur.pages.length;
+
+      if(to===L||to<-2||to>Math.max(0,n-1))return false;
+
+      const fwd=to>L;
+      F={from:L,to:to,fwd:fwd,t:0};
+
+      setStat(fwd?L:to,fwd?to+1:L+1);
+      front.replaceChildren(pageNode(fwd?L+1:to+1));
+      back.replaceChildren(pageNode(fwd?to:L));
+
+      leafEl.classList.add('on');
+      busy=true;
+      setT(0);
+      return true;
+    }
+
+    function setT(t){
+      leafEl.style.transform='rotateY('+
+        (F.fwd?-180*t:-180*(1-t))+'deg';
+
+      book.style.setProperty('--s',Math.sin(Math.PI*t).toFixed(3));
+
+      const c=F.from<0?1-t:(F.to<0?t:0);
+      book.style.setProperty('--c',c.toFixed(3));
+      book.style.transform='translateX('+(-25*c).toFixed(2)+'%)';
+    }
+
+    function animTo(goal){
+      const startT=F.t;
+      const distance=Math.abs(goal-startT);
+
+      if(!distance){
+        endFlip(goal);
+        return;
+      }
+
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+        endFlip(goal);
+        return;
+      }
+
+      const start=performance.now();
+      const duration=Math.max(220,720*distance);
+
+      cancelAnimationFrame(raf);
+
+      function tick(now){
+        const k=Math.min(1,(now-start)/duration);
+        const ease=k<.5
+          ?4*k*k*k
+          :1-Math.pow(-2*k+2,3)/2;
+
+        F.t=startT+(goal-startT)*ease;
+        setT(F.t);
+
+        if(k<1){
+          raf=requestAnimationFrame(tick);
+        }else{
+          endFlip(goal);
+        }
+      }
+
+      raf=requestAnimationFrame(tick);
+    }
+
+    function endFlip(goal){
+      if(goal===1)L=F.to;
+      F=null;
+      busy=false;
+      renderBook();
+    }
+
+    function go(to){
+      if(busy||editing)return;
+      if(startFlip(to))animTo(1);
+    }
+
+    function step(direction){
+      if(editing){
+        gotoPage(pi+direction);
+      }else{
+        go(L+direction*2);
+      }
+    }
+
+    function tapSide(right){
+      if(editing||busy)return;
+
+      if(L<0){
+        if(right)go(0);
+        return;
+      }
+
+      editPage(right?L+1:L);
+    }
+
+    function bindBook(){
+      book.addEventListener('pointerdown',e=>{
+        if(editing||busy)return;
+
+        const rect=book.getBoundingClientRect();
+        let x0=e.clientX;
+        let dir=0;
+
+        try{book.setPointerCapture(e.pointerId)}catch(err){}
+
+        function move(ev){
+          const dx=ev.clientX-x0;
+
+          if(!dir){
+            if(Math.abs(dx)<8)return;
+
+            if(!startFlip(L+(dx<0?2:-2))){
+              x0=ev.clientX;
+              return;
+            }
+
+            dir=dx<0?1:-1;
+          }
+
+          F.t=Math.max(0,Math.min(1,
+            (dir>0?-dx:dx)/(rect.width*.6)
+          ));
+          setT(F.t);
+        }
+
+        function up(ev){
+          book.removeEventListener('pointermove',move);
+          book.removeEventListener('pointerup',up);
+          book.removeEventListener('pointercancel',up);
+
+          if(dir){
+            animTo(ev.type!=='pointercancel'&&F.t>.3?1:0);
+            return;
+          }
+
+          if(ev.type!=='pointercancel'){
+            tapSide(ev.clientX>rect.left+rect.width/2);
+          }
+        }
+
+        book.addEventListener('pointermove',move);
+        book.addEventListener('pointerup',up);
+        book.addEventListener('pointercancel',up);
+      });
+    }
+
+    /* EDIT MODE */
+
+    function editPage(i){
+      if(i>=cur.pages.length){
+        cur.pages.push({caption:'',items:[]});
+        save();
+      }
+
+      pi=i;
+      editing=true;
+      sel=null;
+      refresh();
+    }
+
+    function leaveEdit(){
+      editing=false;
+      sel=null;
+      mode='';
+      tray.classList.remove('show');
+      L=Math.floor(pi/2)*2;
+      refresh();
+    }
+
+    function gotoPage(i){
+      if(i<0||i>=cur.pages.length)return;
+      pi=i;
+      renderPage();
+    }
+
+    function delPage(){
+      if(cur.pages.length<2){
+        showToast('A journal needs at least one page.');
+        return;
+      }
+
+      if(!confirm('Delete page '+(pi+1)+'?'))return;
+
+      cur.pages.splice(pi,1);
+      pi=Math.min(pi,cur.pages.length-1);
+      save();
+      renderPage();
+    }
+
+    function renderPage(){
+      renderEditor();
+      updateNav();
+    }
+
+    function renderEditor(){
+      const p=pg();
+      sel=null;
+      // Keep page arrows mounted when rebuilding the editor.
+      edHost.replaceChildren(prevB,nextB);
+
+      const k=Math.min(
+        (edHost.clientWidth-64)/PW,
+        edHost.clientHeight/PH,
+        1.25
+      )||1;
+
+      ed=el('div',{class:'pgv paper ed'});
+      ed.style.setProperty('--ek',k);
+
+      layer=el('div',{class:'items'});
+
+      ed.appendChild(el('span',{
+        class:'pn '+(pi%2?'r':'l'),
+        text:pi+1
+      }));
+      ed.appendChild(layer);
+
+      p.items.forEach(it=>{
+        layer.appendChild(itemEl(it,false));
+      });
+
+      ed.addEventListener('pointerdown',e=>{
+        if(!e.target.closest('.it')){
+          sel=null;
+          sync();
+        }
+      });
+
+      edHost.appendChild(el('div',{
+        class:'edwrap',
+        style:'width:'+(PW*k)+'px;height:'+(PH*k)+'px'
+      },ed));
+    }
+
+    function sync(){
+      Array.from(layer.children).forEach(n=>{
+        n.classList.toggle('sel',n._it===sel);
+
+        n.querySelectorAll('.ctl').forEach(c=>c.remove());
+
+        if(n._it===sel)controls(n);
+      });
+    }
+
+    function controls(n){
+      const it=n._it;
+
+      n.appendChild(el('button',{
+        class:'ctl x',
+        type:'button',
+        'aria-label':'Remove item',
+        text:'×',
+        onclick:e=>{
+          e.stopPropagation();
+          const items=pg().items;
+          items.splice(items.indexOf(it),1);
+          save();
+          renderPage();
+        }
+      }));
+
+      // Text is edited directly on the page via contenteditable.
+
+      if(it.t==='photo'){
+        n.appendChild(el('button',{
+          class:'ctl ai',
+          type:'button',
+          text:'AI ✦',
+          'aria-label':'Suggest cultural caption for this photo',
+          onclick:e=>{
+            e.stopPropagation();
+            suggestPhotoCaption(it);
+          }
+        }));
+        n.appendChild(el('button',{
+          class:'ctl fr',
+          type:'button',
+          text:'F',
+          'aria-label':'Change photo frame',
+          onclick:e=>{
+            e.stopPropagation();
+            cycleFrame(it,n);
+          }
+        }));
+      }
+
+      const resize=el('span',{
+        class:'ctl rs',
+        role:'slider',
+        'aria-label':'Drag to resize item',
+        text:'↔'
+      });
+
+      resize.addEventListener('pointerdown',e=>{
+        e.stopPropagation();
+        e.preventDefault();
+        resize.setPointerCapture(e.pointerId);
+
+        const bw=ed.getBoundingClientRect().width;
+        const sx=e.clientX;
+        const w0=it.w;
+
+        function move(ev){
+          it.w=Math.max(8,Math.min(96,
+            w0+(ev.clientX-sx)/bw*100
+          ));
+          styleIt(n,it);
+        }
+
+        function up(){
+          resize.removeEventListener('pointermove',move);
+          resize.removeEventListener('pointerup',up);
+          save();
+        }
+
+        resize.addEventListener('pointermove',move);
+        resize.addEventListener('pointerup',up);
+      });
+
+      n.appendChild(resize);
+
+      const rotate=el('span',{
+        class:'ctl rot',
+        role:'slider',
+        'aria-label':'Rotate item',
+        text:'↻'
+      });
+
+      rotate.addEventListener('pointerdown',e=>{
+        e.stopPropagation();
+        e.preventDefault();
+        rotate.setPointerCapture(e.pointerId);
+
+        const rect=n.getBoundingClientRect();
+        const cx=rect.left+rect.width/2;
+        const cy=rect.top+rect.height/2;
+        const start=Math.atan2(e.clientY-cy,e.clientX-cx);
+        const base=it.r||0;
+
+        function move(ev){
+          const angle=Math.atan2(ev.clientY-cy,ev.clientX-cx);
+          it.r=Math.round(base+(angle-start)*180/Math.PI);
+          styleIt(n,it);
+        }
+
+        function up(){
+          rotate.removeEventListener('pointermove',move);
+          rotate.removeEventListener('pointerup',up);
+          save();
+        }
+
+        rotate.addEventListener('pointermove',move);
+        rotate.addEventListener('pointerup',up);
+      });
+
+      n.appendChild(rotate);
+
+      if(it.t==='text'){
+        const smaller=el('button',{class:'ctl font-down',type:'button',text:'A−','aria-label':'Decrease font size',onclick:e=>{e.stopPropagation();it.fontSize=Math.max(10,(it.fontSize||17)-2);styleIt(n,it);save();}});
+        const larger=el('button',{class:'ctl font-up',type:'button',text:'A+','aria-label':'Increase font size',onclick:e=>{e.stopPropagation();it.fontSize=Math.min(42,(it.fontSize||17)+2);styleIt(n,it);save();}});
+        n.append(smaller,larger);
+      }
+    }
+
+    function drag(n,it){
+      n.addEventListener('pointerdown',e=>{
+        if(e.target.closest('.ctl'))return;
+
+        e.preventDefault();
+        n.setPointerCapture(e.pointerId);
+        sel=it;
+        sync();
+
+        const bounds=ed.getBoundingClientRect();
+        const ox=e.clientX-it.x/100*bounds.width;
+        const oy=e.clientY-it.y/100*bounds.height;
+
+        function move(ev){
+          it.x=Math.max(-10,Math.min(95,
+            (ev.clientX-ox)/bounds.width*100
+          ));
+          it.y=Math.max(-5,Math.min(95,
+            (ev.clientY-oy)/bounds.height*100
+          ));
+
+          n.style.left=it.x+'%';
+          n.style.top=it.y+'%';
+        }
+
+        function up(){
+          n.removeEventListener('pointermove',move);
+          n.removeEventListener('pointerup',up);
+          save();
+        }
+
+        n.addEventListener('pointermove',move);
+        n.addEventListener('pointerup',up);
+      });
+    }
+
+    function addItem(it){
+      it.x=25+Math.random()*25;
+      it.y=20+Math.random()*30;
+      it.r=Math.round(Math.random()*16-8);
+
+      pg().items.push(it);
+
+      if(!save()){
+        pg().items.pop();
+        return;
+      }
+
+      renderPage();
+      sel=it;
+      sync();
+    }
+
+    function insertPhoto(src){
+      const it={
+        t:'photo',
+        src:src,
+        w:57,
+        x:10+Math.random()*10,
+        y:8+Math.random()*12,
+        r:0,
+        frameStyle:'polaroid'
+      };
+
+      pg().items.push(it);
+
+      if(!save()){
+        pg().items.pop();
+        return;
+      }
+
+      renderPage();
+      sel=it;
+      sync();
+    }
+
+    function cycleFrame(it,n){
+      const frames=['polaroid','classic','film','none'];
+      const index=frames.indexOf(it.frameStyle||'polaroid');
+      it.frameStyle=frames[(index+1)%frames.length];
+
+      n.className='it photo frame-'+it.frameStyle+
+        (sel===it?' sel':'');
+
+      save();
+    }
+
+    function addTape(color,pattern){
+      addItem({
+        t:'tape',
+        color:color,
+        pattern:pattern,
+        w:34
+      });
+    }
+
+    /* JOURNEY PHOTO PICKER */
+
+    function pickJourneyPhoto(){
+      if(!ensureJourney())return;
+
+      const arr=photoRecords();
+      const wrap=el('div',{class:'picker'});
+
+      wrap.appendChild(el('button',{
+        class:'close',
+        type:'button',
+        text:'Close',
+        onclick:()=>wrap.remove()
+      }));
+
+      wrap.appendChild(el('h2',{
+        text:'Photos from this journey'
+      }));
+
+      const j=journey();
+      const places=destinations(j);
+
+      wrap.appendChild(el('p',{
+        class:'note',
+        text:'Choose a photo from '+(j.name||j.title||'your journey')+
+          (places.length?' — '+places.join(', '):'')+'.'
+      }));
+
+      const grid=el('div',{class:'grid'});
+
+      arr.forEach(p=>{
+        const src=p.src||p.image||p.dataUrl;
+        if(!src)return;
+
+        grid.appendChild(el('button',{
+          type:'button',
+          onclick:()=>{
+            insertPhoto(src);
+            wrap.remove();
+          }
+        },el('img',{
+          src:src,
+          alt:'Journey photo'
+        })));
+      });
+
+      if(!grid.children.length){
+        wrap.appendChild(el('p',{
+          class:'note',
+          text:'No journey photos yet. Capture photos from the Camera page first.'
+        }));
+      }
+
+      wrap.appendChild(grid);
+      V.appendChild(wrap);
+    }
+
+    /* DECORATION AND STAMPS */
+
+    function showTray(m){
+      tray.innerHTML='';
+
+      if(mode===m){
+        mode='';
+        tray.classList.remove('show');
+        return;
+      }
+
+      mode=m;
+      tray.classList.add('show');
+
+      if(m==='caption'){
+        tray.appendChild(el('button',{
+          class:'option',
+          type:'button',
+          text:'+ Text box',
+          onclick:()=>{
+            addItem({t:'text',txt:'Type here...',w:65,fontSize:17});
+            const editable=Array.from(layer.querySelectorAll('.inline-text')).find(x=>x.parentElement._it===sel);
+            if(editable){editable.focus();document.getSelection()?.selectAllChildren(editable);}
+          }
+        }));
+
+        return;
+      }
+
+      if(m==='tape'){
+        [
+          ['#F5A9BA','plain','Rose'],
+          ['#D6B6F4','dots','Lilac dots'],
+          ['#A6CDB4','stripes','Sage stripes'],
+          ['#E8C18A','dots','Sand dots'],
+          ['#AAC7E8','stripes','Blue stripes']
+        ].forEach(t=>{
+          tray.appendChild(el('button',{
+            class:'option',
+            type:'button',
+            text:t[2],
+            style:'background:'+t[0],
+            onclick:()=>addTape(t[0],t[1])
+          }));
+        });
+        return;
+      }
+
+      if(!ensureJourney())return;
+
+      const unlocked=new Set(
+        stampRecords().map(s=>s.placeId||s.id)
+      );
+
+      const library=typeof STAMP_LIB!=='undefined'
+        ?STAMP_LIB
+        :[];
+
+      const available=library.filter(s=>unlocked.has(s.id));
+
+      if(!available.length){
+        tray.appendChild(el('span',{
+          class:'note',
+          text:'No stamps collected for this journey yet.'
+        }));
+        return;
+      }
+
+      available.forEach(s=>{
+        const im=el('img',{
+          src:stampPath(s.id),
+          alt:s.name
+        });
+
+        im.onerror=()=>{
+          im.replaceWith(el('span',{text:s.name}));
+        };
+
+        tray.appendChild(el('button',{
+          class:'st',
+          type:'button',
+          'aria-label':s.name+' stamp',
+          onclick:()=>{
+            addItem({
+              t:'stamp',
+              id:s.id,
+              name:s.name,
+              img:stampPath(s.id),
+              w:30
+            });
+          }
+        },im));
+      });
+    }
+
+    /* CULTURAL CAPTION SUGGESTIONS */
+
+    const culturalCaptions=[
+      'Every craft carries the knowledge of generations. In {p}, I discovered how cultural traditions live on through local makers.',
+      'A moment to appreciate the heritage of {p}: its stories, skilled artisans and the communities who keep these traditions alive.',
+      'Beyond the beautiful sights of {p}, there are stories of identity, history and cultural pride worth remembering.',
+      'From traditional flavours to treasured customs, {p} reminds me that food is also a way of preserving heritage.',
+      'Learning about the people and traditions of {p} made this journey more meaningful than simply visiting a place.'
+    ];
+
+    function suggestPhotoCaption(photo){
+      const j=journey();
+      const places=destinations(j);
+      const place=places.join(', ')||cur.place||'Sarawak';
+      const fallback='Ngajat is a traditional dance of the Iban community in Sarawak, performed during celebrations such as Gawai Dayak. Its graceful movements reflect cultural identity and heritage.';
+      const ctx={
+        title:cur.title, place, destinations:places,
+        journeyId:cur.journeyId,
+        photo:photo.src,
+        focus:'Write ONLY one or two short, informative sentences about Ngajat, the traditional Iban dance of Sarawak. Mention its cultural significance and connection to celebrations such as Gawai Dayak. Avoid invented facts.'
+      };
+      // Uses a connected AI caption provider if available; otherwise a local suggestion.
+      const job=typeof window.terookaCaption==='function'
+        ?Promise.resolve(window.terookaCaption(ctx))
+        :Promise.resolve(fallback);
+      job.then(result=>{
+        const caption=String(result||fallback).trim().slice(0,400);
+        const text={
+          t:'text',txt:caption,
+          x:Math.max(2,Math.min(48,photo.x||10)),
+          y:Math.min(86,(photo.y||10)+Math.max(15,(photo.w||57)*.8)),
+          w:Math.min(80,Math.max(50,photo.w||57)),
+          r:0,fontSize:15
+        };
+        pg().items.push(text);
+        if(!save()){pg().items.pop();return;}
+        renderPage();
+        sel=text;
+        sync();
+        const editable=Array.from(layer.querySelectorAll('.inline-text')).find(x=>x.parentElement._it===text);
+        if(editable)editable.focus();
+      }).catch(()=>showToast('Could not suggest a caption.'));
+    }
+
+    function aiCaption(){
+      const j=journey();
+      const places=destinations(j);
+
+      const place=places.length
+        ?places.join(', ')
+        :cur.place||'Sarawak';
+
+      const ctx={
+        title:cur.title,
+        place:place,
+        destinations:places,
+        journeyId:cur.journeyId
+      };
+
+      const fallback=culturalCaptions[
+        Math.floor(Math.random()*culturalCaptions.length)
+        ].replaceAll('{p}',place);
+
+      const job=typeof window.terookaCaption==='function'
+        ?Promise.resolve(window.terookaCaption(ctx))
+        :Promise.resolve(fallback);
+
+      job.then(t=>{
+        if(t&&String(t).trim()){
+          addItem({
+            t:'text',
+            txt:String(t).slice(0,400),
+            w:70,
+            fontSize:17
+          });
+        }
+      }).catch(()=>{
+        showToast('Could not suggest a caption. Please try again.');
+      });
+    }
+
+    /* KEYBOARD */
+
+    document.addEventListener('keydown',e=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+
+      if(e.key==='ArrowRight')step(1);
+      if(e.key==='ArrowLeft')step(-1);
+
+      if(e.key==='Escape'){
+        const picker=V.querySelector('.picker');
+        if(picker){
+          picker.remove();
+        }else if(editing){
+          leaveEdit();
+        }else{
+          closeBook();
+        }
+      }
+    });
+
+    /* INITIALISE */
+
+    const qid=new URLSearchParams(location.search).get('id');
+
+    cur=books.find(b=>String(b.id)===String(qid));
+
+    if(!cur){
+      location.replace('journal.html');
+      return;
+    }
+
+    if(!Array.isArray(cur.pages)||!cur.pages.length){
+      cur.pages=[{caption:'',items:[]}];
+    }
+
+    cur.pages.forEach(p=>{
+      if(!Array.isArray(p.items))p.items=[];
+
+      if(p.caption&&p.caption.trim()){
+        p.items.push({
+          t:'text',
+          txt:p.caption,
+          x:10,
+          y:72,
+          w:78,
+          r:0,
+          fontSize:17
+        });
+        p.caption='';
+      }
+    });
+
+    save();
+    build();
+
+    if(!journey()){
+      showToast('Link this journal to a journey to use photos and stamps.');
+    }
+
+    window.addEventListener('resize',()=>{
+      if(editing){
+        renderPage();
+      }else if(!busy){
+        layout();
+        renderBook();
+      }
+    });
+
+  })();
+</script>
+</body>
+</html>

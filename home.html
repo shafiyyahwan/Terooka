@@ -184,8 +184,9 @@
     .count { font-size: 11px; font-weight: 700; color: var(--muted); }
 
     /* ===== PLACE CARDS ===== */
-    .rail { display: flex; gap: 14px; overflow-x: auto; scrollbar-width: none; padding: 4px 22px 14px; scroll-snap-type: x mandatory; }
+    .rail { display: flex; gap: 14px; overflow-x: auto; scrollbar-width: none; padding: 4px 22px 14px; scroll-padding-left: 22px; scroll-snap-type: x proximity; }
     .rail::-webkit-scrollbar { display: none; }
+    .rail::after { content:""; flex:0 0 8px; }
     .place {
       flex: 0 0 214px; scroll-snap-align: start; border-radius: 22px; overflow: hidden;
       background: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.9);
@@ -245,7 +246,7 @@
       background: linear-gradient(135deg, #5724A3, #8834B9 55%, #D842A0);
       box-shadow: 0 14px 30px rgba(112,42,159,.24);
     }
-    .know svg.bg { position: absolute; width: 150px; right: -34px; bottom: -40px; opacity: .22; transform: rotate(-16deg); }
+    .know svg.bg { position: absolute; width: 190px; height: 190px; right: -45px; bottom: -48px; opacity: .38; transform: rotate(-18deg); pointer-events:none; }
     .know .k-eyebrow { font-size: 9.5px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; opacity: .85; margin: 0 0 8px; position: relative; }
     .know p.k-text { font: 500 17px/1.35 var(--serif); letter-spacing: -.01em; margin: 0; position: relative; max-width: 270px; }
 
@@ -392,6 +393,37 @@
     .nearby-card button{border:0;background:none;color:var(--purple);font:800 11px var(--sans);padding:0;cursor:pointer}
     .destination-image{height:116px;width:100%;object-fit:cover;display:block}
     .nav button{font-size:9px}
+
+    /* ===== MY JOURNEYS SHORTCUT ===== */
+    .journey-shortcut{display:flex;align-items:center;gap:13px;padding:16px;margin-top:16px;text-decoration:none;color:var(--ink);transition:transform .2s,background .2s}
+    .journey-shortcut:hover{transform:translateY(-2px);background:rgba(255,255,255,.7)}
+    .journey-shortcut:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+    .journey-shortcut-icon{width:48px;height:48px;flex-shrink:0;border-radius:15px;display:grid;place-items:center;background:var(--grad);color:white}
+    .journey-shortcut-icon svg{width:25px;height:25px}
+    .journey-shortcut-text{flex:1;min-width:0}
+    .journey-shortcut-text h3{font:600 17px var(--serif);color:#32145B;margin:0 0 4px}
+    .journey-shortcut-text p{font-size:10px;line-height:1.5;color:var(--muted);margin:0 0 6px}
+    .journey-shortcut-text span{font-size:11px;font-weight:800;color:var(--purple)}
+    .journey-chevron{width:18px;height:18px;color:var(--purple);flex-shrink:0}
+
+    /* RECENT JOURNAL BOOKS — HORIZONTAL BOOKSHELF */
+    .journal-rail { display:flex; gap:16px; overflow-x:auto; overflow-y:hidden; padding:8px 22px 18px; margin:0 -22px; scroll-snap-type:x mandatory; scrollbar-width:none; }
+    .journal-rail::-webkit-scrollbar { display:none; }
+    .journal-book { position:relative; flex:0 0 146px; height:198px; padding:20px 14px 14px 22px; border-radius:5px 13px 13px 5px; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; color:#fff; text-decoration:none; background:linear-gradient(145deg,var(--book-a),var(--book-b)); box-shadow:4px 8px 14px rgba(50,32,75,.18),inset -5px 0 7px rgba(255,255,255,.14); scroll-snap-align:start; transition:transform .2s; }
+    .journal-book:hover { transform:translateY(-4px); }
+    .journal-book-spine { position:absolute; left:6px; top:0; bottom:0; width:6px; background:rgba(0,0,0,.17); border-right:1px solid rgba(255,255,255,.22); }
+    .journal-book-ornament { position:absolute; top:23px; left:0; right:0; text-align:center; font-size:54px; color:rgba(255,255,255,.25); }
+    .journal-book-kicker { font-size:7px; font-weight:800; letter-spacing:.13em; opacity:.83; margin-bottom:8px; }
+    .journal-book-title { font:600 20px/1.12 var(--serif); overflow-wrap:anywhere; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3; overflow:hidden; }
+    .journal-book-place { font-size:10px; margin-top:8px; opacity:.92; }
+    .journal-book-date { font-size:9px; margin-top:5px; opacity:.75; }
+    .journal-book:focus-visible { outline:3px solid var(--pink); outline-offset:3px; }
+
+    .journal-book{justify-content:flex-start;padding:18px 12px 12px 24px;border-radius:4px 14px 14px 4px}
+    .journal-book-spine{left:0;width:14px;background:#0004;border-right:2px dashed #ffffff55}
+    .journal-bookmark{position:absolute;top:0;right:20px;bottom:0;width:9px;background:#FFD166;box-shadow:-1px 0 3px #0003}
+    .journal-plate{position:relative;z-index:1;margin:20px 15px 0 0;padding:9px 8px;background:#fffdf8ef;color:#32145B;border-radius:4px;transform:rotate(-2deg);box-shadow:0 2px 5px #0003;font:600 14px/1.2 var(--serif);overflow-wrap:anywhere}
+    .journal-meta{position:relative;z-index:1;margin-top:auto;font-size:10px;font-weight:700;line-height:1.4;text-shadow:0 1px 4px #0005}
   </style>
 </head>
 
@@ -437,36 +469,19 @@
               <p class="eyebrow" id="greet">Selamat datang</p>
               <h1 id="hello">Hi, <em>traveller.</em></h1>
             </div>
-            <button class="avatar" id="avatar" type="button" aria-label="Open profile">T</button>
           </div>
-
-          <label class="search rise d1">
-            <span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search places and experiences</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input id="q" type="search" placeholder="Search batik, wayang kulit, Melaka…" autocomplete="off">
-          </label>
 
           <!-- STORY HERO: replace img/story-bg.jpg with your own photograph -->
           <div id="start"></div>
-          <div class="mini-stats rise d3" aria-label="Your exploration stats">
-            <div class="mini-stat"><span class="num" id="stat-stamps">0</span><span class="stat-label">Stamps</span></div>
-            <div class="mini-stat"><span class="num" id="stat-books">0</span><span class="stat-label">Travelogues</span></div>
-            <div class="mini-stat"><span class="num" id="stat-places">0</span><span class="stat-label">Places visited</span></div>
-          </div>
         </section>
-
         <!-- DISCOVER -->
         <section id="sec-discover" class="section">
           <div class="pad">
             <div class="sec-head"><h2 class="sec">Explore Malaysia</h2><span class="count" id="place-count"></span></div>
             <p class="sec-sub">Find a destination that sparks your curiosity.</p>
           </div>
-          <div class="row-chips" id="cats" role="group" aria-label="Filter by category"></div>
           <div class="rail" id="places" tabindex="-1"></div>
         </section>
-
-        <section class="pad"><div class="nearby-card glass"><div class="nearby-icon">⌖</div><div><h3>Explore nearby</h3><p>Discover cultural gems around you, even without a journey.</p><button id="nearby" type="button">Explore places →</button></div></div></section>
-
         <!-- DID YOU KNOW -->
         <section class="pad">
           <div class="know">
@@ -479,20 +494,19 @@
         <!-- REMEMBER -->
         <section id="sec-remember" class="section pad">
           <div class="sec-head">
-            <h2 class="sec">Your Journal</h2>
-            <button class="link" id="add-top" type="button">+ Add memory</button>
+            <h2 class="sec">Recent Journals</h2>
+            <a class="link" href="journal.html" style="text-decoration:none">View all →</a>
           </div>
-          <p class="sec-sub">Your personal travelogue.</p>
+          <p class="sec-sub">Flip through your travel memories.</p>
           <div id="memories"></div>
         </section>
 
       </main>
-
       <!-- BOTTOM NAV -->
       <nav class="nav" aria-label="Main navigation">
         <button type="button" data-go="sec-home" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m3 11 9-8 9 8M5 10v10h14V10"/></svg>Home</button>
         <button type="button" data-go="sec-discover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 4-4 2 2-4z"/></svg>Discover</button>
-        <button type="button" data-go="journey"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 19c4-2 2-7 7-8s4-5 9-6M16 5h4v4"/><circle cx="4" cy="19" r="2"/></svg>Journey</button>
+        <button type="button" data-go="camera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="6" width="18" height="15" rx="3"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8 6l1.5-3h5L16 6"/></svg>Camera</button>
         <button type="button" data-go="sec-remember"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></svg>Journal</button>
         <button type="button" data-go="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 16-5 16 0"/></svg>Profile</button>
       </nav>
@@ -504,6 +518,9 @@
   </div>
 </div>
 
+
+
+<script src="journal-store.js"></script>
 <script>
   (function () {
     'use strict';
@@ -529,7 +546,7 @@
     var profile = load(PKEY, { interests: [], saved: [], hideStart: false });
     var memories = load(TKEY, []);
     var cat = 'all';
-    var query = '';
+    var query = ''; // Search is available on Discover, not Home.
 
     /* ================= DATA (sample content) ================= */
     var CATS = [
@@ -667,44 +684,27 @@
       var hello = $('#hello');
       hello.textContent = 'Hi, ';
       hello.appendChild(el('em', { text: first + '.' }));
-      $('#avatar').textContent = first.charAt(0).toUpperCase();
+
     }
 
     /* ================= GETTING STARTED ================= */
     function renderStart() {
       var box = $('#start');
-      var active = load('terooka_active_journey_' + uid, null);
+      var journeys = load('terooka_journeys_' + uid, []);
+      var active = Array.isArray(journeys) ? journeys.find(function(j) { return j.status === 'active'; }) : null;
+
       box.innerHTML = '';
       var hero = el('div', { class: 'story-hero rise d2' });
       hero.appendChild(el('p', { class: 'hero-kicker', text: active ? 'YOUR ACTIVE JOURNEY' : 'YOUR ADVENTURE BEGINS HERE' }));
-      hero.appendChild(el('h2', { text: active ? 'Discover ' + active.destination : 'Every place has a story.' }));
-      hero.appendChild(el('p', { class: 'hero-copy', text: active ? 'Your cultural journey is ready. Explore places, complete missions and collect memories.' : 'Explore the culture, traditions and hidden stories that make Malaysia special.' }));
-      hero.appendChild(el('button', { class: 'hero-action', type: 'button', text: active ? 'View Journey' : 'Start a Journey', onclick: openJourney }));
+      hero.appendChild(el('h2', { text: active ? (active.name || active.destination || 'Your Adventure') : 'Every place has a story.' }));
+      hero.appendChild(el('p', { class: 'hero-copy', text: active ? 'Your cultural journey is ready. Explore places, collect digital stamps and save your memories.' : 'Explore the culture, traditions and hidden stories that make Malaysia special.' }));
+      hero.appendChild(el('button', { class: 'hero-action', type: 'button', text: active ? 'View Journey' : 'Start Journey', onclick: openJourney }));
       box.appendChild(hero);
-      $('#stat-books').textContent = String(memories.length ? 1 : 0);
-      $('#stat-places').textContent = '0';
-      $('#stat-stamps').textContent = '0';
+
     }
 
     function openJourney() {
-      var active = load('terooka_active_journey_' + uid, null);
-      if (active) {
-        openSheet([el('h2', { text: 'Your ' + active.destination + ' journey' }),
-          el('p', { class: 'sub', text: 'Your journey is active! Missions, stamps and location-based activities will appear here once the Journey page is connected.' }),
-          el('button', { class: 'btn ghost full', type: 'button', text: 'End demo journey', onclick: function () {
-              localStorage.removeItem('terooka_active_journey_' + uid); closeSheet(); renderStart();
-            } })]);
-        return;
-      }
-      var select = el('select', { id: 'journey-destination', style: 'width:100%;height:48px;border-radius:14px;border:1px solid #e2d3ee;background:#fff;padding:0 12px;font:600 13px var(--sans);color:var(--ink);margin-bottom:14px' });
-      PLACES.forEach(function (p) { select.appendChild(el('option', { value: p.name, text: p.name + ', ' + p.state })); });
-      openSheet([el('h2', { text: 'Where to next?' }),
-        el('p', { class: 'sub', text: 'Choose a destination to begin your cultural journey.' }),
-        select,
-        el('button', { class: 'btn full', type: 'button', text: 'Start Journey', onclick: function () {
-            store('terooka_active_journey_' + uid, { destination: select.value, startedAt: new Date().toISOString() });
-            closeSheet(); renderStart(); toast('Journey started in ' + select.value + '!');
-          } })]);
+      window.location.href = 'journey.html';
     }
 
     /* ================= DISCOVER ================= */
@@ -785,32 +785,27 @@
     function renderMemories() {
       var wrap = $('#memories');
       wrap.innerHTML = '';
-      $('#add-top').style.display = memories.length ? '' : 'none';
-
-      if (!memories.length) {
+      var journalBooks = (typeof books !== 'undefined' && Array.isArray(books)) ? books : [];
+      if (!journalBooks.length) {
         wrap.appendChild(el('div', { class: 'empty glass' },
-          el('div', { html: '<svg viewBox="0 0 200 200" aria-hidden="true"><use href="#hibiscus"/></svg>' }),
-          el('h3', { text: 'Your travelogue is empty' }),
-          el('p', { text: 'Jot down a place you visited, a dish you loved or a story someone shared with you.' }),
-          el('button', { class: 'btn', type: 'button', text: 'Write your first memory', onclick: openMemory })));
+          el('h3', { text: 'Your bookshelf is waiting' }),
+          el('p', { text: 'Create a journey and start your first memory book.' }),
+          el('a', { class: 'btn', href: 'journal.html', text: 'Open My Journal' })));
         return;
       }
-
-      var list = el('div', { class: 'mem-list' });
-      memories.forEach(function (m) {
-        var meta = [m.place, fmtDate(m.date)].filter(Boolean).join(' \u00B7 ');
-        list.appendChild(el('article', { class: 'mem glass' },
-          el('button', { class: 'del', type: 'button', html: ICON_TRASH, 'aria-label': 'Delete memory ' + m.title, onclick: function () {
-              if (!confirm('Delete this memory?')) return;
-              memories = memories.filter(function (x) { return x.id !== m.id; });
-              store(TKEY, memories); renderMemories(); renderStart(); renderProfileStats();
-            } }),
-          el('h3', { text: m.title }),
-          meta ? el('p', { class: 'meta', text: meta }) : null,
-          m.note ? el('p', { text: m.note }) : null));
+      var rail = el('div', { class: 'journal-rail', 'aria-label': 'Recent journal books' });
+      var palette = [['#5724A3','#D842A0'],['#2D657A','#69A5AA'],['#A34765','#E58A91'],['#6E508F','#B69BD7']];
+      journalBooks.slice(0, 8).forEach(function(b,i) {
+        var c=palette[i%palette.length];
+        var book=el('a',{class:'journal-book',href:'journal-edit.html?id='+encodeURIComponent(b.id),'aria-label':'Open '+(b.title||'Journal')});
+        book.style.setProperty('--book-a',c[0]);book.style.setProperty('--book-b',c[1]);
+        book.appendChild(el('span',{class:'journal-book-spine','aria-hidden':'true'}));
+        book.appendChild(el('span',{class:'journal-bookmark','aria-hidden':'true'}));
+        book.appendChild(el('span',{class:'journal-plate',text:b.title||'Untitled Journal'}));
+        book.appendChild(el('span',{class:'journal-meta',text:(b.place||'')+' · '+((b.pages||[]).length)+' pages'}));
+        rail.appendChild(book);
       });
-      wrap.appendChild(list);
-      wrap.appendChild(el('div', { style: 'margin-top:14px' }, el('button', { class: 'btn ghost full', type: 'button', text: '+ Add another memory', onclick: openMemory })));
+      wrap.appendChild(rail);
     }
 
     /* ================= SHEETS ================= */
@@ -900,31 +895,20 @@
       scroller.scrollTo({ top: id === 'sec-home' ? 0 : Math.max(0, s.offsetTop - 56), behavior: 'smooth' });
     }
 
-    $$('.nav button').forEach(function (b) { b.addEventListener('click', function () { var target = b.getAttribute('data-go'); if (target === 'sec-discover') window.location.href = 'discover.html'; else if (target === 'journey') openJourney(); else if (target === 'profile') openProfile(); else goTo(target); }); });
+    $$('.nav button').forEach(function (b) { b.addEventListener('click', function () { var target = b.getAttribute('data-go'); if (target === 'sec-discover') window.location.href = 'discover.html'; else if (target === 'camera') window.location.href = 'camera.html'; else if (target === 'sec-remember') window.location.href = 'journal.html'; else if (target === 'profile') openProfile(); else goTo(target); }); });
 
-    var ticking = false;
+    // Home is the only active tab on home.html, even when scrolling.
     function syncNav() {
-      ticking = false;
-      var y = scroller.scrollTop + 140;
-      var active = SECTIONS[0];
-      SECTIONS.forEach(function (id) { if (document.getElementById(id).offsetTop <= y) active = id; });
-      if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 8) active = SECTIONS[SECTIONS.length - 1];
-      $$('.nav button').forEach(function (b) { b.setAttribute('aria-current', String(b.getAttribute('data-go') === active)); });
+      $$('.nav button').forEach(function (b) {
+        b.setAttribute('aria-current', String(b.getAttribute('data-go') === 'sec-home'));
+      });
     }
-    scroller.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(syncNav); } });
 
     /* ================= WIRE UP ================= */
-    $('#avatar').addEventListener('click', openProfile);
-    $('#nearby').addEventListener('click', function () { window.location.href = 'discover.html'; });
-    $('#add-top').addEventListener('click', openMemory);
-    $('#q').addEventListener('input', function (e) {
-      query = e.target.value;
-      renderPlaces();
-    });
+
 
     renderGreeting();
     renderStart();
-    renderCats();
     renderPlaces();
 
     renderMemories();
@@ -943,4 +927,3 @@
 </script>
 </body>
 </html>
-
