@@ -1,0 +1,1436 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#EDE4F5">
+  <title>Explore Place — Terooka</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --purple:#5724A3;
+      --pink:#D842A0;
+      --ink:#32204B;
+      --muted:#796B85;
+      --serif:'Fraunces',Georgia,serif;
+      --sans:'Plus Jakarta Sans',sans-serif;
+      --grad:linear-gradient(105deg,#5724A3,#8834B9 52%,#D842A0);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%}
+    body{
+      background:#EDE4F5;color:var(--ink);
+      font-family:var(--sans);min-height:100dvh;
+      display:grid;place-items:center;overflow:hidden
+    }
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    .stage{width:414px;height:868px;transform-origin:center}
+    .phone{
+      width:414px;height:868px;padding:12px;background:#111015;
+      border-radius:62px;position:relative;
+      box-shadow:0 24px 70px #36195838,0 0 0 2px #343039
+    }
+    .phone:before,.phone:after{
+      content:"";position:absolute;left:-5px;width:4px;
+      background:#302b35;border-radius:4px
+    }
+    .phone:before{top:155px;height:52px}
+    .phone:after{top:228px;height:69px}
+    .screen{
+      width:390px;height:844px;border-radius:50px;
+      position:relative;overflow:hidden;
+      background:linear-gradient(160deg,#F0E4FB 0%,#F9EAF5 35%,#FFF9F7 70%,#FFECE5 100%)
+    }
+    .glow{
+      position:absolute;border-radius:50%;
+      filter:blur(55px);pointer-events:none
+    }
+    .glow-1{
+      width:240px;height:240px;top:-70px;right:-80px;
+      background:#d842a033
+    }
+    .glow-2{
+      width:260px;height:260px;top:420px;left:-120px;
+      background:#8834b924
+    }
+    .island{
+      position:absolute;z-index:30;top:11px;left:50%;
+      transform:translateX(-50%);height:34px;width:118px;
+      background:#08070a;border-radius:30px
+    }
+    .status{
+      position:absolute;top:18px;left:34px;right:30px;z-index:29;
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:14px;font-weight:800
+    }
+    .homebar{
+      position:absolute;bottom:8px;left:50%;
+      transform:translateX(-50%);width:126px;height:5px;
+      background:#2F2837;border-radius:20px;z-index:30
+    }
+    .scroll{
+      position:absolute;inset:0;z-index:2;overflow-y:auto;
+      overflow-x:hidden;scrollbar-width:none;padding:65px 0 118px
+    }
+    .scroll::-webkit-scrollbar{display:none}
+    .pad{padding-left:22px;padding-right:22px}
+    .back-row{
+      display:flex;justify-content:space-between;
+      align-items:center;margin-bottom:17px
+    }
+    .back,.icon-btn{
+      border:1px solid #fff;background:#ffffffa6;
+      border-radius:14px;color:var(--purple);height:42px;
+      display:flex;align-items:center;justify-content:center;
+      gap:7px;box-shadow:0 4px 14px #5724a30d
+    }
+    .back{padding:0 14px;font-size:12px;font-weight:800}
+    .icon-btn{width:42px}
+    .icon-btn.saved{color:var(--pink)}
+    svg{width:20px;height:20px;flex-shrink:0}
+    .eyebrow{
+      font-size:10px;font-weight:800;letter-spacing:.17em;
+      text-transform:uppercase;color:var(--pink);margin:0 0 7px
+    }
+    h1{
+      font:600 31px/1.12 var(--serif);color:#32145B;
+      letter-spacing:-.025em;margin:0 0 10px
+    }
+    .meta{
+      display:flex;gap:7px;align-items:center;
+      flex-wrap:wrap;color:#705D84;font-size:11px;font-weight:700
+    }
+    .meta .pill{
+      background:#ffffffb8;border:1px solid #fff;
+      border-radius:20px;padding:6px 10px
+    }
+    .hero{
+      height:220px;border-radius:24px;margin-top:20px;
+      position:relative;overflow:hidden;
+      background:linear-gradient(135deg,#6B3A9E,#D842A0);
+      box-shadow:0 13px 25px #5724a32b
+    }
+    .hero img{
+      height:100%;width:100%;object-fit:cover;display:block
+    }
+    .hero-fallback{
+      position:absolute;inset:0;display:flex;align-items:flex-end;
+      padding:20px;background:linear-gradient(140deg,#5724A3,#A94DBA 58%,#D842A0);
+      color:white;font:italic 500 26px var(--serif)
+    }
+    .hero img:not([hidden])+.hero-fallback{display:none}
+    .photo-label{
+      position:absolute;top:13px;left:13px;border-radius:20px;
+      background:#ffffffdf;padding:7px 11px;color:var(--purple);
+      font-size:10px;font-weight:800
+    }
+    .card{
+      background:#ffffff8a;border:1px solid #ffffffe6;
+      border-radius:21px;padding:18px;
+      box-shadow:0 7px 20px #5724a30d;
+      margin-top:16px;backdrop-filter:blur(12px)
+    }
+    h2{
+      font:600 21px var(--serif);
+      margin:0 0 10px;color:#32145B
+    }
+    p{font-size:12px;line-height:1.75;color:#685677;margin:0}
+    .fact-note{margin-top:12px;font-size:10px;color:#907d9f}
+    .section-title{
+      display:flex;justify-content:space-between;
+      align-items:center;gap:10px;margin-bottom:10px
+    }
+    .section-title h2{margin:0}
+    .info-row{
+      display:flex;align-items:flex-start;gap:12px;
+      padding:11px 0;border-bottom:1px solid #e9dff0
+    }
+    .info-row:last-child{border-bottom:0;padding-bottom:0}
+    .info-icon{
+      width:37px;height:37px;flex-shrink:0;
+      display:grid;place-items:center;border-radius:12px;
+      background:#f1e4fa;color:var(--purple)
+    }
+    .info-icon svg{width:19px;height:19px}
+    .info-row strong{font-size:11px;display:block;margin:2px 0 4px}
+    .info-row span{font-size:11px;color:var(--muted);line-height:1.5}
+    .demo-tag{
+      display:inline-flex;padding:5px 9px;
+      background:#f5eafa;color:#7d5798;border-radius:20px;
+      font-size:9px;font-weight:800;margin-top:10px
+    }
+    .primary{
+      border:0;background:var(--grad);color:white;
+      border-radius:15px;padding:14px 17px;
+      font-size:12px;font-weight:800;width:100%;
+      margin-top:15px;box-shadow:0 9px 20px #5724a32b
+    }
+    .secondary{
+      border:1px solid #e4d3ed;background:#fff;
+      color:var(--purple);border-radius:14px;
+      padding:12px 14px;font-size:11px;font-weight:800
+    }
+    .workshop-box{
+      border:1px solid #e9d8f1;background:#fff;
+      border-radius:17px;padding:14px;margin-top:12px
+    }
+    .workshop-box h3{
+      font:600 17px var(--serif);margin:0 0 7px;color:#32145B
+    }
+    .workshop-box p{font-size:11px}
+    .workshop-meta{
+      display:flex;gap:8px;flex-wrap:wrap;
+      margin-top:12px
+    }
+    .workshop-meta span{
+      background:#f6eefb;border-radius:9px;
+      padding:7px 9px;font-size:10px;font-weight:700;color:#705288
+    }
+    .workshop-price{
+      display:flex;justify-content:space-between;
+      align-items:center;margin-top:13px
+    }
+    .workshop-price span{font-size:10px;color:var(--muted)}
+    .workshop-price strong{font-size:17px;color:var(--purple)}
+    .stamp-card{
+      background:linear-gradient(130deg,#f6eafa,#fff3f7);
+      border:1px solid #e9d5f3;border-radius:17px;
+      padding:15px;display:flex;align-items:center;gap:13px
+    }
+    .stamp-art{
+      height:62px;width:62px;flex-shrink:0;
+      display:grid;place-items:center;border-radius:18px;
+      border:2px dashed #b894d7;background:#ffffff9e;
+      color:var(--purple)
+    }
+    .stamp-art svg{width:30px;height:30px}
+    .stamp-card strong{font-size:12px}
+    .stamp-card p{font-size:10px;margin-top:5px}
+    .stamp-card.collected{
+      background:linear-gradient(130deg,#e6f7ed,#f6fff9);
+      border-color:#bce4c9
+    }
+    .stamp-card.collected .stamp-art{
+      border-color:#6eaf82;color:#31824d
+    }
+    .rating{
+      display:flex;align-items:center;gap:8px;
+      font-size:12px;font-weight:700;color:#705D84
+    }
+    .review{
+      background:#ffffffbd;border:1px solid white;
+      padding:13px;border-radius:14px;margin-top:9px
+    }
+    .review-head{
+      display:flex;justify-content:space-between;
+      gap:10px;font-size:11px;margin-bottom:5px
+    }
+    .review-head b{color:#4B306D}
+    .review p{font-size:11px;white-space:pre-wrap;overflow-wrap:anywhere}
+    .stars{color:#E5A130;letter-spacing:2px}
+    .empty{
+      text-align:center;padding:20px 8px;color:#8a789a;
+      font-size:12px;line-height:1.7
+    }
+    .nearby{display:flex;flex-direction:column;gap:8px}
+    .nearby button{
+      width:100%;text-align:left;background:#ffffffba;
+      border:1px solid #fff;border-radius:14px;
+      padding:13px 14px;color:var(--ink);
+      display:flex;justify-content:space-between;align-items:center
+    }
+    .nearby button span{font-size:12px;font-weight:800}
+    .nearby button small{
+      display:block;font-size:10px;color:var(--muted);margin-top:4px
+    }
+    .nearby button svg{color:var(--purple)}
+    .nav{
+      position:absolute;z-index:20;left:16px;right:16px;bottom:22px;
+      height:66px;padding:6px;display:grid;
+      grid-template-columns:repeat(5,1fr);gap:2px;
+      background:#ffffff9e;border:1px solid #ffffffe6;
+      border-radius:24px;backdrop-filter:blur(24px);
+      box-shadow:0 14px 34px #5724a329
+    }
+    .nav a{
+      color:#9886AB;text-decoration:none;display:flex;
+      flex-direction:column;align-items:center;justify-content:center;
+      gap:3px;border-radius:18px;font-size:9px;font-weight:700
+    }
+    .nav a.active{
+      background:#d842a01a;color:var(--purple)
+    }
+    .nav svg{
+      width:21px;height:21px;stroke-width:1.9;
+      fill:none;stroke-linecap:round;stroke-linejoin:round
+    }
+    .overlay{
+      position:absolute;inset:0;z-index:40;
+      background:#28124270;display:none;align-items:flex-end
+    }
+    .overlay.open{display:flex}
+    .sheet{
+      width:100%;max-height:86%;overflow-y:auto;
+      background:linear-gradient(170deg,#FBF4FF,#FFF7F5);
+      border-radius:30px 30px 0 0;padding:16px 22px 36px
+    }
+    .sheet-head{
+      display:flex;align-items:center;justify-content:space-between
+    }
+    .sheet-head h2{margin:0}
+    .close{
+      width:34px;height:34px;border:0;
+      background:#EFE1F6;color:var(--purple);border-radius:10px
+    }
+    .field-label{
+      font-size:11px;font-weight:800;display:block;margin:18px 0 8px
+    }
+    .field{
+      width:100%;border:1px solid #E4D4ED;border-radius:13px;
+      background:white;color:var(--ink);padding:12px;
+      font:12px var(--sans)
+    }
+    textarea.field{height:108px;resize:vertical;line-height:1.6}
+    .stars-picker{display:flex;gap:6px}
+    .stars-picker button{
+      font-size:29px;color:#c8b9ce;border:0;background:none;padding:2px 5px
+    }
+    .stars-picker button.on{color:#e5a130}
+    .counter{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px;background:#fff;border-radius:13px;
+      border:1px solid #E4D4ED
+    }
+    .counter-controls{display:flex;align-items:center;gap:13px}
+    .counter-controls button{
+      width:30px;height:30px;border:0;border-radius:9px;
+      background:#f1e4fa;color:var(--purple);font-weight:800
+    }
+    .counter-controls strong{font-size:13px}
+    .total-row{
+      display:flex;justify-content:space-between;align-items:center;
+      padding-top:15px;margin-top:16px;border-top:1px solid #e5d8ed
+    }
+    .total-row strong{font-size:20px;color:var(--purple)}
+    .success-icon{
+      width:70px;height:70px;border-radius:50%;
+      display:grid;place-items:center;margin:18px auto;
+      background:#e6f7ed;color:#348b52
+    }
+    .success-icon svg{width:36px;height:36px}
+    .success-title{
+      font:600 25px var(--serif);
+      text-align:center;color:#32145B
+    }
+    .success-copy{
+      text-align:center;font-size:12px;
+      color:var(--muted);margin-top:9px
+    }
+    .confirmation{
+      background:#fff;border:1px solid #e9d8f1;
+      padding:15px;border-radius:15px;margin-top:18px
+    }
+    .confirmation div{
+      display:flex;justify-content:space-between;
+      gap:12px;margin:8px 0;font-size:11px
+    }
+    .confirmation span{color:var(--muted)}
+    .confirmation strong{text-align:right}
+    .scan-frame{
+      width:200px;height:200px;margin:20px auto;
+      border:3px solid #ae82d0;border-radius:22px;
+      display:grid;place-items:center;position:relative;
+      background:repeating-linear-gradient(
+        45deg,#ffffff9e,#ffffff9e 10px,#f8effc 10px,#f8effc 20px
+      )
+    }
+    .scan-frame svg{width:85px;height:85px;color:var(--purple)}
+    .scan-note{text-align:center;font-size:11px;color:var(--muted)}
+    .toast{
+      position:absolute;z-index:50;left:50%;top:58px;
+      transform:translateX(-50%);background:#32204B;
+      color:#fff;font-size:12px;font-weight:700;
+      padding:11px 16px;border-radius:14px;
+      display:none;max-width:86%;text-align:center
+    }
+    .toast.show{display:block}
+    @media(max-width:500px){
+      body{display:block;overflow:auto}
+      .stage,.phone{
+        width:100%;height:100dvh;transform:none!important
+      }
+      .phone{
+        padding:0;border-radius:0;box-shadow:none
+      }
+      .phone:before,.phone:after,.island,.status,.homebar{display:none}
+      .screen{width:100%;height:100%;min-height:650px;border-radius:0}
+      .scroll{padding-top:30px}
+      .nav{bottom:13px}
+      .toast{top:24px}
+    }
+  </style>
+</head>
+
+<body>
+<div class="stage" id="stage">
+  <div class="phone">
+    <div class="screen">
+
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
+      <div class="island"></div>
+
+      <div class="status">
+        <span>9:41</span>
+        <svg style="width:70px;height:15px" viewBox="0 0 70 15" fill="none">
+          <g fill="#32204B">
+            <rect x="0" y="10" width="3" height="5" rx="1"/>
+            <rect x="5" y="7" width="3" height="8" rx="1"/>
+            <rect x="10" y="4" width="3" height="11" rx="1"/>
+            <rect x="15" y="1" width="3" height="14" rx="1"/>
+          </g>
+          <g stroke="#32204B" stroke-width="1.8" stroke-linecap="round">
+            <path d="M27 5Q34-1 41 5"/>
+            <path d="M30 9Q34 5 38 9"/>
+          </g>
+          <circle cx="34" cy="12" r="1.5" fill="#32204B"/>
+          <rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/>
+          <rect x="50" y="4" width="15" height="7" rx="1.6" fill="#32204B"/>
+          <path d="M69 5v5" stroke="#32204B" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <main class="scroll" id="scroll">
+        <div class="pad">
+
+          <div class="back-row">
+            <button class="back" id="back" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+              Discover
+            </button>
+
+            <button class="icon-btn" id="save" type="button" aria-label="Save place">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linejoin="round">
+                <path d="M12 20s-7-4.4-9-9.2C1.8 7.6 3.6 4.5 6.8 4.5c2 0 3.3 1 5.2 3 1.9-2 3.2-3 5.2-3 3.2 0 5 3.1 3.8 6.3C19 15.6 12 20 12 20Z"/>
+              </svg>
+            </button>
+          </div>
+
+          <p class="eyebrow" id="category">CULTURAL DISCOVERY</p>
+          <h1 id="place-name">Explore a place</h1>
+
+          <div class="meta">
+            <span class="pill" id="city">Sarawak, Malaysia</span>
+            <span class="pill" id="category-pill">Heritage</span>
+          </div>
+
+          <div class="hero">
+            <img id="photo" alt="Place photograph" hidden>
+            <div class="hero-fallback" id="fallback">Discover the story behind this place.</div>
+            <span class="photo-label">Explore Malaysia</span>
+          </div>
+
+          <section class="card">
+            <h2>About this place</h2>
+            <p id="description"></p>
+            <p class="fact-note">
+              Cultural experience concept for the Terooka prototype.
+              Details and locations are illustrative.
+            </p>
+          </section>
+
+          <!-- VISITOR INFORMATION -->
+          <section class="card">
+            <h2>Plan Your Visit</h2>
+
+            <div class="info-row">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M12 7v5l3 2"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Opening Hours</strong>
+                <span id="opening-hours">Loading...</span>
+              </div>
+            </div>
+
+            <div class="info-row">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round">
+                  <path d="M12 21s7-5.5 7-12a7 7 0 0 0-14 0c0 6.5 7 12 7 12Z"/>
+                  <circle cx="12" cy="9" r="2.5"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Location</strong>
+                <span id="location-info">Sarawak, Malaysia</span>
+              </div>
+            </div>
+
+            <div class="info-row">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round">
+                  <rect x="3" y="5" width="18" height="16" rx="2"/>
+                  <path d="M7 3v4m10-4v4M3 10h18"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Visit Type</strong>
+                <span id="visit-type">Walk-in</span>
+              </div>
+            </div>
+
+            <span class="demo-tag">Illustrative visitor information</span>
+          </section>
+
+          <!-- WORKSHOP BOOKING -->
+          <section class="card" id="workshop-section" hidden>
+            <div class="section-title">
+              <h2>Cultural Experience</h2>
+            </div>
+
+            <p>Go beyond sightseeing and discover local traditions through a guided activity.</p>
+
+            <div class="workshop-box">
+              <h3 id="workshop-name"></h3>
+              <p id="workshop-description"></p>
+
+              <div class="workshop-meta">
+                <span id="workshop-duration"></span>
+                <span>Guided session</span>
+              </div>
+
+              <div class="workshop-price">
+                <span>Starting from · Demo price</span>
+                <strong id="workshop-price"></strong>
+              </div>
+
+              <button class="primary" id="book-workshop" type="button">
+                Book Experience
+              </button>
+            </div>
+          </section>
+
+          <!-- DIGITAL STAMP -->
+          <section class="card">
+            <div class="section-title">
+              <h2>Digital Stamp</h2>
+            </div>
+
+            <div class="stamp-card" id="stamp-card">
+              <div class="stamp-art">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 15h10v5H7z"/>
+                  <path d="M9 15v-3c-2-1-3-3-3-5a6 6 0 0 1 12 0c0 2-1 4-3 5v3"/>
+                  <path d="M5 21h14"/>
+                </svg>
+              </div>
+              <div>
+                <strong id="stamp-title">Collect Your Stamp</strong>
+                <p id="stamp-description">
+                  Visit this place and scan its official QR code to collect a digital stamp.
+                </p>
+              </div>
+            </div>
+
+            <button class="primary" id="collect-stamp" type="button">
+              Collect Digital Stamp
+            </button>
+
+            <p class="fact-note">
+              Hackathon demo: stamp verification is simulated.
+              Real venue verification requires a secure QR system.
+            </p>
+          </section>
+
+          <!-- REVIEWS -->
+          <section class="card">
+            <div class="section-title">
+              <h2>Visitor Reviews</h2>
+              <span class="rating" id="rating"></span>
+            </div>
+
+            <div id="reviews"></div>
+
+            <button class="primary" id="write-review" type="button">
+              Write a Review
+            </button>
+          </section>
+
+          <!-- NEARBY -->
+          <section class="card">
+            <h2>More to Explore</h2>
+            <div class="nearby" id="nearby"></div>
+          </section>
+
+        </div>
+      </main>
+
+      <!-- NAVBAR -->
+      <nav class="nav" aria-label="Main navigation">
+        <a href="home.html">
+          <svg viewBox="0 0 24 24" stroke="currentColor">
+            <path d="m3 11 9-8 9 8M5 10v10h14V10"/>
+          </svg>
+          Home
+        </a>
+
+        <a href="discover.html" class="active" aria-current="page">
+          <svg viewBox="0 0 24 24" stroke="currentColor">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="m15 9-2 4-4 2 2-4z"/>
+          </svg>
+          Discover
+        </a>
+
+        <a href="camera.html">
+          <svg viewBox="0 0 24 24" stroke="currentColor">
+            <rect x="3" y="6" width="18" height="15" rx="3"/>
+            <circle cx="12" cy="13.5" r="3.5"/>
+            <path d="M8 6l1.5-3h5L16 6"/>
+          </svg>
+          Camera
+        </a>
+
+        <a href="journal.html">
+          <svg viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/>
+            <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>
+          </svg>
+          Journal
+        </a>
+
+        <a href="profile.html">
+          <svg viewBox="0 0 24 24" stroke="currentColor">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-5 16-5 16 0"/>
+          </svg>
+          Profile
+        </a>
+      </nav>
+
+      <!-- BOTTOM SHEET -->
+      <div class="overlay" id="overlay">
+        <div class="sheet" id="sheet"></div>
+      </div>
+
+      <div class="toast" id="toast" role="status"></div>
+      <div class="homebar"></div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    'use strict';
+
+    const $ = selector => document.querySelector(selector);
+    const $$ = selector => Array.from(document.querySelectorAll(selector));
+
+    /*
+      Demo venue information.
+      Replace these with verified venue records before production.
+    */
+    const places = [
+      {
+        id:'riverstory',
+        name:'Riverfront Heritage Walk',
+        city:'Kuching',
+        cat:'Heritage',
+        desc:'Cultural walking experience inspired by Sarawak’s riverside history and storytelling.',
+        photo:'img/sarawak-riverfront.jpg',
+        hours:'Daily · 8:00 AM – 8:00 PM',
+        visitType:'Self-guided cultural walk',
+        workshop:null
+      },
+      {
+        id:'laksa',
+        name:'Rasa Sarawak Kitchen',
+        city:'Kuching',
+        cat:'Food',
+        desc:'Food stop inspired by Sarawak laksa and local culinary traditions.',
+        photo:'img/sarawak-food.jpg',
+        hours:'Tuesday – Sunday · 9:00 AM – 6:00 PM',
+        visitType:'Walk-in dining',
+        workshop:null
+      },
+      {
+        id:'beads',
+        name:'Borneo Bead Studio',
+        city:'Kuching',
+        cat:'Crafts',
+        desc:'Hands-on beadwork workshop inspired by the craft traditions of Sarawak.',
+        photo:'img/sarawak-beads.jpg',
+        hours:'Monday – Saturday · 9:00 AM – 5:00 PM',
+        visitType:'Workshop by reservation',
+        workshop:{
+          name:'Traditional Beadwork Experience',
+          description:'Discover beadwork techniques through a guided hands-on cultural activity.',
+          duration:'1.5 hours',
+          price:35,
+          sessions:[
+            {value:'10:00',label:'10:00 AM – 11:30 AM'},
+            {value:'14:00',label:'2:00 PM – 3:30 PM'}
+          ]
+        }
+      },
+      {
+        id:'culturehouse',
+        name:'Stories of Borneo Gallery',
+        city:'Kuching',
+        cat:'Museum',
+        desc:'Gallery concept featuring cultural stories, music and traditional objects.',
+        photo:'img/sarawak-gallery.jpg',
+        hours:'Tuesday – Sunday · 10:00 AM – 5:00 PM',
+        visitType:'Walk-in gallery visit',
+        workshop:null
+      },
+      {
+        id:'weaving',
+        name:'Anyaman Heritage Workshop',
+        city:'Kuching',
+        cat:'Crafts',
+        desc:'Weaving experience inspired by traditional Sarawak handicrafts.',
+        photo:'img/sarawak-weaving.jpg',
+        hours:'Monday – Saturday · 9:00 AM – 5:00 PM',
+        visitType:'Workshop by reservation',
+        workshop:{
+          name:'Traditional Weaving Experience',
+          description:'Explore basic weaving techniques with guidance from a workshop facilitator.',
+          duration:'2 hours',
+          price:45,
+          sessions:[
+            {value:'09:30',label:'9:30 AM – 11:30 AM'},
+            {value:'14:00',label:'2:00 PM – 4:00 PM'}
+          ]
+        }
+      },
+      {
+        id:'keklapis',
+        name:'Kek Lapis Corner',
+        city:'Kuching',
+        cat:'Food',
+        desc:'Stop highlighting Sarawak layered cake traditions.',
+        photo:'img/sarawak-kek-lapis.jpg',
+        hours:'Daily · 9:00 AM – 7:00 PM',
+        visitType:'Walk-in food discovery',
+        workshop:null
+      },
+      {
+        id:'baucraft',
+        name:'Bau Heritage Craft House',
+        city:'Bau',
+        cat:'Crafts',
+        desc:'Cultural craft experience in the Bau area.',
+        photo:'img/sarawak-bau.jpg',
+        hours:'Wednesday – Sunday · 10:00 AM – 5:00 PM',
+        visitType:'Workshop by reservation',
+        workshop:{
+          name:'Bau Craft Discovery Workshop',
+          description:'Try a guided introductory craft activity inspired by the region’s creative traditions.',
+          duration:'1 hour',
+          price:30,
+          sessions:[
+            {value:'10:00',label:'10:00 AM – 11:00 AM'},
+            {value:'15:00',label:'3:00 PM – 4:00 PM'}
+          ]
+        }
+      },
+      {
+        id:'serian',
+        name:'Serian Cultural Stories',
+        city:'Serian',
+        cat:'Heritage',
+        desc:'Storytelling stop inspired by the cultural diversity of the Serian area.',
+        photo:'img/sarawak-serian.jpg',
+        hours:'Saturday – Sunday · 10:00 AM – 4:00 PM',
+        visitType:'Scheduled storytelling experience',
+        workshop:null
+      }
+    ];
+
+    const params = new URLSearchParams(location.search);
+    const p = places.find(x => x.id === params.get('id')) || places[0];
+
+    let session = null;
+    try {
+      session = JSON.parse(localStorage.getItem('terooka_session'));
+    } catch(e) {}
+
+    const uid = session?.username || session?.email || 'guest';
+
+    const savedKey = 'terooka_saved_places_' + uid;
+    const reviewKey = 'terooka_reviews_' + uid;
+    const bookingKey = 'terooka_bookings_' + uid;
+    const stampKey = 'terooka_stamps_' + uid;
+
+    function load(key,fallback) {
+      try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+      } catch(e) {
+        return fallback;
+      }
+    }
+
+    function persist(key,value) {
+      try {
+        localStorage.setItem(key,JSON.stringify(value));
+        return true;
+      } catch(e) {
+        toast('Unable to save to browser storage');
+        return false;
+      }
+    }
+
+    let saved = load(savedKey,[]);
+    let allReviews = load(reviewKey,{});
+    let bookings = load(bookingKey,[]);
+    let stamps = load(stampKey,[]);
+    let stars = 0;
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g,c => ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#39;'
+      }[c]));
+    }
+
+    function toast(message) {
+      $('#toast').textContent = message;
+      $('#toast').classList.add('show');
+
+      setTimeout(() => {
+        $('#toast').classList.remove('show');
+      },2300);
+    }
+
+    function openSheet(html) {
+      $('#sheet').innerHTML = html;
+      $('#overlay').classList.add('open');
+      $('#scroll').style.overflowY = 'hidden';
+    }
+
+    function closeSheet() {
+      $('#overlay').classList.remove('open');
+      $('#scroll').style.overflowY = 'auto';
+    }
+
+    function sheetHeader(title) {
+      return `
+    <div class="sheet-head">
+      <h2>${escapeHTML(title)}</h2>
+      <button class="close" id="sheet-close" type="button"
+              aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <path d="M6 6l12 12M18 6 6 18"/>
+        </svg>
+      </button>
+    </div>
+  `;
+    }
+
+    function wireClose() {
+      const button = $('#sheet-close');
+      if(button) button.onclick = closeSheet;
+    }
+
+    /* INITIAL PAGE */
+
+    $('#place-name').textContent = p.name;
+    $('#category').textContent = p.cat.toUpperCase() + ' · CULTURAL DISCOVERY';
+    $('#city').textContent = p.city + ', Sarawak';
+    $('#category-pill').textContent = p.cat;
+    $('#description').textContent = p.desc;
+    $('#fallback').textContent = p.name;
+    $('#opening-hours').textContent = p.hours;
+    $('#location-info').textContent = p.city + ', Sarawak, Malaysia';
+    $('#visit-type').textContent = p.visitType;
+
+    document.title = p.name + ' — Terooka';
+
+    const photo = $('#photo');
+
+    photo.onload = () => {
+      photo.hidden = false;
+    };
+
+    photo.onerror = () => {
+      photo.hidden = true;
+    };
+
+    photo.src = p.photo;
+
+    $('#back').onclick = () => {
+      location.href = 'discover.html';
+    };
+
+    /* SAVE PLACE */
+
+    function showSaved() {
+      const active = saved.includes(p.id);
+
+      $('#save').classList.toggle('saved',active);
+      $('#save').setAttribute(
+        'aria-label',
+        active ? 'Remove saved place' : 'Save place'
+      );
+
+      $('#save').querySelector('svg').setAttribute(
+        'fill',
+        active ? 'currentColor' : 'none'
+      );
+    }
+
+    showSaved();
+
+    $('#save').onclick = () => {
+      if(saved.includes(p.id)) {
+        saved = saved.filter(id => id !== p.id);
+      } else {
+        saved.push(p.id);
+      }
+
+      if(persist(savedKey,saved)) {
+        showSaved();
+        toast(saved.includes(p.id) ? 'Place saved!' : 'Removed from saved places');
+      }
+    };
+
+    /* WORKSHOP BOOKING */
+
+    if(p.workshop) {
+      $('#workshop-section').hidden = false;
+      $('#workshop-name').textContent = p.workshop.name;
+      $('#workshop-description').textContent = p.workshop.description;
+      $('#workshop-duration').textContent = p.workshop.duration;
+      $('#workshop-price').textContent = 'RM ' + p.workshop.price;
+
+      $('#book-workshop').onclick = openBooking;
+    }
+
+    function localDateISO(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth()+1).padStart(2,'0');
+      const day = String(date.getDate()).padStart(2,'0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function openBooking() {
+      if(!p.workshop) return;
+
+      const today = localDateISO(new Date());
+      const maxDate = new Date();
+      maxDate.setMonth(maxDate.getMonth()+3);
+
+      let participants = 1;
+
+      openSheet(`
+    ${sheetHeader('Book Experience')}
+
+    <p style="margin-top:8px">
+      ${escapeHTML(p.workshop.name)}<br>
+      ${escapeHTML(p.name)}
+    </p>
+
+    <label class="field-label" for="booking-date">Select Date</label>
+    <input class="field" type="date" id="booking-date"
+           min="${today}" max="${localDateISO(maxDate)}"
+           value="${today}">
+
+    <label class="field-label" for="booking-session">
+      Choose Session
+    </label>
+
+    <select class="field" id="booking-session">
+      ${p.workshop.sessions.map(s => `
+        <option value="${escapeHTML(s.value)}">
+          ${escapeHTML(s.label)}
+        </option>
+      `).join('')}
+    </select>
+
+    <label class="field-label">Participants</label>
+
+    <div class="counter">
+      <span style="font-size:12px;font-weight:700">Number of guests</span>
+
+      <div class="counter-controls">
+        <button id="minus-guest" type="button">−</button>
+        <strong id="guest-count">1</strong>
+        <button id="plus-guest" type="button">+</button>
+      </div>
+    </div>
+
+    <div class="total-row">
+      <span style="font-size:12px;font-weight:700">Total (demo)</span>
+      <strong id="booking-total">RM ${p.workshop.price}.00</strong>
+    </div>
+
+    <button class="primary" id="confirm-booking" type="button">
+      Confirm Demo Booking
+    </button>
+
+    <p class="fact-note">
+      Prototype only. No real reservation, payment or venue
+      availability check will be made.
+    </p>
+  `);
+
+      wireClose();
+
+      function updateGuests() {
+        $('#guest-count').textContent = participants;
+        $('#booking-total').textContent =
+          'RM ' + (participants*p.workshop.price).toFixed(2);
+      }
+
+      $('#minus-guest').onclick = () => {
+        participants = Math.max(1,participants-1);
+        updateGuests();
+      };
+
+      $('#plus-guest').onclick = () => {
+        participants = Math.min(8,participants+1);
+        updateGuests();
+      };
+
+      $('#confirm-booking').onclick = () => {
+        const date = $('#booking-date').value;
+        const sessionTime = $('#booking-session').value;
+
+        if(!date || date < today || date > localDateISO(maxDate)) {
+          toast('Please select a valid date');
+          return;
+        }
+
+        const booking = {
+          id:'DEMO-' + Date.now().toString(36).toUpperCase(),
+          placeId:p.id,
+          placeName:p.name,
+          workshop:p.workshop.name,
+          date,
+          session:sessionTime,
+          participants,
+          total:participants*p.workshop.price,
+          status:'demo-confirmed',
+          createdAt:new Date().toISOString()
+        };
+
+        const nextBookings = [...bookings,booking];
+
+        if(!persist(bookingKey,nextBookings)) return;
+
+        bookings = nextBookings;
+        showBookingSuccess(booking);
+      };
+    }
+
+    function showBookingSuccess(booking) {
+      const sessionLabel =
+        p.workshop.sessions.find(s => s.value === booking.session)?.label ||
+        booking.session;
+
+      openSheet(`
+    ${sheetHeader('Booking Details')}
+
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5">
+        <path d="m5 12 5 5L20 7"/>
+      </svg>
+    </div>
+
+    <div class="success-title">Demo Booking Created!</div>
+
+    <p class="success-copy">
+      Your experience has been added to your prototype bookings.
+    </p>
+
+    <div class="confirmation">
+      <div>
+        <span>Reference</span>
+        <strong>${escapeHTML(booking.id)}</strong>
+      </div>
+      <div>
+        <span>Experience</span>
+        <strong>${escapeHTML(booking.workshop)}</strong>
+      </div>
+      <div>
+        <span>Date</span>
+        <strong>${escapeHTML(booking.date)}</strong>
+      </div>
+      <div>
+        <span>Session</span>
+        <strong>${escapeHTML(sessionLabel)}</strong>
+      </div>
+      <div>
+        <span>Participants</span>
+        <strong>${booking.participants}</strong>
+      </div>
+      <div>
+        <span>Total</span>
+        <strong>RM ${booking.total.toFixed(2)}</strong>
+      </div>
+    </div>
+
+    <button class="primary" id="done-booking" type="button">
+      Done
+    </button>
+
+    <p class="fact-note">
+      No real venue booking has been made.
+    </p>
+  `);
+
+      wireClose();
+      $('#done-booking').onclick = closeSheet;
+    }
+
+    /* DIGITAL STAMPS */
+
+    function hasStamp() {
+      return stamps.some(stamp => stamp.placeId === p.id);
+    }
+
+    function updateStampUI() {
+      const collected = hasStamp();
+
+      $('#stamp-card').classList.toggle('collected',collected);
+
+      $('#stamp-title').textContent =
+        collected ? 'Stamp Collected!' : 'Collect Your Stamp';
+
+      $('#stamp-description').textContent = collected
+        ? 'This place has been added to your digital stamp collection.'
+        : 'Visit this place and scan its official Terooka QR code to unlock a stamp.';
+
+      $('#collect-stamp').textContent =
+        collected ? 'View My Stamp' : 'Collect Digital Stamp';
+    }
+
+    updateStampUI();
+
+    $('#collect-stamp').onclick = () => {
+      if(hasStamp()) {
+        showStampSuccess();
+      } else {
+        openStampScanner();
+      }
+    };
+
+    function openStampScanner() {
+      openSheet(`
+    ${sheetHeader('Collect Digital Stamp')}
+
+    <p style="margin-top:10px;text-align:center">
+      Scan the official Terooka QR code displayed at
+      <strong>${escapeHTML(p.name)}</strong>.
+    </p>
+
+    <div class="scan-frame">
+      <svg viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.4"
+           stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="8" height="8" rx="1"/>
+        <rect x="14" y="2" width="8" height="8" rx="1"/>
+        <rect x="2" y="14" width="8" height="8" rx="1"/>
+        <path d="M5 5h2v2H5zM17 5h2v2h-2zM5 17h2v2H5z"/>
+        <path d="M14 14h3v3h-3zM20 14v3M14 20h3m3 0v-2"/>
+      </svg>
+    </div>
+
+    <p class="scan-note">
+      Camera QR scanning is not connected in this prototype.
+    </p>
+
+    <button class="primary" id="simulate-scan" type="button">
+      Simulate Venue QR Scan
+    </button>
+
+    <p class="fact-note" style="text-align:center">
+      Demo verification only. This does not confirm a real visit.
+    </p>
+  `);
+
+      wireClose();
+
+      $('#simulate-scan').onclick = () => {
+        if(hasStamp()) {
+          showStampSuccess();
+          return;
+        }
+
+        const stamp = {
+          placeId:p.id,
+          placeName:p.name,
+          category:p.cat,
+          city:p.city,
+          collectedAt:new Date().toISOString(),
+          verification:'demo-simulated'
+        };
+
+        const nextStamps = [...stamps,stamp];
+
+        if(!persist(stampKey,nextStamps)) return;
+
+        stamps = nextStamps;
+        updateStampUI();
+        showStampSuccess();
+      };
+    }
+
+    function showStampSuccess() {
+      const stamp = stamps.find(s => s.placeId === p.id);
+
+      openSheet(`
+    ${sheetHeader('Digital Stamp')}
+
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2">
+        <path d="M7 15h10v5H7z"/>
+        <path d="M9 15v-3c-2-1-3-3-3-5a6 6 0 0 1 12 0c0 2-1 4-3 5v3"/>
+        <path d="M5 21h14"/>
+      </svg>
+    </div>
+
+    <div class="success-title">Stamp Unlocked!</div>
+
+    <p class="success-copy">
+      ${escapeHTML(p.name)} has been added to your
+      digital stamp collection.
+    </p>
+
+    <div class="confirmation">
+      <div>
+        <span>Place</span>
+        <strong>${escapeHTML(p.name)}</strong>
+      </div>
+      <div>
+        <span>Category</span>
+        <strong>${escapeHTML(p.cat)}</strong>
+      </div>
+      <div>
+        <span>Collected</span>
+        <strong>${stamp ? new Date(stamp.collectedAt).toLocaleDateString('en-GB') : '—'}</strong>
+      </div>
+      <div>
+        <span>Verification</span>
+        <strong>Demo simulation</strong>
+      </div>
+    </div>
+
+    <button class="primary" id="done-stamp" type="button">
+      Continue Exploring
+    </button>
+  `);
+
+      wireClose();
+      $('#done-stamp').onclick = closeSheet;
+    }
+
+    /* REVIEWS */
+
+    function renderReviews() {
+      const reviews = allReviews[p.id] || [];
+
+      $('#rating').textContent = reviews.length
+        ? '★ ' +
+        (reviews.reduce((sum,r) => sum+Number(r.stars||0),0)/reviews.length).toFixed(1) +
+        ' ('+reviews.length+')'
+        : 'No ratings yet';
+
+      const root = $('#reviews');
+      root.innerHTML = '';
+
+      if(!reviews.length) {
+        root.innerHTML = `
+      <div class="empty">
+        No reviews yet. Be the first to share your experience.
+      </div>
+    `;
+        return;
+      }
+
+      reviews.slice().reverse().forEach(review => {
+        const element = document.createElement('div');
+        element.className = 'review';
+
+        const count = Math.max(0,Math.min(5,Number(review.stars)||0));
+
+        element.innerHTML = `
+      <div class="review-head">
+        <b>${escapeHTML(review.name||'Traveller')}</b>
+        <span class="stars">${'★'.repeat(count)}</span>
+      </div>
+      <p>${escapeHTML(review.text||'Rating only')}</p>
+    `;
+
+        root.appendChild(element);
+      });
+    }
+
+    renderReviews();
+
+    $('#write-review').onclick = openReview;
+
+    function openReview() {
+      stars = 0;
+
+      openSheet(`
+    ${sheetHeader('Write a Review')}
+
+    <p style="margin-top:8px">${escapeHTML(p.name)}</p>
+
+    <label class="field-label">Your Rating</label>
+    <div class="stars-picker" id="stars"></div>
+
+    <label class="field-label" for="review-text">
+      Your Experience (optional)
+    </label>
+
+    <textarea class="field" id="review-text"
+              maxlength="500"
+              placeholder="Share your experience..."></textarea>
+
+    <button class="primary" id="submit-review" type="button">
+      Submit Review
+    </button>
+
+    <p class="fact-note">
+      Reviews are stored locally in this browser for prototype testing.
+    </p>
+  `);
+
+      wireClose();
+
+      for(let i=1;i<=5;i++) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = '★';
+        button.setAttribute('aria-label',i+' stars');
+
+        button.onclick = () => {
+          stars = i;
+
+          $$('#stars button').forEach((item,index) => {
+            item.classList.toggle('on',index<stars);
+          });
+        };
+
+        $('#stars').appendChild(button);
+      }
+
+      $('#submit-review').onclick = () => {
+        if(!stars) {
+          toast('Please choose a star rating');
+          return;
+        }
+
+        const review = {
+          stars,
+          name:session?.name || session?.username || 'Explorer',
+          text:$('#review-text').value.trim()
+        };
+
+        const nextReviews = {
+          ...allReviews,
+          [p.id]:[...(allReviews[p.id]||[]),review]
+        };
+
+        if(!persist(reviewKey,nextReviews)) return;
+
+        allReviews = nextReviews;
+        renderReviews();
+        closeSheet();
+        toast('Review saved on this device');
+      };
+    }
+
+    /* MORE TO EXPLORE */
+
+    const nearby = $('#nearby');
+
+    places
+      .filter(place => place.id !== p.id)
+      .slice(0,3)
+      .forEach(place => {
+        const button = document.createElement('button');
+        button.type = 'button';
+
+        button.innerHTML = `
+      <div>
+        <span>${escapeHTML(place.name)}</span>
+        <small>${escapeHTML(place.cat)} · ${escapeHTML(place.city)}</small>
+      </div>
+
+      <svg viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14m-6-6 6 6-6 6"/>
+      </svg>
+    `;
+
+        button.onclick = () => {
+          location.href = 'place.html?id=' + encodeURIComponent(place.id);
+        };
+
+        nearby.appendChild(button);
+      });
+
+    /* OVERLAY */
+
+    $('#overlay').onclick = event => {
+      if(event.target === $('#overlay')) closeSheet();
+    };
+
+    document.addEventListener('keydown',event => {
+      if(event.key === 'Escape') closeSheet();
+    });
+
+    /* RESPONSIVE PHONE */
+
+    const stage = $('#stage');
+
+    function fit() {
+      if(innerWidth <= 500) {
+        stage.style.transform = '';
+        return;
+      }
+
+      const scale = Math.min(
+        1,
+        (innerWidth-28)/414,
+        (innerHeight-28)/868
+      );
+
+      stage.style.transform = 'scale('+scale+')';
+    }
+
+    fit();
+    addEventListener('resize',fit);
+
+  })();
+</script>
+</body>
+</html>

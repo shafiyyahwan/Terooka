@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#EDE4F5">
+  <title>Journal — Terooka</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--purple:#5724A3;--pink:#D842A0;--ink:#32204B;--muted:#796B85;--outer:#EDE4F5;--error:#C0224F;--serif:'Fraunces',Georgia,serif;--sans:'Plus Jakarta Sans',sans-serif;--grad:linear-gradient(105deg,var(--purple),#8834B9 52%,var(--pink))}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%}button,input,textarea{font-family:inherit}
+    body{background:var(--outer);font-family:var(--sans);color:var(--ink);min-height:100dvh;display:grid;place-items:center;overflow:hidden}
+    .stage{width:414px;height:868px;flex-shrink:0;transform-origin:center}
+    .phone{width:414px;height:868px;padding:12px;background:#111015;border-radius:62px;position:relative;box-shadow:0 24px 70px rgba(54,25,88,.23),0 0 0 2px #343039}
+    .screen{width:390px;height:844px;border-radius:50px;position:relative;overflow:hidden;background:linear-gradient(160deg,#F0E4FB 0%,#F9EAF5 35%,#FFF9F7 70%,#FFECE5 100%)}
+    .glow{position:absolute;border-radius:50%;filter:blur(55px);pointer-events:none;width:240px;height:240px;top:-70px;right:-80px;background:rgba(216,66,160,.2)}
+    .island{position:absolute;z-index:30;top:11px;left:50%;transform:translateX(-50%);height:34px;width:118px;background:#08070a;border-radius:30px}
+    .status{position:absolute;top:18px;left:34px;right:30px;z-index:29;font-size:14px;font-weight:800}
+    .homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:126px;height:5px;background:#2F2837;border-radius:20px;z-index:30}
+    .scroll{position:absolute;inset:0;z-index:2;overflow-y:auto;scrollbar-width:none;padding:64px 22px 118px}
+    .scroll::-webkit-scrollbar{display:none}
+    .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .eyebrow{font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin:4px 0 8px}
+    h1{font:600 30px/1.1 var(--serif);letter-spacing:-.025em;color:#32145B;margin:0}
+    h1 em{font-style:italic;font-weight:500;padding-right:.06em;background:linear-gradient(100deg,var(--purple),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .sub{font-size:12px;color:var(--muted);margin:8px 0 0;line-height:1.5}
+    .add{border:0;background:var(--grad);color:#fff;font:800 12px var(--sans);border-radius:14px;min-height:44px;padding:0 15px;cursor:pointer;box-shadow:0 8px 18px rgba(112,42,159,.25);flex:none}
+    button:focus-visible,a:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+    .count{font-size:11px;font-weight:700;color:var(--muted);margin:20px 2px 12px}
+    .shelf{display:grid;grid-template-columns:1fr 1fr;gap:22px 20px;perspective:900px}
+    /* BOOK */
+    .book{position:relative;aspect-ratio:3/4.1;border:0;color:#fff;text-align:left;cursor:pointer;display:flex;flex-direction:column;padding:16px 12px 12px 26px;border-radius:5px 12px 12px 5px;box-shadow:0 14px 22px rgba(87,36,163,.22),inset 0 0 0 1px rgba(255,255,255,.12);transition:transform .3s,box-shadow .3s;transform-origin:left center}
+    .book:hover{transform:rotateY(-14deg) translateY(-3px);box-shadow:8px 16px 24px rgba(87,36,163,.28)}
+    .book::before{content:"";position:absolute;left:0;top:0;bottom:0;width:15px;border-radius:5px 0 0 5px;background:rgba(0,0,0,.22);box-shadow:inset -2px 0 3px rgba(255,255,255,.22);border-right:2px dashed rgba(255,255,255,.3)}
+    .book::after{content:"";position:absolute;right:-5px;top:5px;bottom:5px;width:6px;border-radius:0 4px 4px 0;background:repeating-linear-gradient(180deg,#fff 0 2px,#E4D8EE 2px 3px)}
+    .ribbon{position:absolute;top:-3px;right:20px;width:12px;height:38px;background:#FFD166;clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%);box-shadow:0 2px 4px rgba(0,0,0,.2)}
+    .plate{background:rgba(255,255,255,.92);color:#32145B;border-radius:7px;padding:9px 8px;margin-top:14px}
+    .plate b{display:block;font:600 14px/1.2 var(--serif);word-break:break-word}
+    .orn{font:italic 500 11px var(--serif);opacity:.9;margin-top:2px}
+    .bmeta{margin-top:auto;font-size:10px;font-weight:700;line-height:1.4;text-shadow:0 1px 4px rgba(0,0,0,.25)}
+    .newbook{border:2px dashed #C9B4E2;background:rgba(255,255,255,.4);color:var(--purple);border-radius:12px;aspect-ratio:3/4.1;font:700 12px var(--sans);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+    .newbook span{font-size:30px;line-height:1}
+    .empty{text-align:center;padding:40px 18px;background:rgba(255,255,255,.4);border:1px solid #fff;border-radius:22px;margin-top:22px}
+    .empty .big{font-size:56px}.empty h2{font:600 19px var(--serif);margin:8px 0 5px}.empty p{font-size:12px;color:var(--muted);line-height:1.55;margin:0 0 16px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border:0;cursor:pointer;min-height:50px;padding:0 24px;border-radius:16px;background:var(--grad);color:#fff;font:800 13.5px var(--sans);box-shadow:0 12px 24px rgba(112,42,159,.2)}
+    .btn.full{width:100%}.btn.danger{background:rgba(192,34,79,.09);color:var(--error);box-shadow:none;margin-top:10px}
+    /* NAV */
+    .nav{position:absolute;z-index:20;left:16px;right:16px;bottom:22px;height:66px;padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:rgba(255,255,255,.62);border:1px solid #fff;border-radius:24px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 14px 34px rgba(87,36,163,.16)}
+    .nav a{border-radius:18px;color:#7D6B92;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:700 9px var(--sans)}
+    .nav a svg{width:21px;height:21px}
+    .nav a[aria-current="page"]{color:var(--purple);background:rgba(216,66,160,.1)}
+    /* SHEET */
+    .overlay{position:absolute;inset:0;z-index:40;display:flex;align-items:flex-end;background:rgba(40,18,66,.38);opacity:0;pointer-events:none;transition:opacity .3s}
+    .overlay.open{opacity:1;pointer-events:auto}
+    .sheet{width:100%;max-height:90%;overflow-y:auto;scrollbar-width:none;background:linear-gradient(170deg,#FBF4FF,#FFF7F5);border-radius:30px 30px 0 0;padding:12px 22px 34px;transform:translateY(100%);transition:transform .38s cubic-bezier(.2,.8,.2,1)}
+    .overlay.open .sheet{transform:none}
+    .grab{width:40px;height:4px;border-radius:4px;background:#D8C8E8;margin:0 auto 16px}
+    .sheet h2{font:600 24px var(--serif);letter-spacing:-.02em;margin:0 0 4px;color:#32145B}
+    .f{margin:12px 0}.f label{display:block;font-size:11px;font-weight:700;margin:0 0 5px 3px;color:#4a3566}
+    .f input,.f textarea{width:100%;padding:0 14px;font:500 14px var(--sans);color:var(--ink);background:#fff;border:1.5px solid #E5D6F0;border-radius:14px;outline:none}
+    .f input{height:46px}.f textarea{padding:12px 14px;min-height:110px;resize:vertical;line-height:1.5}
+    .f input:focus,.f textarea:focus{border-color:#B77BDB;box-shadow:0 0 0 4px rgba(184,123,219,.18)}
+    .err{font-size:10.5px;font-weight:600;color:var(--error);margin:4px 0 0 3px;display:block}.err:empty{display:none}
+    /* OPEN BOOK */
+    .spread{display:flex;border-radius:6px 14px 14px 6px;overflow:hidden;box-shadow:0 12px 26px rgba(87,36,163,.2);margin:12px 0 4px}
+    .spread .l{width:34%;padding:16px 10px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;font:italic 500 13px var(--serif)}
+    .spread .r{flex:1;padding:16px 14px 18px;background:#FFFDF8 repeating-linear-gradient(180deg,transparent 0 25px,#E9DDF2 25px 26px);background-position:0 8px;box-shadow:inset 8px 0 10px -8px rgba(0,0,0,.25);min-height:230px}
+    .spread .r p{font-size:13px;line-height:26px;margin:0;white-space:pre-wrap;word-break:break-word;color:#4a3a5c}
+    .spread .r .h{font:600 17px/1.3 var(--serif);color:#32145B;margin-bottom:2px}
+    .spread .r .m{font-size:10.5px;font-weight:700;color:var(--pink);margin-bottom:10px}
+    .toast{position:absolute;z-index:60;left:50%;top:58px;transform:translate(-50%,-20px);background:#32204B;color:#fff;font-size:12px;font-weight:700;padding:11px 16px;border-radius:14px;opacity:0;pointer-events:none;transition:.3s;max-width:86%;text-align:center}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:500px){body{display:block;overflow:auto}.stage,.phone{width:100%;height:100dvh;transform:none!important}.phone{padding:0;border-radius:0;box-shadow:none}.island,.status,.homebar{display:none}.screen{width:100%;height:100%;border-radius:0}.scroll{padding-top:30px}.toast{top:24px}}
+    @media(prefers-reduced-motion:reduce){.book,.sheet,.overlay,.toast{transition:none}.book:hover{transform:none}}
+  </style>
+</head>
+<body>
+<div class="stage" id="stage"><div class="phone"><div class="screen">
+  <div class="glow"></div><div class="island"></div><div class="status">9:41</div>
+  <main class="scroll">
+    <div class="top"><div><p class="eyebrow">Your travelogue</p><h1>My <em>Journal.</em></h1></div><button class="add" id="add" type="button">+ New</button></div>
+    <p class="sub">Every memory becomes a book on your shelf. Tap one to open it.</p>
+    <p class="count" id="count"></p>
+    <div id="shelf"></div>
+  </main>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m3 11 9-8 9 8M5 10v10h14V10"/></svg>Home</a>
+    <a href="discover.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 4-4 2 2-4z"/></svg>Discover</a>
+    <a href="journey.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 19c4-2 2-7 7-8s4-5 9-6M16 5h4v4"/><circle cx="4" cy="19" r="2"/></svg>Journey</a>
+    <a href="journal.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></svg>Journal</a>
+    <a href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 16-5 16 0"/></svg>Profile</a>
+  </nav>
+  <div class="overlay" id="overlay" aria-hidden="true"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="homebar"></div>
+</div></div></div>
+<script>
+  (function(){
+    'use strict';
+    var session=null;try{session=JSON.parse(localStorage.getItem('terooka_session'))}catch(e){}
+    if(!session){location.replace('auth.html');return}
+    var uid=session.username||session.email||'guest',TKEY='terooka_travelogue_'+uid;
+    var memories=[];try{memories=JSON.parse(localStorage.getItem(TKEY))||[]}catch(e){}
+    var COVERS=['#5724A3,#8834B9','#C12D91,#E0679E','#4a1d8a,#B04BC2','#D9517A,#F58AA6','#8834B9,#D842A0'];
+    function $(s,r){return (r||document).querySelector(s)}
+    function el(t,p){var e=document.createElement(t);p=p||{};Object.keys(p).forEach(function(k){if(k==='class')e.className=p[k];else if(k==='text')e.textContent=p[k];else if(k.indexOf('on')===0)e.addEventListener(k.slice(2),p[k]);else e.setAttribute(k,p[k])});for(var i=2;i<arguments.length;i++){var c=arguments[i];if(c!=null)e.appendChild(typeof c==='string'?document.createTextNode(c):c)}return e}
+    function cover(m){return 'linear-gradient(135deg,'+COVERS[Math.abs(Number(m.id)||0)%COVERS.length]+')'}
+    function fmt(iso){try{return new Date(iso).toLocaleDateString('en-MY',{day:'numeric',month:'short',year:'numeric'})}catch(e){return ''}}
+    var tt;function toast(t){var x=$('#toast');x.textContent=t;x.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){x.classList.remove('show')},2300)}
+    function save(){try{localStorage.setItem(TKEY,JSON.stringify(memories));return true}catch(e){toast('Couldn\u2019t save. Check browser storage.');return false}}
+    var ov=$('#overlay'),sh=$('#sheet'),last=null;
+    function openSheet(nodes){last=document.activeElement;sh.innerHTML='';sh.appendChild(el('div',{class:'grab'}));nodes.forEach(function(n){sh.appendChild(n)});sh.scrollTop=0;ov.classList.add('open');ov.setAttribute('aria-hidden','false');var f=$('input,textarea,button',sh);setTimeout(function(){if(f)f.focus({preventScroll:true})},350)}
+    function closeSheet(){ov.classList.remove('open');ov.setAttribute('aria-hidden','true');if(last&&last.focus)last.focus({preventScroll:true})}
+    ov.addEventListener('click',function(e){if(e.target===ov)closeSheet()});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('open'))closeSheet()});
+
+    function render(){
+      var shelf=$('#shelf');shelf.innerHTML='';
+      $('#count').textContent=memories.length?memories.length+(memories.length===1?' book':' books')+' on your shelf':'';
+      if(!memories.length){
+        shelf.appendChild(el('div',{class:'empty'},el('div',{class:'big',text:'\uD83D\uDCD6'}),el('h2',{text:'Your shelf is empty'}),el('p',{text:'Write a memory and it becomes your first book.'}),el('button',{class:'btn',type:'button',text:'Write your first memory',onclick:openForm})));
+        return;
+      }
+      var grid=el('div',{class:'shelf'});
+      memories.forEach(function(m){
+        grid.appendChild(el('button',{class:'book',type:'button','aria-label':'Open book: '+m.title,style:'background:'+cover(m),onclick:function(){openBook(m)}},
+          el('span',{class:'ribbon','aria-hidden':'true'}),
+          el('span',{class:'plate'},el('b',{text:m.title}),el('span',{class:'orn',text:'A travel memory'})),
+          el('span',{class:'bmeta',text:[m.place,fmt(m.date)].filter(Boolean).join('\n')})));
+      });
+      grid.appendChild(el('button',{class:'newbook',type:'button',onclick:openForm},el('span',{text:'+',class:'',}),'New book'));
+      shelf.appendChild(grid);
+    }
+    function openBook(m){
+      var meta=[m.place,fmt(m.date)].filter(Boolean).join(' \u00B7 ');
+      openSheet([
+        el('div',{class:'spread'},
+          el('div',{class:'l',style:'background:'+cover(m)},el('span',{text:'Terooka'}),el('span',{text:'Journal'})),
+          el('div',{class:'r'},el('div',{class:'h',text:m.title}),meta?el('div',{class:'m',text:meta}):null,el('p',{text:m.note||'No notes written in this book yet.'}))),
+        el('button',{class:'btn danger full',type:'button',text:'Delete this book',onclick:function(){
+            if(!confirm('Delete this memory?'))return;
+            memories=memories.filter(function(x){return x.id!==m.id});save();closeSheet();render();toast('Book removed');}})
+      ]);
+    }
+    function fld(id,label,tag,ph){var i=el(tag,{id:id,placeholder:ph,autocomplete:'off'});if(tag==='input')i.type='text';return{w:el('div',{class:'f'},el('label',{for:id,text:label}),i,el('span',{class:'err',id:'e-'+id})),i:i}}
+    function openForm(){
+      var t=fld('t','Title','input','e.g. Batik day in Kota Bharu'),p=fld('p','Place (optional)','input','e.g. Kelantan'),n=fld('n','What do you want to remember? (optional)','textarea','The people, the food, the little details…');
+      t.i.maxLength=80;p.i.maxLength=60;n.i.maxLength=1500;
+      var form=el('form',{novalidate:'novalidate',onsubmit:function(e){
+          e.preventDefault();var title=t.i.value.trim();$('#e-t').textContent='';
+          if(!title){$('#e-t').textContent='Give your book a title.';t.i.focus();return}
+          memories.unshift({id:Date.now(),title:title,place:p.i.value.trim(),note:n.i.value.trim(),date:new Date().toISOString()});
+          if(!save()){memories.shift();return}
+          closeSheet();render();toast('New book added to your shelf');
+        }},t.w,p.w,n.w,el('button',{class:'btn full',type:'submit',text:'Add to shelf'}));
+      openSheet([el('h2',{text:'New book'}),el('p',{class:'sub',text:'Saved privately in this browser.'}),form]);
+    }
+    $('#add').addEventListener('click',openForm);
+    render();
+    var stage=$('#stage');function fit(){if(innerWidth<=500){stage.style.transform='';return}stage.style.transform='scale('+Math.min(1,(innerHeight-28)/868,(innerWidth-28)/414)+')'}
+    fit();addEventListener('resize',fit);
+  })();
+</script>
+</body>
+</html>

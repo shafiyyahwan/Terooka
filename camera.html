@@ -1,0 +1,1416 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terooka — Culture Lens Camera</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --purple: #5724a3;
+      --pink: #d842a0;
+      --ink: #342449;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #eee5f5;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .stage {
+      width: 414px;
+      height: 868px;
+      transform-origin: center;
+    }
+
+    .phone {
+      width: 414px;
+      height: 868px;
+      padding: 12px;
+      background: #111015;
+      border-radius: 62px;
+      box-shadow: 0 25px 65px #39224c44;
+    }
+
+    .screen {
+      position: relative;
+      width: 390px;
+      height: 844px;
+      overflow: hidden;
+      border-radius: 50px;
+      background: #231b2d;
+      color: white;
+    }
+
+    /* CAMERA */
+
+    .camera-bg,
+    .camera-video,
+    .uploaded {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .camera-bg {
+      filter: brightness(.8);
+    }
+
+    .camera-video,
+    .uploaded {
+      display: none;
+    }
+
+    .shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        #150d21aa,
+        transparent 28%,
+        transparent 55%,
+        #130b20ed
+      );
+      pointer-events: none;
+    }
+
+    /* TOP BAR */
+
+    .top {
+      position: absolute;
+      top: 34px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 5;
+    }
+
+    .round {
+      width: 39px;
+      height: 39px;
+      border-radius: 50%;
+      border: 1px solid #ffffff70;
+      background: #21172c99;
+      color: white;
+      font-size: 23px;
+    }
+
+    .brand {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .06em;
+    }
+
+    .brand small {
+      display: block;
+      font-size: 9px;
+      font-weight: 500;
+      opacity: .8;
+      margin-top: 4px;
+    }
+
+    /* MODE SWITCH */
+
+    .mode-tabs {
+      position: absolute;
+      top: 106px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      padding: 4px;
+      border-radius: 25px;
+      background: #21142dcc;
+      border: 1px solid #ffffff55;
+      gap: 3px;
+      white-space: nowrap;
+      z-index: 5;
+    }
+
+    .mode-tabs button {
+      border: 0;
+      border-radius: 20px;
+      background: transparent;
+      color: white;
+      padding: 9px 15px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .mode-tabs button.active {
+      background: white;
+      color: var(--purple);
+    }
+
+    .scan-label {
+      position: absolute;
+      top: 165px;
+      left: 20px;
+      right: 20px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      text-shadow: 0 2px 8px #000;
+    }
+
+    /* CULTURE LENS */
+
+    .scan-box {
+      position: absolute;
+      inset: 27% 12% 29%;
+      border: 1.5px dashed #ffffff88;
+      border-radius: 25px;
+      pointer-events: none;
+    }
+
+    .scan-box::before,
+    .scan-box::after {
+      content: "";
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border: 3px solid white;
+    }
+
+    .scan-box::before {
+      top: -2px;
+      left: -2px;
+      border-right: 0;
+      border-bottom: 0;
+      border-radius: 10px 0 0 0;
+    }
+
+    .scan-box::after {
+      bottom: -2px;
+      right: -2px;
+      border-left: 0;
+      border-top: 0;
+      border-radius: 0 0 10px 0;
+    }
+
+    .marker {
+      position: absolute;
+      z-index: 6;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border: 3px solid white;
+      border-radius: 50%;
+      background: #7139bd;
+      color: white;
+      font-size: 19px;
+      font-weight: 800;
+      box-shadow: 0 4px 18px #0006;
+    }
+
+    .marker.show {
+      display: flex;
+    }
+
+    #marker-carving {
+      top: 37%;
+      left: 29%;
+    }
+
+    #marker-longhouse {
+      top: 50%;
+      right: 21%;
+    }
+
+    /* SHORT INFORMATION PREVIEW */
+
+    .preview {
+      position: absolute;
+      z-index: 8;
+      left: 18px;
+      right: 18px;
+      bottom: 167px;
+      background: white;
+      color: var(--ink);
+      border-radius: 20px;
+      padding: 16px;
+      display: none;
+      box-shadow: 0 12px 35px #0005;
+    }
+
+    .preview.show {
+      display: block;
+    }
+
+    .preview-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .preview h3 {
+      font: 600 19px 'Fraunces', serif;
+      margin: 0 0 7px;
+    }
+
+    .preview p {
+      font-size: 11px;
+      line-height: 1.6;
+      color: #756680;
+      margin: 0 0 12px;
+    }
+
+    .source {
+      font-size: 9px;
+      color: #8d789d;
+      margin-bottom: 12px;
+    }
+
+    .read-btn {
+      width: 100%;
+      background: var(--purple);
+      border: 0;
+      border-radius: 12px;
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 12px 16px;
+    }
+
+    .close-preview {
+      border: 0;
+      background: #f1e8f6;
+      border-radius: 50%;
+      width: 27px;
+      height: 27px;
+      color: var(--purple);
+    }
+
+    /* PHOTO GUIDE */
+
+    .pose-img {
+      position: absolute;
+      bottom: 165px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 94%;
+      height: 57%;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 12px #0005);
+      display: none;
+      pointer-events: none;
+    }
+
+    .pose-img.show {
+      display: block;
+    }
+
+    .pose-nav {
+      position: absolute;
+      left: 13px;
+      right: 13px;
+      top: 44%;
+      display: none;
+      justify-content: space-between;
+    }
+
+    .pose-nav.show {
+      display: flex;
+    }
+
+    .pose-nav button {
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: white;
+      color: var(--purple);
+      font-size: 26px;
+      box-shadow: 0 3px 14px #0003;
+    }
+
+    .pose-description {
+      position: absolute;
+      bottom: 165px;
+      left: 20px;
+      right: 20px;
+      display: none;
+      background: #21132be6;
+      padding: 13px 14px;
+      border-radius: 15px;
+      backdrop-filter: blur(8px);
+    }
+
+    .pose-description.show {
+      display: block;
+    }
+
+    .pose-description h3 {
+      font-size: 13px;
+      margin: 0 0 5px;
+    }
+
+    .pose-description p {
+      font-size: 10px;
+      line-height: 1.5;
+      margin: 0;
+      color: #f0e4f7;
+    }
+
+    .pose-why {
+      margin-top: 9px;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      color: #f3caff;
+      font-size: 10px;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* BOTTOM CAMERA CONTROLS */
+
+    .bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 17px 20px 29px;
+      background: linear-gradient(
+        transparent,
+        #180e22d9 22%,
+        #160d20f5
+      );
+    }
+
+    .status {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      min-height: 16px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    .tool {
+      height: 44px;
+      width: 44px;
+      border-radius: 15px;
+      border: 1px solid #ffffff70;
+      background: #ffffff30;
+      color: white;
+      font-size: 21px;
+    }
+
+    .shutter {
+      width: 72px;
+      height: 72px;
+      border: 5px solid white;
+      background: transparent;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+
+    .shutter::after {
+      content: "";
+      width: 53px;
+      height: 53px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    .bottom-note {
+      text-align: center;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .09em;
+      margin-top: 12px;
+    }
+
+    /* BOTTOM SHEET */
+
+    .sheet-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      background: #160d2380;
+      display: none;
+      align-items: flex-end;
+    }
+
+    .sheet-overlay.open {
+      display: flex;
+    }
+
+    .sheet {
+      background: linear-gradient(150deg, #fcf5ff, #fff7f5);
+      color: var(--ink);
+      width: 100%;
+      border-radius: 28px 28px 0 0;
+      padding: 21px 22px 33px;
+      max-height: 85%;
+      overflow: auto;
+    }
+
+    .handle {
+      height: 4px;
+      width: 45px;
+      background: #d9c4e7;
+      border-radius: 10px;
+      margin: 0 auto 19px;
+    }
+
+    .sheet h2 {
+      font: 600 25px 'Fraunces', serif;
+      margin: 0 0 10px;
+    }
+
+    .sheet p {
+      font-size: 12px;
+      color: #756680;
+      line-height: 1.7;
+    }
+
+    .sheet img {
+      width: 100%;
+      max-height: 250px;
+      object-fit: contain;
+    }
+
+    .sheet textarea {
+      width: 100%;
+      min-height: 80px;
+      border: 1px solid #e3d6ee;
+      border-radius: 12px;
+      padding: 12px;
+      font: 12px 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .primary {
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 13px;
+      background: var(--purple);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      margin-top: 12px;
+    }
+
+    .tip {
+      background: white;
+      border: 1px solid #ecdef4;
+      border-radius: 14px;
+      padding: 13px;
+      font-size: 11px;
+      line-height: 1.7;
+      margin: 12px 0;
+    }
+
+    .toast {
+      position: absolute;
+      z-index: 40;
+      top: 89px;
+      left: 30px;
+      right: 30px;
+      display: none;
+      background: #261631;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      border-radius: 13px;
+      font-size: 11px;
+    }
+
+    .island {
+      position: absolute;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #080709;
+      width: 117px;
+      height: 32px;
+      border-radius: 20px;
+      z-index: 30;
+      pointer-events: none;
+    }
+
+    .homebar {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      width: 125px;
+      height: 5px;
+      border-radius: 9px;
+      z-index: 30;
+      pointer-events: none;
+    }
+
+    @media(max-width:500px) {
+      body {
+        display: block;
+      }
+
+      .stage,
+      .phone {
+        width: 100%;
+        height: 100dvh;
+        transform: none !important;
+      }
+
+      .phone {
+        padding: 0;
+        border-radius: 0;
+      }
+
+      .screen {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      }
+
+      .island,
+      .homebar {
+        display: none;
+      }
+
+      .top {
+        top: 20px;
+      }
+
+      .bottom {
+        padding-bottom: 19px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="stage" id="stage">
+  <div class="phone">
+    <div class="screen">
+
+      <!-- CAMERA BACKGROUND -->
+      <img
+        class="camera-bg"
+        id="background"
+        src="img/sarawak-longhouse-bg.png"
+        alt="Sarawak longhouse"
+      >
+
+      <video
+        class="camera-video"
+        id="video"
+        autoplay
+        muted
+        playsinline
+      ></video>
+
+      <img
+        class="uploaded"
+        id="uploaded"
+        alt="Selected photograph"
+      >
+
+      <div class="shade"></div>
+
+      <!-- TOP BAR -->
+      <div class="top">
+        <button class="round" onclick="location.href='home.html'">‹</button>
+
+        <div class="brand">
+          TEROOKA · CULTURE LENS
+          <small>Discover the stories around you</small>
+        </div>
+
+        <button class="round" onclick="showHelp()">?</button>
+      </div>
+
+      <!-- CAMERA MODES -->
+      <div class="mode-tabs">
+        <button
+          id="lens-tab"
+          class="active"
+          onclick="setMode('lens')"
+        >
+          Culture Lens
+        </button>
+
+        <button
+          id="pose-tab"
+          onclick="setMode('pose')"
+        >
+          Photo Guide
+        </button>
+      </div>
+
+      <div class="scan-label" id="scan-label">
+        Point your camera at a cultural object
+      </div>
+
+      <!-- CULTURE LENS -->
+      <div class="scan-box" id="scan-box"></div>
+
+      <!-- DEMO INFORMATION MARKERS -->
+      <button
+        class="marker"
+        id="marker-carving"
+        onclick="openPreview('carving')"
+        aria-label="Wood carving information"
+      >
+        i
+      </button>
+
+      <button
+        class="marker"
+        id="marker-longhouse"
+        onclick="openPreview('longhouse')"
+        aria-label="Longhouse information"
+      >
+        i
+      </button>
+
+      <!-- SHORT PREVIEW -->
+      <div class="preview" id="preview">
+
+        <div class="preview-top">
+          <h3 id="preview-title"></h3>
+
+          <button
+            class="close-preview"
+            onclick="closePreview()"
+          >
+            ×
+          </button>
+        </div>
+
+        <p id="preview-text"></p>
+
+        <div class="source" id="preview-source"></div>
+
+        <button class="read-btn" id="read-story">
+          Read Full Story →
+        </button>
+
+      </div>
+
+      <!-- OPTIONAL PHOTO GUIDE -->
+      <img
+        class="pose-img"
+        id="pose-img"
+        src="img/ngajat-pose-1.png"
+        alt="Cartoon pose suggestion"
+      >
+
+      <div class="pose-nav" id="pose-nav">
+        <button onclick="changePose(-1)">‹</button>
+        <button onclick="changePose(1)">›</button>
+      </div>
+
+      <div class="pose-description" id="pose-description">
+
+        <h3 id="pose-title"></h3>
+
+        <p id="pose-text"></p>
+
+        <button
+          class="pose-why"
+          onclick="showPoseWhy()"
+        >
+          ⓘ Why this pose?
+        </button>
+
+      </div>
+
+      <!-- BOTTOM CONTROLS -->
+      <div class="bottom">
+
+        <div class="status" id="status">
+          Capture to discover cultural elements
+        </div>
+
+        <div class="controls">
+
+          <button
+            class="tool"
+            onclick="document.getElementById('file').click()"
+            title="Upload photo"
+          >
+            ▧
+          </button>
+
+          <button
+            class="shutter"
+            onclick="takePhoto()"
+            title="Capture photo"
+          ></button>
+
+          <button
+            class="tool"
+            onclick="toggleCamera()"
+            title="Toggle live camera"
+          >
+            ◉
+          </button>
+
+        </div>
+
+        <div class="bottom-note" id="bottom-note">
+          CULTURE LENS · CAPTURE TO RECOGNISE
+        </div>
+
+      </div>
+
+      <!-- BOTTOM SHEET -->
+      <div
+        class="sheet-overlay"
+        id="overlay"
+        onclick="if(event.target===this)closeSheet()"
+      >
+        <div class="sheet">
+          <div class="handle"></div>
+          <div id="sheet-content"></div>
+        </div>
+      </div>
+
+      <div class="toast" id="toast"></div>
+
+      <div class="island"></div>
+      <div class="homebar"></div>
+
+    </div>
+  </div>
+</div>
+
+<input type="file" id="file" accept="image/*" hidden>
+
+<script>
+
+  /* =========================
+     HELPERS
+  ========================= */
+
+  const $ = id => document.getElementById(id);
+
+  function notify(message) {
+    $("toast").textContent = message;
+    $("toast").style.display = "block";
+
+    clearTimeout(window.toastTimer);
+
+    window.toastTimer = setTimeout(() => {
+      $("toast").style.display = "none";
+    }, 3000);
+  }
+
+  function openSheet(html) {
+    $("sheet-content").innerHTML = html;
+    $("overlay").classList.add("open");
+  }
+
+  function closeSheet() {
+    $("overlay").classList.remove("open");
+  }
+
+  /* =========================
+     VERIFIED PORTAL PLACEHOLDERS
+
+     Replace with real portal data.
+     Never invent missing cultural facts.
+  ========================= */
+
+  const portal = {
+    longhouse: {
+      title: "Sarawak Longhouse",
+      short:
+        "A traditional communal dwelling associated with several Indigenous communities in Sarawak.",
+      source:
+        "Demo record · Verification pending",
+      storyId: "longhouse"
+    },
+
+    carving: {
+      title: "Decorative Wood Carving",
+      short:
+        "Decorative wooden details may reflect local artistic traditions. This specific motif is not yet verified.",
+      source:
+        "Demo record · Motif unverified",
+      storyId: "carving"
+    }
+  };
+
+  /* =========================
+     CURATED PHOTO GUIDE TEMPLATES
+
+     Cultural review is required
+     before real publication.
+  ========================= */
+
+  const poses = [
+    {
+      title: "Elegant Hand Pose",
+      text:
+        "Gently extend your arms to create a graceful composition.",
+      why:
+        "This photo composition takes visual inspiration from expressive arm gestures associated with Ngajat performances. It is not an authentic dance lesson.",
+      etiquette:
+        "Avoid imitating sacred or ceremonial movements without appropriate cultural guidance."
+    },
+
+    {
+      title: "Full Body Portrait",
+      text:
+        "Include your full body and the longhouse in the frame.",
+      why:
+        "This composition gives attention to both the visitor and the surrounding traditional architecture, helping preserve the cultural setting in the photograph.",
+      etiquette:
+        "Ask permission before photographing residents or entering private areas."
+    },
+
+    {
+      title: "Side Profile",
+      text:
+        "Turn slightly and leave space for the architecture.",
+      why:
+        "A side-profile composition helps highlight the architectural surroundings without covering important decorative details.",
+      etiquette:
+        "Respect photography restrictions and avoid disturbing cultural activities."
+    }
+  ];
+
+  /* =========================
+     APP STATE
+  ========================= */
+
+  let mode = "lens";
+  let poseIndex = 0;
+  let stream = null;
+  let photoData = null;
+  let scanned = false;
+  let selectedRecord = null;
+  let sourceType = "sample";
+
+  /* =========================
+     CAMERA MODES
+  ========================= */
+
+  function setMode(nextMode) {
+    mode = nextMode;
+
+    closePreview();
+
+    const isLens = mode === "lens";
+
+    $("lens-tab").classList.toggle("active", isLens);
+    $("pose-tab").classList.toggle("active", !isLens);
+
+    $("scan-box").style.display = isLens ? "block" : "none";
+
+    $("pose-img").classList.toggle("show", !isLens);
+    $("pose-nav").classList.toggle("show", !isLens);
+    $("pose-description").classList.toggle("show", !isLens);
+
+    $("scan-label").textContent = isLens
+      ? "Point your camera at a cultural object"
+      : "Choose a culturally inspired composition";
+
+    $("status").textContent = isLens
+      ? "Capture to discover cultural elements"
+      : "Optional pose recommendations";
+
+    $("bottom-note").textContent = isLens
+      ? "CULTURE LENS · CAPTURE TO RECOGNISE"
+      : "PHOTO GUIDE · CAPTURE YOUR MOMENT";
+
+    updateMarkers();
+    renderPose();
+  }
+
+  /* =========================
+     CULTURE LENS RECOGNITION
+  ========================= */
+
+  function updateMarkers() {
+    const show = mode === "lens" && scanned;
+
+    $("marker-carving").classList.toggle("show", show);
+    $("marker-longhouse").classList.toggle("show", show);
+  }
+
+  function recogniseCulture() {
+    closePreview();
+
+    /*
+      DEMO ONLY:
+      The bundled sample image has predefined
+      information marker positions.
+
+      Actual photos must be analysed by a
+      vision model connected to a verified
+      cultural heritage database.
+    */
+
+    if (sourceType !== "sample") {
+      scanned = false;
+      updateMarkers();
+
+      $("status").textContent =
+        "Recognition unavailable for this image";
+
+      notify(
+        "AI recognition is not connected yet. Try the sample scene."
+      );
+
+      return;
+    }
+
+    scanned = true;
+    updateMarkers();
+
+    $("status").textContent =
+      "2 demo cultural elements found · Tap ⓘ";
+
+    notify("Sample recognition complete!");
+  }
+
+  function openPreview(id) {
+    const record = portal[id];
+
+    if (!record) return;
+
+    selectedRecord = record;
+
+    $("preview-title").textContent = record.title;
+    $("preview-text").textContent = record.short;
+    $("preview-source").textContent = record.source;
+
+    $("read-story").onclick = () => {
+      location.href =
+        "cultural-story.html?id=" +
+        encodeURIComponent(record.storyId);
+    };
+
+    $("preview").classList.add("show");
+  }
+
+  function closePreview() {
+    $("preview").classList.remove("show");
+  }
+
+  /* =========================
+     PHOTO GUIDE
+  ========================= */
+
+  function renderPose() {
+    const pose = poses[poseIndex];
+
+    $("pose-img").src =
+      "img/ngajat-pose-" + (poseIndex + 1) + ".png";
+
+    $("pose-title").textContent = pose.title;
+    $("pose-text").textContent = pose.text;
+  }
+
+  function changePose(direction) {
+    poseIndex =
+      (poseIndex + direction + poses.length) %
+      poses.length;
+
+    renderPose();
+  }
+
+  function showPoseWhy() {
+    const pose = poses[poseIndex];
+
+    openSheet(`
+    <h2>Why this pose?</h2>
+
+    <p>${pose.why}</p>
+
+    <div class="tip">
+      <b>Photography etiquette</b><br>
+      ${pose.etiquette}
+    </div>
+
+    <div class="tip">
+      <b>Important</b><br>
+      This is a creative photo suggestion,
+      not a traditional dance tutorial.
+      Pose templates should be reviewed
+      by local cultural practitioners.
+    </div>
+
+    <button class="primary" onclick="closeSheet()">
+      Back to Photo Guide
+    </button>
+  `);
+  }
+
+  /* =========================
+     LIVE CAMERA
+  ========================= */
+
+  async function stopCamera() {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+    }
+
+    $("video").srcObject = null;
+    $("video").style.display = "none";
+  }
+
+  async function toggleCamera() {
+    if (stream) {
+      await stopCamera();
+      restoreSample();
+      notify("Camera stopped");
+      return;
+    }
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      notify("Live camera requires HTTPS or localhost.");
+      return;
+    }
+
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: "environment"
+        },
+        audio: false
+      });
+
+      photoData = null;
+      sourceType = "live";
+      scanned = false;
+
+      updateMarkers();
+      closePreview();
+
+      $("uploaded").style.display = "none";
+      $("background").style.display = "none";
+
+      $("video").srcObject = stream;
+      $("video").style.display = "block";
+
+      notify("Live camera enabled");
+
+    } catch (error) {
+      notify("Camera unavailable. Try uploading a photo.");
+    }
+  }
+
+  function restoreSample() {
+    photoData = null;
+    sourceType = "sample";
+    scanned = false;
+
+    updateMarkers();
+    closePreview();
+
+    $("uploaded").style.display = "none";
+    $("background").style.display = "block";
+  }
+
+  /* =========================
+     UPLOAD PHOTO
+  ========================= */
+
+  function resizeImage(image) {
+    const canvas = document.createElement("canvas");
+
+    const ratio = Math.min(
+      1,
+      1000 / Math.max(image.width, image.height)
+    );
+
+    canvas.width = Math.round(image.width * ratio);
+    canvas.height = Math.round(image.height * ratio);
+
+    canvas.getContext("2d").drawImage(
+      image,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    return canvas.toDataURL("image/jpeg", 0.75);
+  }
+
+  $("file").addEventListener("change", event => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const image = new Image();
+
+      image.onload = async () => {
+        const data = resizeImage(image);
+
+        await stopCamera();
+
+        photoData = data;
+        sourceType = "upload";
+        scanned = false;
+
+        $("uploaded").src = photoData;
+        $("uploaded").style.display = "block";
+        $("background").style.display = "none";
+
+        updateMarkers();
+        closePreview();
+
+        notify("Photo uploaded successfully");
+      };
+
+      image.src = reader.result;
+    };
+
+    reader.readAsDataURL(file);
+
+    event.target.value = "";
+  });
+
+  /* =========================
+     SHUTTER BUTTON
+
+     Culture Lens:
+     Capture -> Recognise
+
+     Photo Guide:
+     Capture -> Review
+  ========================= */
+
+  function takePhoto() {
+    if (stream) {
+      const video = $("video");
+
+      if (!video.videoWidth) {
+        notify("Camera is still loading");
+        return;
+      }
+
+      const canvas = document.createElement("canvas");
+
+      const ratio = Math.min(
+        1,
+        1000 / Math.max(
+          video.videoWidth,
+          video.videoHeight
+        )
+      );
+
+      canvas.width =
+        Math.round(video.videoWidth * ratio);
+
+      canvas.height =
+        Math.round(video.videoHeight * ratio);
+
+      canvas.getContext("2d").drawImage(
+        video,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      photoData =
+        canvas.toDataURL("image/jpeg", 0.75);
+    }
+
+    if (mode === "lens") {
+      recogniseCulture();
+      return;
+    }
+
+    if (!photoData) {
+      notify(
+        "Enable the live camera or upload a photo first"
+      );
+      return;
+    }
+
+    showPhotoReview();
+  }
+
+  /* =========================
+     PHOTO REVIEW & SAVE
+  ========================= */
+
+  function showPhotoReview() {
+    openSheet(`
+    <h2>Your Cultural Moment</h2>
+
+    <p>
+      Review your photograph before saving
+      it to your Terooka memories.
+    </p>
+
+    <img
+      id="review-photo"
+      alt="Captured photograph"
+    >
+
+    <div class="tip">
+      <b>Photo composition</b><br>
+      ${poses[poseIndex].title}
+    </div>
+
+    <textarea
+      id="caption"
+      placeholder="Write your journal caption..."
+    ></textarea>
+
+    <button
+      class="primary"
+      id="save-photo"
+    >
+      Save Photo
+    </button>
+  `);
+
+    $("review-photo").src = photoData;
+    $("save-photo").onclick = savePhoto;
+  }
+
+  function savePhoto() {
+    const key = "terooka_camera_memories_guest";
+
+    try {
+      const records =
+        JSON.parse(localStorage.getItem(key) || "[]");
+
+      records.unshift({
+        id: Date.now(),
+        image: photoData,
+        caption: $("caption").value,
+        pose: poses[poseIndex].title,
+        createdAt: new Date().toISOString()
+      });
+
+      localStorage.setItem(
+        key,
+        JSON.stringify(records)
+      );
+
+      closeSheet();
+      notify("Photo saved successfully!");
+
+    } catch (error) {
+      notify(
+        "Unable to save. Browser storage may be full."
+      );
+    }
+  }
+
+  /* =========================
+     HELP
+  ========================= */
+
+  function showHelp() {
+    openSheet(`
+    <h2>How Culture Lens Works</h2>
+
+    <p>
+      Capture a photograph to discover
+      cultural elements around you.
+    </p>
+
+    <div class="tip">
+      <b>Culture Lens</b><br>
+      Tap the shutter to capture and recognise
+      cultural subjects. Tap an information
+      marker for a short description, then
+      Read Full Story for more details.
+    </div>
+
+    <div class="tip">
+      <b>Photo Guide</b><br>
+      Switch to Photo Guide to explore optional
+      culturally inspired pose and composition
+      suggestions. Tap Why this pose?
+      for the explanation and etiquette.
+    </div>
+
+    <div class="tip">
+      <b>Prototype limitation</b><br>
+      The sample longhouse recognition is simulated.
+      Live camera and uploaded photographs
+      are not yet analysed by AI.
+    </div>
+
+    <button
+      class="primary"
+      onclick="closeSheet()"
+    >
+      Got it
+    </button>
+  `);
+  }
+
+  /* =========================
+     RESPONSIVE PHONE
+  ========================= */
+
+  function scalePhone() {
+    if (innerWidth <= 500) {
+      $("stage").style.transform = "";
+      return;
+    }
+
+    const scale = Math.min(
+      (innerWidth - 32) / 414,
+      (innerHeight - 32) / 868,
+      1
+    );
+
+    $("stage").style.transform =
+      `scale(${scale})`;
+  }
+
+  addEventListener("resize", scalePhone);
+  addEventListener("pagehide", stopCamera);
+
+  /* INITIALISE */
+
+  scalePhone();
+  renderPose();
+  setMode("lens");
+
+</script>
+
+</body>
+</html>

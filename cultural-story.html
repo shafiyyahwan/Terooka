@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terooka — Cultural Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;background:#eee5f5;font-family:'Plus Jakarta Sans',sans-serif;color:#342449}
+    button{font:inherit;cursor:pointer}
+    .stage{width:414px;height:868px;transform-origin:center}
+    .phone{width:414px;height:868px;padding:12px;background:#111015;border-radius:62px;box-shadow:0 25px 65px #39224c44}
+    .screen{width:390px;height:844px;position:relative;overflow:hidden;border-radius:50px;background:linear-gradient(160deg,#f0e4fb,#f9eaf5 35%,#fff9f7 70%,#ffece5)}
+    .scroll{height:100%;overflow-y:auto;padding-bottom:55px;scrollbar-width:none}
+    .scroll::-webkit-scrollbar{display:none}
+    .header{display:flex;align-items:center;gap:13px;padding:47px 22px 18px}
+    .back{width:38px;height:38px;border:1px solid #e6d7f1;background:#ffffffb5;border-radius:50%;color:#5724a3;font-size:24px}
+    .header-title{font-size:12px;font-weight:800;letter-spacing:.04em}
+    .header-sub{font-size:10px;color:#8b789b;margin-top:3px}
+    .hero{position:relative;margin:0 19px;border-radius:22px;overflow:hidden;height:225px;background:#ddd0e8}
+    .hero img{width:100%;height:100%;object-fit:cover}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(transparent 35%,#160c20a6)}
+    .hero-label{position:absolute;bottom:17px;left:17px;color:white;font-size:10px;font-weight:800;letter-spacing:.08em}
+    .content{padding:22px}
+    .eyebrow{font-size:10px;font-weight:800;letter-spacing:.1em;color:#8e43bb}
+    h1{font:600 31px 'Fraunces',serif;margin:8px 0 12px;line-height:1.18}
+    .summary{font-size:12px;line-height:1.8;color:#74637f;margin:0 0 20px}
+    .section{background:#ffffffb9;border:1px solid #efe2f3;border-radius:19px;padding:17px;margin-bottom:13px}
+    .section h2{font:600 20px 'Fraunces',serif;margin:0 0 10px}
+    .section p{font-size:11px;line-height:1.85;color:#72627d;margin:0}
+    .section + .section{margin-top:0}
+    .tag{display:inline-block;background:#f0e3fa;color:#5724a3;padding:7px 11px;border-radius:30px;font-size:10px;font-weight:800;margin-bottom:13px}
+    .notice{background:#fff8ed;border:1px solid #eedfc7;border-radius:13px;padding:12px;font-size:10px;line-height:1.7;color:#806a48;margin-top:12px}
+    .source-row{display:flex;gap:10px;align-items:flex-start;font-size:11px;color:#74637f;line-height:1.7}
+    .source-icon{width:30px;height:30px;flex-shrink:0;border-radius:9px;background:#f0e3fa;display:grid;place-items:center;color:#5724a3;font-weight:800}
+    .action{display:block;width:100%;padding:15px;border:0;border-radius:14px;background:#5724a3;color:white;font-size:12px;font-weight:800;margin-top:16px}
+    .secondary{background:white;border:1px solid #dfcbe9;color:#5724a3;margin-top:10px}
+    .island{position:absolute;top:11px;left:50%;transform:translateX(-50%);height:32px;width:117px;border-radius:20px;background:#070609;z-index:5}
+    .homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:125px;height:5px;border-radius:8px;background:#342449;z-index:5}
+    @media(max-width:500px){
+      body{display:block}
+      .stage,.phone{width:100%;height:100dvh;transform:none!important}
+      .phone{padding:0;border-radius:0}
+      .screen{width:100%;height:100%;border-radius:0}
+      .island,.homebar{display:none}
+      .header{padding-top:25px}
+    }
+  </style>
+</head>
+
+<body>
+<div class="stage" id="stage">
+  <div class="phone">
+    <div class="screen">
+
+      <div class="scroll">
+        <header class="header">
+          <button class="back" onclick="location.href='camera.html'">‹</button>
+          <div>
+            <div class="header-title">CULTURAL STORY</div>
+            <div class="header-sub">Terooka Heritage Discovery</div>
+          </div>
+        </header>
+
+        <div class="hero">
+          <img id="hero-image" src="img/sarawak-longhouse-bg.png" alt="Cultural heritage">
+          <div class="hero-overlay"></div>
+          <div class="hero-label">EXPLORE MALAYSIAN HERITAGE</div>
+        </div>
+
+        <main class="content">
+          <span class="eyebrow">TEROOKA · CULTURAL DISCOVERY</span>
+          <h1 id="story-title">Cultural Story</h1>
+          <p class="summary" id="story-summary"></p>
+
+          <section class="section">
+            <span class="tag">Cultural Background</span>
+            <h2>Behind the Heritage</h2>
+            <p id="background-text"></p>
+          </section>
+
+          <section class="section">
+            <h2>Cultural Significance</h2>
+            <p id="significance-text"></p>
+          </section>
+
+          <section class="section">
+            <h2>Stories from the Community</h2>
+            <p id="community-text"></p>
+          </section>
+
+          <section class="section">
+            <h2>Sources & References</h2>
+            <div class="source-row">
+              <div class="source-icon">i</div>
+              <div id="source-text"></div>
+            </div>
+            <div class="notice">
+              Terooka only publishes cultural information supported by
+              verified portal records. Unverified historical claims,
+              cultural meanings and community narratives are not generated.
+            </div>
+          </section>
+
+          <button class="action" onclick="location.href='camera.html'">
+            Return to Culture Lens
+          </button>
+
+          <button class="action secondary" onclick="location.href='camera.html'">
+            Explore Photo Guide
+          </button>
+        </main>
+      </div>
+
+      <div class="island"></div>
+      <div class="homebar"></div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  /*
+    SAMPLE PORTAL DATA
+
+    Replace these records with content retrieved from your
+    approved heritage portal or cultural database.
+
+    Do not generate missing cultural facts with AI.
+  */
+
+  const stories = {
+    longhouse: {
+      title: "Sarawak Longhouse",
+      summary:
+        "A traditional communal dwelling associated with several Indigenous communities in Sarawak.",
+
+      background:
+        "Longhouses are communal residential structures found among different Indigenous communities in Sarawak. Their layouts, construction methods and customs differ between communities.",
+
+      significance:
+        "Longhouses are associated with community life and shared living spaces. Specific traditions and meanings should be explained using sources relevant to the community being featured.",
+
+      community:
+        "No verified community-contributed narrative has been added to this demo record yet.",
+
+      source:
+        "Demo record only. Official heritage references and community-approved materials must be linked before publication.",
+
+      image: "img/sarawak-longhouse-bg.png"
+    },
+
+    carving: {
+      title: "Decorative Wood Carving",
+      summary:
+        "Decorative wooden details may reflect local artistic traditions. The exact pattern shown has not been verified.",
+
+      background:
+        "Wooden decorative elements appear in various traditional structures and crafts. The origin of an individual carving should be verified before it is assigned to a particular community.",
+
+      significance:
+        "The meaning of this specific motif has not been established in the current portal record. Terooka will not assign symbolic meanings without reliable documentation.",
+
+      community:
+        "No verified story from a local craftsperson or community contributor is available for this carving yet.",
+
+      source:
+        "Verification pending. Add a heritage portal record, archive reference or community-approved source before publishing a specific interpretation.",
+
+      image: "img/sarawak-longhouse-bg.png"
+    }
+  };
+
+  const params = new URLSearchParams(location.search);
+  const storyId = params.get("id") || "longhouse";
+  const story = stories[storyId];
+
+  if (!story) {
+    document.getElementById("story-title").textContent =
+      "Story Not Available";
+
+    document.getElementById("story-summary").textContent =
+      "We could not find a verified cultural record for this item.";
+
+    document.querySelectorAll(".section").forEach(section => {
+      section.style.display = "none";
+    });
+  } else {
+    document.getElementById("story-title").textContent = story.title;
+    document.getElementById("story-summary").textContent = story.summary;
+    document.getElementById("background-text").textContent = story.background;
+    document.getElementById("significance-text").textContent = story.significance;
+    document.getElementById("community-text").textContent = story.community;
+    document.getElementById("source-text").textContent = story.source;
+    document.getElementById("hero-image").src = story.image;
+  }
+
+  function scalePhone() {
+    if (innerWidth <= 500) {
+      document.getElementById("stage").style.transform = "";
+      return;
+    }
+
+    const scale = Math.min(
+      (innerWidth - 32) / 414,
+      (innerHeight - 32) / 868,
+      1
+    );
+
+    document.getElementById("stage").style.transform =
+      `scale(${scale})`;
+  }
+
+  addEventListener("resize", scalePhone);
+  scalePhone();
+</script>
+</body>
+</html>
