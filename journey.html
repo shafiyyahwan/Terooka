@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -774,6 +773,248 @@
         bottom: 13px;
       }
     }
+
+    /* Saved camera photo with original Culture Lens information markers */
+    .preview { justify-content: flex-start; overflow-y: auto; padding: 60px 22px 38px; gap: 10px; }
+    .preview-toolbar { display:flex; width:100%; justify-content:space-between; align-items:center; gap:12px; }
+    .preview-toolbar button { margin:0; align-self:auto; font-size:12px; font-weight:800; }
+    .preview-toolbar .preview-delete { background:#ffe4ec; color:#ae2553; }
+    .preview-toolbar button { width:42px; height:42px; padding:0; display:flex; align-items:center; justify-content:center; border-radius:13px; flex-shrink:0; }
+    .preview-toolbar button svg { display:block; }
+    #photoDetails { width:100%; }
+    .preview-photo-area { position:relative; width:100%; max-width:350px; margin:0 auto; aspect-ratio:780 / 1688; }
+    .preview-photo-area img { display:block; width:100%; height:100%; object-fit:fill; border-radius:14px; }
+    .saved-marker { position:absolute; transform:translate(-50%,-50%); width:35px; height:35px; border:2px solid white; border-radius:50%; background:linear-gradient(110deg,#5724a3,#d842a0); color:white; font-size:17px; font-weight:800; box-shadow:0 0 0 5px #ffffff44; }
+    .preview-info { margin-top:16px; font-size:12px; color:#f5eaff; line-height:1.6; text-align:center; }
+    .preview-story-btn { display:block; width:100%; margin-top:14px; padding:14px; border:0; border-radius:14px; background:#fff; color:#5724a3; font-weight:800; }
+    /* Compact full-screen photo viewer: no oversized gap or vertical scrolling */
+    .preview {
+      padding: 54px 16px 24px;
+      gap: 8px;
+      overflow: hidden;
+      justify-content: flex-start;
+    }
+    .preview-toolbar { flex: 0 0 46px; }
+    .preview-toolbar button { width:46px; height:46px; }
+    #closePreview { font-size: 34px; line-height: 1; font-weight: 400; }
+    #photoDetails {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .preview-photo-area {
+      width: auto;
+      max-width: 100%;
+      height: 100%;
+      max-height: 100%;
+      aspect-ratio: 780 / 1688;
+      flex: 0 1 auto;
+      margin: 0 auto;
+    }
+    .preview-photo-area img { width:100%; height:100%; object-fit:fill; }
+    .saved-marker {
+      width:40px; height:40px; border:3px solid white;
+      border-radius:50%; background:linear-gradient(115deg,#5724a3,#a448b7,#d842a0);
+      color:white; font-size:18px; font-weight:800;
+      box-shadow:0 0 0 7px #ffffff40,0 4px 14px #0008;
+      display:flex; align-items:center; justify-content:center;
+      padding:0; margin:0;
+    }
+    .preview-info { margin:0; flex-shrink:0; }
+    .preview-story-btn { margin:0; flex-shrink:0; }
+    #previewText { flex:0 0 auto; margin:0; padding:4px 0 0; text-align:center; }
+    @media (max-width:500px) { .preview { padding:18px 16px 22px; } }
+
+    /* Photo viewer: centred image, toolbar overlay, camera-matching markers */
+    .preview.show { display:flex; }
+    .preview {
+      padding: 16px !important;
+      overflow: hidden !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 0 !important;
+    }
+    .preview-toolbar {
+      position:absolute; z-index:4;
+      top: max(16px, env(safe-area-inset-top));
+      left:16px; right:16px; width:auto;
+      display:flex; justify-content:space-between;
+    }
+    #photoDetails {
+      position:absolute; inset: 76px 16px 64px;
+      width:auto; min-height:0;
+      display:flex; align-items:center; justify-content:center;
+      padding:0; margin:0;
+    }
+    .preview-photo-area {
+      position:relative; flex:none;
+      width:min(100%, calc((100dvh - 180px) * 780 / 1688));
+      height:auto; max-height:100%;
+      aspect-ratio:780 / 1688;
+      margin:0 auto;
+    }
+    .preview-photo-area img { width:100%; height:100%; object-fit:fill; }
+    .preview .saved-marker {
+      position:absolute; z-index:3;
+      display:flex; align-items:center; justify-content:center;
+      transform:translate(-50%,-50%);
+      width:40px; height:40px; padding:0; margin:0;
+      border:3px solid #fff; border-radius:50%;
+      background:linear-gradient(115deg,#5724a3,#a448b7,#d842a0);
+      color:#fff; font-size:18px; font-weight:800;
+      box-shadow:0 0 0 7px #ffffff40,0 4px 14px #0008;
+    }
+    #previewText {
+      position:absolute; z-index:4;
+      left:12px; right:12px; bottom:22px;
+      margin:0; padding:0; text-align:center;
+    }
+    .preview-info { display:none; }
+    @media (max-width:500px) {
+      #photoDetails { inset: 72px 14px 62px; }
+      .preview-photo-area { width:min(100%, calc((100dvh - 170px) * 780 / 1688)); }
+    }
+    /* Final alignment fix: size against the phone viewer, not browser viewport. */
+    #preview #photoDetails {
+      position: absolute;
+      inset: 72px 16px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      min-height: 0;
+      overflow: hidden;
+    }
+    #preview .preview-photo-area {
+      position: relative;
+      flex: 0 1 auto;
+      width: auto;
+      height: 100%;
+      max-height: 100%;
+      max-width: 100%;
+      aspect-ratio: 780 / 1688;
+      margin: 0;
+    }
+    #preview .preview-photo-area img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: fill;
+    }
+    @media (max-width:500px) {
+      #preview #photoDetails { inset: 72px 14px 62px; }
+    }
+
+    /* Photo viewer refinements: slightly lower image and toolbar, plus navigation. */
+    #preview .preview-toolbar { top: 34px; }
+    #preview #photoDetails { inset: 96px 16px 48px; }
+    #preview .preview-nav {
+      position: absolute; z-index: 5; top: 50%; transform: translateY(-50%);
+      width: 38px; height: 46px; display: flex; align-items: center;
+      justify-content: center; padding: 0; margin: 0;
+      border: 1px solid #ffffff85; border-radius: 13px;
+      background: #21152cbb; color: #fff; font-size: 30px;
+      line-height: 1; font-weight: 500; backdrop-filter: blur(6px);
+    }
+    #preview .preview-nav.prev { left: 4px; }
+    #preview .preview-nav.next { right: 4px; }
+    #preview .preview-nav[hidden] { display: none; }
+    @media (max-width: 500px) {
+      #preview .preview-toolbar { top: calc(28px + env(safe-area-inset-top)); }
+      #preview #photoDetails { inset: 92px 14px 46px; }
+    }
+    .photo-story { position:absolute; z-index:60; inset:0; display:none; align-items:flex-end; background:#160a27a8; }
+    .photo-story.show { display:flex; }
+    .photo-story-sheet { width:100%; max-height:78%; overflow-y:auto; padding:24px 22px 40px; border-radius:26px 26px 0 0; background:#fff9fd; color:#32204b; }
+    .story-close { float:right; border:0; background:#eee1f7; color:#5724a3; border-radius:10px; font-size:24px; width:36px; height:36px; }
+    .story-category { color:#d842a0; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; }
+    .photo-story-sheet h2 { font-size:24px; margin:12px 0; }
+    .photo-story-sheet p { white-space:pre-line; font-size:12px; line-height:1.85; color:#6c5b79; }
+    .photo-story-sheet .story-source { font-size:10px; color:#9987a7; }
+    #storyLinkSaved { display:block; margin-top:14px; padding:15px; border-radius:14px; text-align:center; color:white; background:linear-gradient(110deg,#5724a3,#d842a0); text-decoration:none; font-size:12px; font-weight:800; }
+
+    /* Smaller photo viewer so the "i" markers are fully visible */
+    #preview #photoDetails {
+      inset: 112px 54px 78px;   /* top | sides | bottom: more breathing room */
+      overflow: visible;        /* markers near the edge are no longer clipped */
+    }
+
+    #preview #photoDetails { container-type: size; }
+
+    /* Fit the photo inside the box without distorting its aspect ratio */
+    #preview .preview-photo-area {
+      width: min(100cqw, calc(100cqh * 780 / 1688));
+      height: auto;
+      max-width: none;
+      max-height: none;
+      aspect-ratio: 780 / 1688;
+    }
+
+    #preview .preview-photo-area img {
+      border-radius: 16px;
+      box-shadow: 0 10px 30px #0006;
+    }
+
+    /* Slightly bigger, clearer marker */
+    #preview .saved-marker {
+      width: 42px;
+      height: 42px;
+      font-size: 19px;
+    }
+
+    #preview #previewText {
+      bottom: 30px;
+    }
+
+    @media (max-width: 500px) {
+      #preview #photoDetails { inset: 108px 52px 74px; }
+    }
+
+    /* Lower the close (x) and delete buttons so they sit clear of the phone frame */
+    #preview .preview-toolbar { top: 76px; left: 26px; right: 26px; }
+    #preview .preview-toolbar button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      font-size: 0;
+      line-height: 0;
+    }
+    #preview .preview-toolbar button svg { display: block; margin: auto; }
+    #preview #photoDetails { inset: 132px 54px 78px; }
+    @media (max-width: 500px) {
+      #preview .preview-toolbar { top: calc(64px + env(safe-area-inset-top)); left: 22px; right: 22px; }
+      #preview #photoDetails { inset: 128px 52px 74px; }
+    }
+
+    /* Previous / next arrows styled like the Camera page arrows */
+    #preview .preview-nav {
+      width: 39px;
+      height: 39px;
+      padding: 0;
+      border: 1px solid #ffffff65;
+      border-radius: 13px;
+      background: #21152ca8;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 23px;
+      font-weight: 400;
+      line-height: normal;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    #preview .preview-nav.prev { left: 8px; }
+    #preview .preview-nav.next { right: 8px; }
+
   </style>
 </head>
 
@@ -878,17 +1119,31 @@
 
       <!-- PHOTO PREVIEW -->
       <div class="preview" id="preview">
-        <button id="closePreview">Close</button>
-        <img id="previewImg" alt="Journey photo">
+        <div class="preview-toolbar">
+          <button id="closePreview" type="button" aria-label="Close photo" title="Close photo"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          <button id="deletePhoto" type="button" class="preview-delete" aria-label="Delete photo" title="Delete photo"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M5 6l1 15h12l1-15M10 10v7M14 10v7"/></svg></button>
+        </div>
+        <div id="photoDetails"></div>
+        <button type="button" class="preview-nav prev" id="previousPhoto" aria-label="Previous photo">&#8249;</button>
+        <button type="button" class="preview-nav next" id="nextPhoto" aria-label="Next photo">&#8250;</button>
         <p id="previewText"></p>
+      </div>
+      <div class="photo-story" id="photoStory">
+        <div class="photo-story-sheet">
+          <button id="closeStory" type="button" class="story-close">×</button>
+          <div class="story-category" id="storyCategory"></div>
+          <h2 id="storyTitle"></h2>
+          <p id="storyDescription"></p>
+          <p class="story-source" id="storySource"></p>
+          <a id="storyLinkSaved" href="#">Read Full Story</a>
+        </div>
       </div>
 
     </div>
   </div>
 </div>
 
-<input type="file" id="photoInput"
-       accept="image/*" multiple hidden>
+
 
 <script src="places.js"></script>
 
@@ -1289,8 +1544,7 @@
             'camera',
             'No photos yet',
             'Your journey photos will appear here, organised by travel day.',
-            old ? '' :
-              '<button class="btn primary" data-action="photo">Add Photos</button>'
+            ''
           );
           return;
         }
@@ -1323,12 +1577,7 @@
               </button>
             `).join('')}
           </div>
-        `).join('') + (old ? '' : `
-          <button class="btn secondary add-photo-btn"
-                  data-action="photo">
-            Add More Photos
-          </button>
-        `);
+        `).join('');
 
         return;
       }
@@ -1800,120 +2049,109 @@
     }
 
     /* =====================================
-       ADD PHOTOS
-    ===================================== */
-
-    function addPhoto() {
-      $('#photoInput').click();
-    }
-
-    function resizeImage(file) {
-      return new Promise((resolve, reject) => {
-        const image = new Image();
-        const url = URL.createObjectURL(file);
-
-        image.onload = () => {
-          const scale = Math.min(
-            1,
-            650 / Math.max(image.width, image.height)
-          );
-
-          const canvas = document.createElement('canvas');
-
-          canvas.width = Math.max(
-            1,
-            Math.round(image.width * scale)
-          );
-
-          canvas.height = Math.max(
-            1,
-            Math.round(image.height * scale)
-          );
-
-          canvas.getContext('2d').drawImage(
-            image,
-            0,
-            0,
-            canvas.width,
-            canvas.height
-          );
-
-          URL.revokeObjectURL(url);
-
-          resolve(
-            canvas.toDataURL('image/jpeg', 0.65)
-          );
-        };
-
-        image.onerror = () => {
-          URL.revokeObjectURL(url);
-          reject(new Error('Invalid image'));
-        };
-
-        image.src = url;
-      });
-    }
-
-    $('#photoInput').onchange = async event => {
-      const journey = active();
-      if (!journey) return;
-
-      const files = [...event.target.files].slice(0, 6);
-      event.target.value = '';
-
-      const list = read(photoKey);
-
-      for (const file of files) {
-        try {
-          const src = await resizeImage(file);
-
-          list.push({
-            id: 'P-' + Date.now() + '-' +
-              Math.random().toString(36).slice(2, 7),
-            journeyId: journey.id,
-            src,
-            takenAt: new Date().toISOString()
-          });
-
-        } catch (error) {
-          console.error(error);
-        }
-      }
-
-      if (write(photoKey, list)) {
-        tab = 'photos';
-        render();
-      }
-    };
-
-    /* =====================================
        PHOTO PREVIEW
     ===================================== */
 
+    let previewedPhotoId = null;
+    let previewPhotoIds = [];
+
+    function navigatePhoto(direction) {
+      if (!previewPhotoIds.length) return;
+      const index = previewPhotoIds.findIndex(id => String(id) === String(previewedPhotoId));
+      if (index < 0) return;
+      const next = index + direction;
+      if (next < 0 || next >= previewPhotoIds.length) return;
+      previewPhoto(previewPhotoIds[next]);
+    }
+    $('#previousPhoto').onclick = () => navigatePhoto(-1);
+    $('#nextPhoto').onclick = () => navigatePhoto(1);
+
     function previewPhoto(id) {
-      const journey = view === 'pastDetail'
-        ? selected
-        : active();
-
+      const journey = view === 'pastDetail' ? selected : active();
       if (!journey) return;
-
-      const photo = photos(journey).find(
-        item => String(item.id) === String(id)
-      );
-
+      const photo = photos(journey).find(item => String(item.id) === String(id));
       if (!photo) return;
-
-      $('#previewImg').src = photo.src || photo.image;
-
-      $('#previewText').textContent =
-        'Day ' + travelDay(journey, photo) +
+      // Follow the same day-descending order as the journey photo grid.
+      previewPhotoIds = photos(journey).slice().sort((a, b) =>
+        travelDay(journey, b) - travelDay(journey, a)
+      ).map(item => item.id);
+      previewedPhotoId = id;
+      const currentIndex = previewPhotoIds.findIndex(photoId => String(photoId) === String(id));
+      $('#previousPhoto').hidden = currentIndex <= 0;
+      $('#nextPhoto').hidden = currentIndex >= previewPhotoIds.length - 1;
+      $('#previewText').textContent = 'Day ' + travelDay(journey, photo) +
         ' · ' + fmt(photo.takenAt || photo.createdAt);
 
+      const details = $('#photoDetails');
+      const discoveries = Array.isArray(photo.discoveries) ? photo.discoveries : [];
+      const pose = photo.poseInfo;
+      details.innerHTML = '';
+      const photoArea = document.createElement('div');
+      photoArea.className = 'preview-photo-area';
+      const photoImage = document.createElement('img');
+      photoImage.src = photo.src || photo.image;
+      photoImage.alt = 'Saved journey photo';
+      photoArea.appendChild(photoImage);
+      if (discoveries.length) {
+        discoveries.forEach((discovery, index) => {
+          const marker = document.createElement('button');
+          marker.className = 'saved-marker';
+          marker.textContent = 'i';
+          marker.title = discovery.title || 'Cultural information';
+          marker.style.left = Math.max(0, Math.min(100, Number(discovery.x) || 50)) + '%';
+          marker.style.top = Math.max(0, Math.min(100, Number(discovery.y) || 50)) + '%';
+          marker.onclick = () => showPhotoStory(discovery);
+          photoArea.appendChild(marker);
+        });
+      }
+      details.appendChild(photoArea);
+      if (pose && !discoveries.length) {
+        const marker = document.createElement('button');
+        marker.className = 'saved-marker';
+        marker.textContent = 'i';
+        marker.title = 'Cultural inspiration';
+        marker.setAttribute('aria-label', 'Learn about this pose');
+        marker.style.left = '50%';
+        marker.style.top = '50%';
+        marker.onclick = () => showPhotoStory(pose);
+        photoArea.appendChild(marker);
+      }
       $('#preview').classList.add('show');
     }
 
+    function showPhotoStory(data) {
+      $('#storyCategory').textContent = data.category || 'Cultural information';
+      $('#storyTitle').textContent = data.title || 'Cultural Story';
+      $('#storyDescription').textContent = [data.description, data.note].filter(Boolean).join('\n\n');
+      $('#storySource').textContent = data.source || '';
+      const link = $('#storyLinkSaved');
+      if (data.storyUrl && /^cultural-story\.html\?id=[a-zA-Z0-9_-]+$/.test(data.storyUrl)) {
+        link.href = data.storyUrl + '&from=journey';
+        link.style.display = 'block';
+      } else {
+        link.style.display = 'none';
+      }
+      $('#photoStory').classList.add('show');
+    }
+
+    $('#closeStory').onclick = () => $('#photoStory').classList.remove('show');
     $('#closePreview').onclick = () => {
+      $('#photoStory').classList.remove('show');
       $('#preview').classList.remove('show');
+    };
+    $('#deletePhoto').onclick = () => {
+      const journey = view === 'pastDetail' ? selected : active();
+      if (!journey || previewedPhotoId == null) return;
+      if (!confirm('Delete this photo from your journey? This cannot be undone.')) return;
+      const remaining = read(photoKey).filter(p =>
+        !(belongs(p, journey) && String(p.id) === String(previewedPhotoId))
+      );
+      if (write(photoKey, remaining)) {
+        $('#photoStory').classList.remove('show');
+        $('#preview').classList.remove('show');
+        previewedPhotoId = null;
+        render();
+      }
     };
 
     /* =====================================
@@ -2079,10 +2317,6 @@
 
         case 'scan':
           scanQR();
-          break;
-
-        case 'photo':
-          addPhoto();
           break;
 
         case 'end':

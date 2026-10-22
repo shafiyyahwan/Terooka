@@ -1,247 +1,97 @@
-/*! HTML5 Boilerplate v9.0.1 | MIT License | https://html5boilerplate.com/ */
+/* Terooka — shared design tokens and reusable UI components.
+   Load BEFORE page-specific styles: <link rel="stylesheet" href="global.css">
+   Existing page CSS can override these rules as needed. */
 
-/* main.css 3.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
-/*
- * What follows is the result of much research on cross-browser styling.
- * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
- * Kroc Camen, and the H5BP dev community and team.
- */
-
-/* ==========================================================================
-   Base styles: opinionated defaults
-   ========================================================================== */
-
-html {
-  color: #222;
-  font-size: 1em;
-  line-height: 1.4;
+:root {
+  --purple: #5724a3;
+  --pink: #d842a0;
+  --ink: #32204b;
+  --gradient: linear-gradient(115deg, #5724a3, #a448b7, #d842a0);
+  --page-gradient: linear-gradient(145deg, #f8f1ff 0%, #f4eafa 48%, #ffeef8 100%);
+  --surface: #ffffff;
+  --muted: #6c5b79;
+  --border-soft: #e8dbea;
+  --phone-width: 414px;
+  --phone-height: 868px;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Fraunces', Georgia, serif;
 }
 
-/*
- * Remove text-shadow in selection highlight:
- * https://twitter.com/miketaylr/status/12228805301
- *
- * Customize the background color to match your design.
- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: var(--font-body); color: var(--ink); }
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, a:focus-visible { outline: 3px solid #ffc6ef; outline-offset: 3px; }
+img { max-width: 100%; }
 
-::-moz-selection {
-  background: #b3d4fc;
-  text-shadow: none;
+/* Opt in to the shared gradient on ordinary pages.
+   On camera, the scene should remain its own full-screen background. */
+.terooka-page-bg { background: var(--page-gradient); }
+.terooka-heading { font-family: var(--font-heading); }
+.terooka-muted { color: var(--muted); }
+
+/* Reusable controls; prefixed to avoid changing existing page buttons. */
+.terooka-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; min-height: 44px; padding: 10px 16px;
+  border: 0; border-radius: 14px; font-weight: 800;
+  text-decoration: none;
+}
+.terooka-btn-primary { background: var(--gradient); color: #fff; }
+.terooka-btn-secondary { background: #f0e4f8; color: var(--purple); }
+.terooka-icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; padding: 0;
+  border: 1px solid #ffffff65; border-radius: 13px;
+  background: #21152ca8; color: #fff;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  font-size: 24px; line-height: 1;
+}
+.terooka-card {
+  background: var(--surface); border: 1px solid var(--border-soft);
+  border-radius: 18px;
 }
 
-::selection {
-  background: #b3d4fc;
-  text-shadow: none;
+/* Shared phone frame: opt in with terooka-* classes.
+   Avoid applying this to the existing .phone/.screen until those pages
+   have been migrated, because they already define their own frame. */
+.terooka-stage { position: relative; width: var(--phone-width); height: var(--phone-height); transform-origin: center; }
+.terooka-phone {
+  position: relative; width: var(--phone-width); height: var(--phone-height);
+  padding: 12px; background: #111015; border-radius: 62px;
+  box-shadow: 0 24px 70px rgba(54,25,88,.23), 0 0 0 2px #343039;
+}
+.terooka-phone::before, .terooka-phone::after {
+  content: ''; position: absolute; left: -5px; width: 4px;
+  background: #302b35; border-radius: 4px;
+}
+.terooka-phone::before { top: 155px; height: 52px; }
+.terooka-phone::after { top: 228px; height: 69px; }
+.terooka-screen {
+  position: relative; width: 100%; height: 100%;
+  border-radius: 50px; overflow: hidden; background: var(--page-gradient);
+}
+.terooka-island {
+  position: absolute; z-index: 30; top: 11px; left: 50%;
+  transform: translateX(-50%); width: 118px; height: 34px;
+  background: #08070a; border-radius: 30px;
+}
+.terooka-status {
+  position: absolute; z-index: 29; top: 18px; left: 34px; right: 30px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 14px; font-weight: 800; pointer-events: none;
+}
+.terooka-homebar {
+  position: absolute; z-index: 30; bottom: 8px; left: 50%;
+  transform: translateX(-50%); width: 126px; height: 5px;
+  background: rgba(255,255,255,.9); border-radius: 20px; pointer-events: none;
 }
 
-/*
- * A better looking default horizontal rule
- */
-
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid #ccc;
-  margin: 1em 0;
-  padding: 0;
+@media (max-width: 500px) {
+  .terooka-stage, .terooka-phone { width: 100%; height: 100dvh; transform: none !important; }
+  .terooka-phone { padding: 0; border-radius: 0; box-shadow: none; }
+  .terooka-phone::before, .terooka-phone::after,
+  .terooka-island, .terooka-status, .terooka-homebar { display: none; }
+  .terooka-screen { border-radius: 0; }
 }
-
-/*
- * Remove the gap between audio, canvas, iframes,
- * images, videos and the bottom of their containers:
- * https://github.com/h5bp/html5-boilerplate/issues/440
- */
-
-audio,
-canvas,
-iframe,
-img,
-svg,
-video {
-  vertical-align: middle;
-}
-
-/*
- * Remove default fieldset styles.
- */
-
-fieldset {
-  border: 0;
-  margin: 0;
-  padding: 0;
-}
-
-/*
- * Allow only vertical resizing of textareas.
- */
-
-textarea {
-  resize: vertical;
-}
-
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
-
-/* ==========================================================================
-   Helper classes
-   ========================================================================== */
-
-/*
- * Hide visually and from screen readers
- */
-
-.hidden,
-[hidden] {
-  display: none !important;
-}
-
-/*
- * Hide only visually, but have it available for screen readers:
- * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
- *
- * 1. For long content, line feeds are not interpreted as spaces and small width
- *    causes content to wrap 1 word per line:
- *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
- */
-
-.visually-hidden {
-  border: 0;
-  clip: rect(0, 0, 0, 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-  /* 1 */
-}
-
-/*
- * Extends the .visually-hidden class to allow the element
- * to be focusable when navigated to via the keyboard:
- * https://www.drupal.org/node/897638
- */
-
-.visually-hidden.focusable:active,
-.visually-hidden.focusable:focus {
-  clip: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-  position: static;
-  white-space: inherit;
-  width: auto;
-}
-
-/*
- * Hide visually and from screen readers, but maintain layout
- */
-
-.invisible {
-  visibility: hidden;
-}
-
-/*
- * Clearfix: contain floats
- *
- * The use of `table` rather than `block` is only necessary if using
- * `::before` to contain the top-margins of child elements.
- */
-
-.clearfix::before,
-.clearfix::after {
-  content: "";
-  display: table;
-}
-
-.clearfix::after {
-  clear: both;
-}
-
-/* ==========================================================================
-   EXAMPLE Media Queries for Responsive Design.
-   These examples override the primary ('mobile first') styles.
-   Modify as content requires.
-   ========================================================================== */
-
-@media only screen and (min-width: 35em) {
-  /* Style adjustments for viewports that meet the condition */
-}
-
-@media print,
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 1.25dppx),
-  (min-resolution: 120dpi) {
-  /* Style adjustments for high resolution devices */
-}
-
-/* ==========================================================================
-   Print styles.
-   Inlined to avoid the additional HTTP request:
-   https://www.phpied.com/delay-loading-your-print-css/
-   ========================================================================== */
-
-@media print {
-  *,
-  *::before,
-  *::after {
-    background: #fff !important;
-    color: #000 !important;
-    /* Black prints faster */
-    box-shadow: none !important;
-    text-shadow: none !important;
-  }
-
-  a,
-  a:visited {
-    text-decoration: underline;
-  }
-
-  a[href]::after {
-    content: " (" attr(href) ")";
-  }
-
-  abbr[title]::after {
-    content: " (" attr(title) ")";
-  }
-
-  /*
-   * Don't show links that are fragment identifiers,
-   * or use the `javascript:` pseudo protocol
-   */
-  a[href^="#"]::after,
-  a[href^="javascript:"]::after {
-    content: "";
-  }
-
-  pre {
-    white-space: pre-wrap !important;
-  }
-
-  pre,
-  blockquote {
-    border: 1px solid #999;
-    page-break-inside: avoid;
-  }
-
-  tr,
-  img {
-    page-break-inside: avoid;
-  }
-
-  p,
-  h2,
-  h3 {
-    orphans: 3;
-    widows: 3;
-  }
-
-  h2,
-  h3 {
-    page-break-after: avoid;
-  }
-}
-
