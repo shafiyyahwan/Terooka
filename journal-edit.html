@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -181,7 +180,7 @@
     .viewer.editing .edhost>.nb:nth-child(2){right:0}
     .viewer.editing .nav .nb{display:none}
     .viewer.editing .nav{justify-content:center}
-    .viewer.editing .nav .lbl{flex:none}
+    .viewer.editing .nav .lbl{flex:none;text-align:center}
     .viewer.editing .deck,
     .viewer.editing .strip,
     .viewer.editing .hint{display:none}
@@ -206,11 +205,12 @@
     }
     .bd{
       position:absolute;
-      top:-6px;
-      bottom:-6px;
+      top:0;
+      bottom:0;
       background:linear-gradient(135deg,#7d32b8,#46197f);
       box-shadow:0 20px 34px #0007;
     }
+    .book.cover-view .bd{visibility:hidden}
     .bd.l{
       left:-6px;
       width:calc(50% + 6px);
@@ -377,6 +377,7 @@
     .it.sel{
       outline:2px dashed var(--pink);
       outline-offset:3px;
+      z-index:30; /* FIX: selected item (and its buttons) always on top */
     }
     .it img{
       width:100%;
@@ -400,8 +401,9 @@
       background:white;
       padding:7px;
       border-radius:19px;
-      overflow:hidden;
+      overflow:visible; /* FIX: don't clip the control buttons */
     }
+    .it.photo.frame-rounded img{border-radius:12px}
     .it.photo.frame-film{
       background:#24202c;
       padding:10px 7px;
@@ -419,10 +421,26 @@
       background:transparent;
       box-shadow:none;
     }
+
+    /* WASHI TAPE */
     .it.tape{
       height:22px;
-      opacity:.88;
-      border-radius:3px;
+      border-radius:3px; /* FIX: opacity removed so buttons stay solid (see color-mix in JS) */
+    }
+    .it.tape::after{ /* bigger invisible grab area */
+      content:'';
+      position:absolute;
+      inset:-8px 0;
+    }
+    .it.tape .ctl.x{
+      top:-36px;
+      right:-4px;
+    }
+    .it.tape .ctl.rs{
+      top:50%;
+      bottom:auto;
+      right:-16px;
+      transform:translateY(-50%);
     }
     .it.tape.pattern-dots{
       background-image:radial-gradient(#ffffffb8 2px,transparent 3px)!important;
@@ -431,6 +449,7 @@
     .it.tape.pattern-stripes{
       background-image:repeating-linear-gradient(45deg,#ffffff77 0 5px,transparent 5px 11px)!important;
     }
+
     .it.label{
       padding:9px 10px;
       background:#fce6ed;
@@ -511,6 +530,7 @@
     /* EDITOR */
     .edwrap{
       position:relative;
+      z-index:20; /* FIX: editor (and its handles) sits above the page arrows */
       flex:none;
     }
     .ed{
@@ -537,19 +557,47 @@
       color:white;
       cursor:pointer;
     }
+
+    /* CONTROL BUTTONS */
     .ctl{
       position:absolute;
+      box-sizing:border-box;
       display:flex;
       align-items:center;
       justify-content:center;
       padding:0;
       text-align:center;
       font-family:var(--sans);
+      font-style:normal;
+      font-weight:800;
+      white-space:nowrap;
+      letter-spacing:0;
       border:0;
       cursor:pointer;
       line-height:1;
       z-index:5;
       color:white;
+      -webkit-user-select:none;
+      user-select:none;
+      -webkit-tap-highlight-color:transparent;
+    }
+    /* bigger invisible touch area */
+    .ctl::before{
+      content:'';
+      position:absolute;
+      inset:-6px;
+    }
+    /* SVG icons are perfectly centred, unlike font glyphs */
+    .ctl svg{
+      width:58%;
+      height:58%;
+      display:block;
+      pointer-events:none;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:2.4;
+      stroke-linecap:round;
+      stroke-linejoin:round;
     }
     .ctl.x{
       top:-18px;
@@ -558,7 +606,6 @@
       height:30px;
       border-radius:50%;
       background:var(--error);
-      font-size:16px;
     }
     .ctl.fr{
       top:-18px;
@@ -567,23 +614,21 @@
       height:30px;
       border-radius:50%;
       background:var(--purple);
-      font-size:14px;
     }
     .ctl.rs{
-      right:-14px;
-      bottom:-14px;
-      width:28px;
-      height:28px;
+      width:32px;
+      height:32px;
+      right:-16px;
+      bottom:-16px;
       border-radius:50%;
       background:var(--pink);
       border:3px solid white;
       touch-action:none;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:0;
-      font-size:19px;
-      font-weight:800;
+    }
+    .ctl.rs svg{
+      width:76%;
+      height:76%;
+      stroke-width:2.6;
     }
     .ctl.rot{
       left:-16px;
@@ -594,8 +639,11 @@
       border-radius:50%;
       background:var(--purple);
       border:2px solid white;
-      font-size:17px;
       touch-action:none;
+    }
+    .ctl.rot svg{
+      width:70%;
+      height:70%;
     }
     .ctl.ai{
       top:-18px;
@@ -605,9 +653,16 @@
       height:30px;
       border-radius:15px;
       background:#D842A0;
-      font:800 11px var(--sans);
+      font-size:11px;
     }
-    .ctl.font-down,.ctl.font-up{bottom:-17px;width:31px;height:27px;border-radius:10px;background:var(--purple);font-size:12px;font-weight:800}
+    .ctl.font-down,.ctl.font-up{
+      bottom:-17px;
+      width:31px;
+      height:27px;
+      border-radius:10px;
+      background:var(--purple);
+      font-size:12px;
+    }
     .ctl.font-down{left:0}
     .ctl.font-up{left:38px}
     .ctl.edittxt{
@@ -619,6 +674,7 @@
       background:var(--purple);
       font-size:14px;
     }
+
     .tray{
       display:none;
       gap:8px;
@@ -795,6 +851,29 @@
     @media(prefers-reduced-motion:reduce){
       .toast{transition:none}
     }
+
+    /* Match the shared Home / Camera frame */
+    .phone::before,.phone::after{content:"";position:absolute;left:-5px;width:4px;background:#302b35;border-radius:4px}
+    .phone::before{top:155px;height:52px}.phone::after{top:228px;height:69px}
+    .status{right:30px;display:flex;align-items:center;justify-content:space-between;z-index:49;color:white}
+    .status svg{display:block;flex:none}
+    .vh .ib,.nb{display:flex;align-items:center;justify-content:center;padding:0;border:1px solid #ffffff65;background:#21152ca8;border-radius:13px;backdrop-filter:blur(12px);font-family:var(--sans)}
+    .vh .ib svg,.nb svg{display:block;flex:none}
+    .vh .ib{width:40px;min-width:40px;height:40px}
+    .vh::after{content:"";width:40px;flex:none}
+    .lbl{flex:0 0 auto;min-width:120px;text-align:center;font:700 12px var(--sans);white-space:nowrap}
+    .nav{justify-content:center;gap:10px}
+    .nb{width:40px;height:40px;flex:none}
+    .cover{justify-content:flex-start;gap:0;padding:0 18px 0 30px;border-radius:5px 12px 12px 5px}
+    .cover::before{width:14px;background:#0004;border-right:2px dashed #ffffff55}
+    .cover::after{display:none}
+    .cover-spine{position:absolute;left:0;top:0;bottom:0;width:14px;background:#0003;border-right:2px dashed #ffffff55}
+    .cover-bookmark{position:absolute;top:0;bottom:0;right:20px;width:9px;background:#FFD166;box-shadow:-1px 0 3px #0003}
+    .cover-plate{position:relative;margin-top:54px;margin-right:28px;padding:13px 10px;background:#fffdf8ef;color:#32145B;border-radius:4px;z-index:1}
+    .cover .ct{font:600 22px/1.2 var(--serif)}
+    .cover .cp{position:relative;z-index:1;margin-top:12px;font:500 13px/1.5 var(--sans);color:#fff}
+    @media(max-width:500px){.phone::before,.phone::after,.status{display:none}}
+
   </style>
 </head>
 <body>
@@ -802,7 +881,25 @@
   <div class="phone">
     <div class="screen">
       <div class="island"></div>
-      <div class="status">9:41</div>
+      <div class="status" aria-label="Phone status">
+        <span>9:41</span>
+        <svg width="70" height="15" viewBox="0 0 70 15" fill="none" aria-hidden="true">
+          <g fill="white">
+            <rect x="0" y="10" width="3" height="5" rx="1"/>
+            <rect x="5" y="7" width="3" height="8" rx="1"/>
+            <rect x="10" y="4" width="3" height="11" rx="1"/>
+            <rect x="15" y="1" width="3" height="14" rx="1"/>
+          </g>
+          <g stroke="white" stroke-width="1.8" stroke-linecap="round">
+            <path d="M27 5Q34-1 41 5"/>
+            <path d="M30 9Q34 5 38 9"/>
+          </g>
+          <circle cx="34" cy="12" r="1.5" fill="white"/>
+          <rect x="48" y="2" width="19" height="11" rx="3" stroke="white" stroke-width="1.3"/>
+          <rect x="50" y="4" width="15" height="7" rx="1.6" fill="white"/>
+          <path d="M69 5v5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
       <section class="viewer" id="viewer" aria-label="Journal editor"></section>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
       <div class="homebar"></div>
@@ -907,11 +1004,13 @@
     /* PAGE CONTENT */
 
     function coverNode(){
-      return el('div',{class:'pgv cover'},
-        el('div',{class:'emb',text:'Terooka'}),
-        el('div',{class:'ct',text:cur.title||'Untitled journal'}),
+      const node=el('div',{class:'pgv cover'},
+        el('div',{class:'cover-spine'}),el('div',{class:'cover-bookmark'}),
+        el('div',{class:'cover-plate'},el('div',{class:'ct',text:cur.title||'Untitled journal'})),
         el('div',{class:'cp',text:cur.place||''})
       );
+      if(cur.customCoverColor)node.style.background=cur.customCoverColor;
+      return node;
     }
 
     function styleIt(n,it){
@@ -946,6 +1045,10 @@
           span.setAttribute('role','textbox');
           span.setAttribute('aria-label','Edit journal text');
           span.addEventListener('pointerdown',e=>e.stopPropagation());
+          // FIX: tapping the text now selects the item so its buttons show
+          span.addEventListener('focus',()=>{
+            if(sel!==it){sel=it;sync();}
+          });
           span.addEventListener('input',()=>{it.txt=span.innerText.slice(0,400);save();});
           span.addEventListener('blur',()=>{it.txt=span.innerText.slice(0,400);save();});
         }
@@ -953,7 +1056,8 @@
       }else if(it.t==='label'){
         n.textContent=it.txt||'';
       }else if(it.t==='tape'){
-        n.style.backgroundColor=it.color||'#F5A9BA';
+        // FIX: transparency on the colour only, so buttons are not faded
+        n.style.backgroundColor='color-mix(in srgb,'+(it.color||'#F5A9BA')+' 88%,transparent)';
         n.classList.add('pattern-'+(it.pattern||'plain'));
       }else{
         const im=el('img',{
@@ -1030,6 +1134,24 @@
       },svg,label);
     }
 
+    /* CONTROL ICONS (SVG, perfectly centred) */
+
+    const ctlIcons={
+      x:'<path d="M6 6l12 12M18 6L6 18"/>',
+      resize:'<path d="M6 6l12 12M6 10V6h4M18 14v4h-4"/>',
+      resizeH:'<path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
+      rotate:'<path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v5h-5"/>',
+      frame:'<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8.5" y="8.5" width="7" height="7"/>'
+    };
+
+    function ctlIcon(name){
+      const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      s.setAttribute('viewBox','0 0 24 24');
+      s.setAttribute('aria-hidden','true');
+      s.innerHTML=ctlIcons[name];
+      return s;
+    }
+
     /* BUILD */
 
     function build(){
@@ -1040,7 +1162,6 @@
         class:'nb',
         type:'button',
         'aria-label':'Previous',
-        text:'‹',
         onclick:()=>step(-1)
       });
 
@@ -1048,10 +1169,11 @@
         class:'nb',
         type:'button',
         'aria-label':'Next',
-        text:'›',
         onclick:()=>step(1)
       });
 
+      prevB.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>';
+      nextB.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>';
       lbl=el('div',{class:'lbl'});
 
       front=el('div',{class:'f'});
@@ -1106,24 +1228,13 @@
         el('button',{
           class:'ib',
           type:'button',
-          text:'‹',
           'aria-label':'Back to journals',
           onclick:closeBook
-        }),
+        },el('span',{text:'‹'})),
         el('div',{class:'t',text:cur.title}),
-        el('button',{
-          class:'ib',
-          type:'button',
-          text:'Delete',
-          onclick:()=>{
-            if(!confirm('Delete this whole journal?'))return;
-            books=books.filter(b=>String(b.id)!==String(cur.id));
-            save();
-            location.href='journal.html';
-          }
-        })
       ));
 
+      V.querySelector('.vh .ib').innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>';
       V.appendChild(el('div',{class:'body'},
         el('div',{class:'nav'},prevB,lbl,nextB),
         deck,edHost,strip,hint
@@ -1224,6 +1335,7 @@
 
       book.style.setProperty('--s',0);
       book.style.setProperty('--c',c);
+      book.classList.toggle('cover-view',L<0);
       book.style.transform='translateX('+(-25*c)+'%)';
       book.style.setProperty('--sl',L<0?'0px':'3px');
       book.style.setProperty('--sr','3px');
@@ -1282,7 +1394,7 @@
 
     function setT(t){
       leafEl.style.transform='rotateY('+
-        (F.fwd?-180*t:-180*(1-t))+'deg';
+        (F.fwd?-180*t:-180*(1-t))+'deg)';
 
       book.style.setProperty('--s',Math.sin(Math.PI*t).toFixed(3));
 
@@ -1516,7 +1628,6 @@
         class:'ctl x',
         type:'button',
         'aria-label':'Remove item',
-        text:'×',
         onclick:e=>{
           e.stopPropagation();
           const items=pg().items;
@@ -1524,7 +1635,7 @@
           save();
           renderPage();
         }
-      }));
+      },ctlIcon('x')));
 
       // Text is edited directly on the page via contenteditable.
 
@@ -1532,7 +1643,7 @@
         n.appendChild(el('button',{
           class:'ctl ai',
           type:'button',
-          text:'AI ✦',
+          text:'AI',
           'aria-label':'Suggest cultural caption for this photo',
           onclick:e=>{
             e.stopPropagation();
@@ -1542,21 +1653,21 @@
         n.appendChild(el('button',{
           class:'ctl fr',
           type:'button',
-          text:'F',
           'aria-label':'Change photo frame',
           onclick:e=>{
             e.stopPropagation();
             cycleFrame(it,n);
           }
-        }));
+        },ctlIcon('frame')));
       }
 
+      // tape only changes width, so it gets a left-right arrow;
+      // everything else gets the tilted double arrowhead
       const resize=el('span',{
         class:'ctl rs',
         role:'slider',
-        'aria-label':'Drag to resize item',
-        text:'↔'
-      });
+        'aria-label':'Drag to resize item'
+      },ctlIcon(it.t==='tape'?'resizeH':'resize'));
 
       resize.addEventListener('pointerdown',e=>{
         e.stopPropagation();
@@ -1589,9 +1700,8 @@
       const rotate=el('span',{
         class:'ctl rot',
         role:'slider',
-        'aria-label':'Rotate item',
-        text:'↻'
-      });
+        'aria-label':'Rotate item'
+      },ctlIcon('rotate'));
 
       rotate.addEventListener('pointerdown',e=>{
         e.stopPropagation();
@@ -1833,14 +1943,16 @@
       if(!ensureJourney())return;
 
       const unlocked=new Set(
-        stampRecords().map(s=>s.placeId||s.id)
+        stampRecords().map(s=>String(s.placeId||s.id))
       );
 
       const library=typeof STAMP_LIB!=='undefined'
         ?STAMP_LIB
         :[];
 
-      const available=library.filter(s=>unlocked.has(s.id));
+      const available=library.filter(s=>unlocked.has(String(s.id)));
+      // Also show collected stamps when the static library is not loaded.
+      stampRecords().forEach(r=>{const id=String(r.placeId||r.id||'');if(id&&!available.some(s=>String(s.id)===id))available.push({id,name:r.placeName||r.name||'Collected Stamp'});});
 
       if(!available.length){
         tray.appendChild(el('span',{
@@ -2012,6 +2124,8 @@
 
     save();
     build();
+    function fitPhone(){const stage=document.querySelector('.stage');if(innerWidth<=500){stage.style.transform='none';return;}stage.style.transform='scale('+Math.min(1,(innerHeight-28)/868,(innerWidth-28)/414)+')';}
+    fitPhone();addEventListener('resize',fitPhone);
 
     if(!journey()){
       showToast('Link this journal to a journey to use photos and stamps.');
@@ -2030,3 +2144,4 @@
 </script>
 </body>
 </html>
+

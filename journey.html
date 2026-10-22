@@ -20,11 +20,16 @@
 
     * { box-sizing: border-box; }
 
-    body {
+    html, body {
       margin: 0;
-      min-height: 100vh;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100dvh;
       display: grid;
       place-items: center;
+      overflow: hidden;
       background: #ede4f5;
       color: var(--ink);
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -34,27 +39,35 @@
     button { cursor: pointer; }
     button:disabled { opacity: .5; cursor: default; }
 
-    button:focus-visible, a:focus-visible {
+    button:focus-visible,
+    a:focus-visible {
       outline: 3px solid var(--pink);
       outline-offset: 3px;
     }
 
-    /* PHONE FRAME */
+    /* ======================================
+       PHONE FRAME — MATCH HOME
+    ====================================== */
+
     .stage {
       position: relative;
       width: 414px;
       height: 868px;
-      margin: auto;
-      transform-origin: center center;
+      flex-shrink: 0;
+      margin: 0;
+      transform-origin: center;
     }
 
     .phone {
-      position: absolute;
-      inset: 0;
+      position: relative;
+      width: 414px;
+      height: 868px;
       padding: 12px;
       background: #111015;
       border-radius: 62px;
-      box-shadow: 0 24px 70px #3619583b, 0 0 0 2px #343039;
+      box-shadow:
+        0 24px 70px rgba(54,25,88,.23),
+        0 0 0 2px #343039;
     }
 
     .phone::before,
@@ -67,33 +80,46 @@
       border-radius: 4px;
     }
 
-    .phone::before { top: 155px; height: 52px; }
-    .phone::after { top: 228px; height: 69px; }
+    .phone::before {
+      top: 155px;
+      height: 52px;
+    }
+
+    .phone::after {
+      top: 228px;
+      height: 69px;
+    }
 
     .screen {
       position: relative;
-      width: 100%;
-      height: 100%;
+      width: 390px;
+      height: 844px;
       overflow: hidden;
       border-radius: 50px;
-      background: linear-gradient(160deg,#f3e8fc,#fff8fb 65%,#fff4ee);
+      background: linear-gradient(
+        160deg,
+        #f0e4fb 0%,
+        #f9eaf5 35%,
+        #fff9f7 70%,
+        #ffece5 100%
+      );
     }
 
     .island {
       position: absolute;
-      z-index: 10;
+      z-index: 30;
       top: 11px;
       left: 50%;
       transform: translateX(-50%);
       width: 118px;
       height: 34px;
       border-radius: 30px;
-      background: #100c15;
+      background: #08070a;
     }
 
     .status {
       position: absolute;
-      z-index: 9;
+      z-index: 29;
       top: 18px;
       left: 34px;
       right: 30px;
@@ -106,7 +132,7 @@
 
     .homebar {
       position: absolute;
-      z-index: 9;
+      z-index: 30;
       bottom: 8px;
       left: 50%;
       transform: translateX(-50%);
@@ -117,13 +143,21 @@
     }
 
     .scroll {
-      height: 100%;
+      position: absolute;
+      inset: 0;
+      z-index: 2;
       overflow-y: auto;
-      padding: 67px 20px 118px;
+      overflow-x: hidden;
+      padding: 64px 20px 118px;
       scrollbar-width: none;
+      scroll-behavior: smooth;
     }
 
     .scroll::-webkit-scrollbar { display: none; }
+
+    /* ======================================
+       TYPOGRAPHY
+    ====================================== */
 
     h1, h2 {
       font-family: 'Fraunces', Georgia, serif;
@@ -159,8 +193,12 @@
       font-weight: 800;
     }
 
-    /* JOURNEY CARD */
+    /* ======================================
+       JOURNEY CARD
+    ====================================== */
+
     .hero {
+      position: relative;
       padding: 22px;
       border-radius: 24px;
       background: var(--gradient);
@@ -184,6 +222,32 @@
       font-weight: 800;
     }
 
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .edit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border: 1px solid #ffffff65;
+      border-radius: 12px;
+      background: #ffffff25;
+      color: white;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .edit-btn svg {
+      width: 15px;
+      height: 15px;
+    }
+
     .destinations {
       display: flex;
       flex-wrap: wrap;
@@ -200,7 +264,10 @@
       font-weight: 700;
     }
 
-    /* BUTTONS */
+    /* ======================================
+       BUTTONS
+    ====================================== */
+
     .btn {
       min-height: 48px;
       padding: 0 16px;
@@ -245,7 +312,10 @@
       height: 19px;
     }
 
-    /* TABS */
+    /* ======================================
+       TABS
+    ====================================== */
+
     .tabs {
       display: grid;
       grid-template-columns: repeat(3,1fr);
@@ -278,7 +348,10 @@
       border-bottom-color: var(--pink);
     }
 
-    /* EMPTY STATE */
+    /* ======================================
+       EMPTY STATE
+    ====================================== */
+
     .empty {
       padding: 29px 18px;
       border: 1px dashed #d9c4e9;
@@ -306,7 +379,10 @@
       line-height: 1.7;
     }
 
-    /* PHOTOS */
+    /* ======================================
+       PHOTOS
+    ====================================== */
+
     .day {
       display: flex;
       justify-content: space-between;
@@ -337,7 +413,15 @@
       object-fit: cover;
     }
 
-    /* STAMPS — THREE PER ROW */
+    .add-photo-btn {
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    /* ======================================
+       STAMPS — 3 PER ROW
+    ====================================== */
+
     .stamps {
       display: grid;
       grid-template-columns: repeat(3,minmax(0,1fr));
@@ -357,6 +441,13 @@
       object-fit: contain;
     }
 
+    .stamp > svg {
+      width: 55px;
+      height: 112px;
+      padding: 20px 0;
+      color: var(--purple);
+    }
+
     .stamp strong {
       display: block;
       margin-top: 5px;
@@ -371,7 +462,10 @@
       font-size: 8px;
     }
 
-    /* BOOKINGS AND PAST JOURNEYS */
+    /* ======================================
+       BOOKINGS / PAST JOURNEYS
+    ====================================== */
+
     .listcard,
     .pastitem {
       display: block;
@@ -427,11 +521,15 @@
     }
 
     .chevron {
+      width: 18px;
+      height: 18px;
       color: var(--purple);
-      font-size: 22px;
     }
 
     .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       margin-bottom: 18px;
       padding: 5px 0;
       border: 0;
@@ -439,6 +537,11 @@
       color: var(--purple);
       font-size: 12px;
       font-weight: 800;
+    }
+
+    .back svg {
+      width: 18px;
+      height: 18px;
     }
 
     .danger {
@@ -462,23 +565,27 @@
       text-underline-offset: 3px;
     }
 
-    /* BOTTOM NAVIGATION */
+    /* ======================================
+       BOTTOM NAV — MATCH HOME
+    ====================================== */
+
     .nav {
       position: absolute;
-      z-index: 5;
-      bottom: 22px;
+      z-index: 20;
       left: 16px;
       right: 16px;
+      bottom: 22px;
       height: 66px;
+      padding: 6px;
       display: grid;
       grid-template-columns: repeat(5,1fr);
       gap: 2px;
-      padding: 6px;
-      border: 1px solid #ffffffe6;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(255,255,255,.9);
       border-radius: 24px;
-      background: #ffffffae;
-      box-shadow: 0 14px 34px #5724a329;
       backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 14px 34px rgba(87,36,163,.16);
     }
 
     .nav a {
@@ -494,7 +601,7 @@
       font-weight: 700;
     }
 
-    .nav svg {
+    .nav a svg {
       width: 21px;
       height: 21px;
     }
@@ -504,10 +611,13 @@
       color: var(--purple);
     }
 
-    /* MODAL */
+    /* ======================================
+       START / EDIT / QR MODAL
+    ====================================== */
+
     .overlay {
       position: absolute;
-      z-index: 20;
+      z-index: 40;
       inset: 0;
       display: none;
       align-items: flex-end;
@@ -535,6 +645,11 @@
       border-radius: 13px;
       background: white;
       font-size: 13px;
+      outline: none;
+    }
+
+    .field:focus {
+      border-color: var(--purple);
     }
 
     .form-label {
@@ -564,9 +679,21 @@
       color: var(--muted);
     }
 
+    .sheet-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .sheet-actions .btn { flex: 1; }
+
+    /* ======================================
+       PHOTO PREVIEW
+    ====================================== */
+
     .preview {
       position: absolute;
-      z-index: 30;
+      z-index: 50;
       inset: 0;
       display: none;
       flex-direction: column;
@@ -600,10 +727,14 @@
       font-size: 12px;
     }
 
-    /* MOBILE */
+    /* ======================================
+       MOBILE
+    ====================================== */
+
     @media (max-width:500px) {
       body {
         display: block;
+        overflow: auto;
         background: white;
       }
 
@@ -628,9 +759,20 @@
         display: none;
       }
 
-      .screen { border-radius: 0; }
-      .scroll { padding-top: 30px; }
-      .nav { bottom: 13px; }
+      .screen {
+        width: 100%;
+        height: 100%;
+        min-height: 650px;
+        border-radius: 0;
+      }
+
+      .scroll {
+        padding-top: 30px;
+      }
+
+      .nav {
+        bottom: 13px;
+      }
     }
   </style>
 </head>
@@ -641,10 +783,13 @@
   <div class="phone">
     <div class="screen">
 
+      <!-- DYNAMIC ISLAND -->
       <div class="island"></div>
 
+      <!-- STATUS BAR -->
       <div class="status">
         <span>9:41</span>
+
         <svg width="70" height="15" viewBox="0 0 70 15" fill="none">
           <g fill="#32204B">
             <rect x="0" y="10" width="3" height="5" rx="1"/>
@@ -657,26 +802,36 @@
             <path d="M30 9Q34 5 38 9"/>
           </g>
           <circle cx="34" cy="12" r="1.5" fill="#32204B"/>
-          <rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/>
-          <rect x="50" y="4" width="15" height="7" rx="1.6" fill="#32204B"/>
-          <path d="M69 5v5" stroke="#32204B" stroke-width="2" stroke-linecap="round"/>
+          <rect x="48" y="2" width="19" height="11" rx="3"
+                stroke="#32204B" stroke-width="1.3"/>
+          <rect x="50" y="4" width="15" height="7"
+                rx="1.6" fill="#32204B"/>
+          <path d="M69 5v5" stroke="#32204B"
+                stroke-width="2" stroke-linecap="round"/>
         </svg>
       </div>
 
       <div class="homebar"></div>
 
+      <!-- MAIN CONTENT -->
       <main class="scroll" id="main"></main>
 
+      <!-- BOTTOM NAV -->
       <nav class="nav" aria-label="Main navigation">
+
         <a href="home.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.9"
+               stroke-linecap="round" stroke-linejoin="round">
             <path d="m3 11 9-8 9 8M5 10v10h14V10"/>
           </svg>
           Home
         </a>
 
         <a href="discover.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.9"
+               stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="9"/>
             <path d="m15 9-2 4-4 2 2-4z"/>
           </svg>
@@ -684,7 +839,9 @@
         </a>
 
         <a href="camera.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.9"
+               stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="6" width="18" height="15" rx="3"/>
             <circle cx="12" cy="13.5" r="3.5"/>
             <path d="M8 6l1.5-3h5L16 6"/>
@@ -693,7 +850,9 @@
         </a>
 
         <a href="journal.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.9"
+               stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/>
             <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>
           </svg>
@@ -701,18 +860,23 @@
         </a>
 
         <a href="profile.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.9"
+               stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="8" r="4"/>
             <path d="M4 21c0-5 16-5 16 0"/>
           </svg>
           Profile
         </a>
+
       </nav>
 
+      <!-- START / EDIT / QR SHEET -->
       <div class="overlay" id="overlay">
         <div class="sheet" id="sheet"></div>
       </div>
 
+      <!-- PHOTO PREVIEW -->
       <div class="preview" id="preview">
         <button id="closePreview">Close</button>
         <img id="previewImg" alt="Journey photo">
@@ -723,7 +887,8 @@
   </div>
 </div>
 
-<input type="file" id="photoInput" accept="image/*" multiple hidden>
+<input type="file" id="photoInput"
+       accept="image/*" multiple hidden>
 
 <script src="places.js"></script>
 
@@ -733,37 +898,83 @@
 
     const $ = selector => document.querySelector(selector);
 
+    /* =====================================
+       SVG ICONS
+    ===================================== */
+
     const icon = (name, size = 24) => {
       const paths = {
-        camera: '<rect x="3" y="6" width="18" height="15" rx="3"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8 6l1.5-3h5L16 6"/>',
-        stamp: '<path d="M7 14h10l2 3v3H5v-3zM9 14v-3c-2-2-2-6 3-6s5 4 3 6v3M4 22h16"/>',
-        bookings: '<path d="M3 6h18v4a2 2 0 0 0 0 4v4H3v-4a2 2 0 0 0 0-4z"/><path d="M12 6v12" stroke-dasharray="2 2"/>',
-        map: '<path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"/>',
-        book: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>'
+        camera:
+          '<rect x="3" y="6" width="18" height="15" rx="3"/>' +
+          '<circle cx="12" cy="13.5" r="3.5"/>' +
+          '<path d="M8 6l1.5-3h5L16 6"/>',
+
+        stamp:
+          '<path d="M7 14h10l2 3v3H5v-3z' +
+          'M9 14v-3c-2-2-2-6 3-6s5 4 3 6v3' +
+          'M4 22h16"/>',
+
+        bookings:
+          '<path d="M3 6h18v4a2 2 0 0 0 0 4v4H3v-4a2 2 0 0 0 0-4z"/>' +
+          '<path d="M12 6v12" stroke-dasharray="2 2"/>',
+
+        map:
+          '<path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z' +
+          'M9 3v15M15 6v15"/>',
+
+        book:
+          '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5' +
+          'A2.5 2.5 0 0 1 4 18.5Z"/>' +
+          '<path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>',
+
+        edit:
+          '<path d="M12 20h9"/>' +
+          '<path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L9 17l-4 1 1-4Z"/>',
+
+        back:
+          '<path d="m15 18-6-6 6-6"/>',
+
+        next:
+          '<path d="m9 18 6-6-6-6"/>'
       };
 
-      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24"
-      fill="none" stroke="currentColor" stroke-width="1.8"
-      stroke-linecap="round" stroke-linejoin="round">
-      ${paths[name] || paths.map}
-    </svg>`;
+      return `
+      <svg width="${size}" height="${size}"
+           viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="1.8"
+           stroke-linecap="round"
+           stroke-linejoin="round"
+           aria-hidden="true">
+        ${paths[name] || paths.map}
+      </svg>
+    `;
     };
 
     const qrIcon = `
     <svg viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" stroke-width="2"
-      stroke-linecap="round" stroke-linejoin="round">
-      <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3M21 16v3a2 2 0 0 1-2 2h-3"/>
+         stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 3H5a2 2 0 0 0-2 2v3
+               M16 3h3a2 2 0 0 1 2 2v3
+               M3 16v3a2 2 0 0 0 2 2h3
+               M21 16v3a2 2 0 0 1-2 2h-3"/>
       <rect x="7" y="7" width="4" height="4"/>
       <path d="M15 7h2v4h-2M7 15h4v2H7M15 15h2v2h-2"/>
     </svg>
   `;
+
+    /* =====================================
+       USER / STORAGE
+    ===================================== */
 
     function getUser() {
       try {
         const session = JSON.parse(
           localStorage.getItem('terooka_session') || 'null'
         );
+
         return session?.username || session?.email || 'guest';
       } catch {
         return 'guest';
@@ -820,6 +1031,7 @@
 
     function fmt(value) {
       const date = new Date(value);
+
       return isNaN(date)
         ? 'Unknown date'
         : date.toLocaleDateString('en-GB', {
@@ -865,12 +1077,16 @@
     }
 
     function destinations(journey) {
-      if (Array.isArray(journey.destinations) &&
-        journey.destinations.length) {
+      if (
+        Array.isArray(journey.destinations) &&
+        journey.destinations.length
+      ) {
         return journey.destinations;
       }
 
-      return String(journey.destination || journey.city || 'Malaysia')
+      return String(
+        journey.destination || journey.city || 'Malaysia'
+      )
         .split(',')
         .map(x => x.trim())
         .filter(Boolean);
@@ -880,6 +1096,7 @@
       const a = new Date(
         journey.startDate || journey.startedAt || journey.date
       );
+
       const b = new Date(
         photo.takenAt || photo.createdAt || photo.date
       );
@@ -899,6 +1116,10 @@
     let selected = null;
     let tab = 'photos';
 
+    /* =====================================
+       EMPTY STATE
+    ===================================== */
+
     function emptyState(symbol, title, description, action = '') {
       return `
       <div class="empty">
@@ -909,6 +1130,10 @@
       </div>
     `;
     }
+
+    /* =====================================
+       MAIN JOURNEY PAGE
+    ===================================== */
 
     function render() {
       if (view === 'pastList') {
@@ -924,9 +1149,14 @@
         <div class="header">
           <div>
             <h1>My Journeys</h1>
-            <p class="sub">Your cultural adventures in one place.</p>
+            <p class="sub">
+              Your cultural adventures in one place.
+            </p>
           </div>
-          <button class="linkbtn" data-action="past">See all</button>
+
+          <button class="linkbtn" data-action="past">
+            See all
+          </button>
         </div>
 
         ${emptyState(
@@ -940,14 +1170,17 @@
       }
 
       $('#main').innerHTML = `
-      ${old
-        ? '<button class="back" data-action="past">← Past Journeys</button>'
-        : ''
-      }
+      ${old ? `
+        <button class="back" data-action="past">
+          ${icon('back', 18)}
+          Past Journeys
+        </button>
+      ` : ''}
 
       <div class="header">
         <div>
           <h1>${old ? 'Journey Memories' : 'My Journeys'}</h1>
+
           <p class="sub">
             ${old
         ? 'Revisit your cultural adventure.'
@@ -955,18 +1188,28 @@
           </p>
         </div>
 
-        ${old
-        ? ''
-        : '<button class="linkbtn" data-action="past">See all</button>'
-      }
+        ${old ? '' : `
+          <button class="linkbtn" data-action="past">
+            See all
+          </button>
+        `}
       </div>
 
       <section class="hero">
-        <span class="pill">
-          ${old ? 'Completed Journey' : 'Active Journey'}
-        </span>
+        <div class="hero-top">
+          <span class="pill">
+            ${old ? 'Completed Journey' : 'Active Journey'}
+          </span>
 
-        <h2>${esc(journey.name || journey.title || 'My Adventure')}</h2>
+          <button class="edit-btn" data-action="edit">
+            ${icon('edit', 15)}
+            Edit
+          </button>
+        </div>
+
+        <h2>
+          ${esc(journey.name || journey.title || 'My Adventure')}
+        </h2>
 
         <p class="sub">
           Started ${fmt(
@@ -978,7 +1221,9 @@
 
         <div class="destinations">
           ${destinations(journey).map(destination => `
-            <span class="destination">${esc(destination)}</span>
+            <span class="destination">
+              ${esc(destination)}
+            </span>
           `).join('')}
         </div>
       </section>
@@ -1028,9 +1273,14 @@
       renderTab(journey, old);
     }
 
+    /* =====================================
+       TABS
+    ===================================== */
+
     function renderTab(journey, old) {
       const target = $('#tabContent');
 
+      /* PHOTOS */
       if (tab === 'photos') {
         const list = photos(journey);
 
@@ -1073,11 +1323,17 @@
               </button>
             `).join('')}
           </div>
-        `).join('');
+        `).join('') + (old ? '' : `
+          <button class="btn secondary add-photo-btn"
+                  data-action="photo">
+            Add More Photos
+          </button>
+        `);
 
         return;
       }
 
+      /* BOOKINGS */
       if (tab === 'bookings') {
         const list = bookings(journey);
 
@@ -1095,7 +1351,9 @@
         target.innerHTML = list.map(booking => `
         <div class="listcard">
           <div class="cardrow">
-            <div class="cardicon">${icon('bookings')}</div>
+            <div class="cardicon">
+              ${icon('bookings')}
+            </div>
 
             <div>
               <strong>
@@ -1125,6 +1383,7 @@
         return;
       }
 
+      /* STAMPS */
       if (tab === 'stamps') {
         const list = stamps(journey);
 
@@ -1154,7 +1413,11 @@
           }
 
                 <strong>
-                  ${esc(stamp.placeName || place?.name || 'Digital Stamp')}
+                  ${esc(
+            stamp.placeName ||
+            place?.name ||
+            'Digital Stamp'
+          )}
                 </strong>
 
                 <span>
@@ -1170,12 +1433,17 @@
       }
     }
 
+    /* =====================================
+       PAST JOURNEYS
+    ===================================== */
+
     function renderPast() {
       const list = past().slice().reverse();
 
       $('#main').innerHTML = `
       <button class="back" data-action="home">
-        ← My Journeys
+        ${icon('back', 18)}
+        My Journeys
       </button>
 
       <h1>Past Journeys</h1>
@@ -1191,11 +1459,17 @@
             data-past="${esc(journey.id)}"
           >
             <div class="cardrow">
-              <div class="cardicon">${icon('book')}</div>
+              <div class="cardicon">
+                ${icon('book')}
+              </div>
 
               <div>
                 <strong>
-                  ${esc(journey.name || journey.title || 'My Adventure')}
+                  ${esc(
+          journey.name ||
+          journey.title ||
+          'My Adventure'
+        )}
                 </strong>
 
                 <p>
@@ -1214,7 +1488,9 @@
                 </p>
               </div>
 
-              <span class="chevron">›</span>
+              <span class="chevron">
+                ${icon('next', 18)}
+              </span>
             </div>
           </button>
         `).join('')
@@ -1226,6 +1502,10 @@
       }
     `;
     }
+
+    /* =====================================
+       MODAL HELPERS
+    ===================================== */
 
     function openSheet(html) {
       $('#sheet').innerHTML = html;
@@ -1240,6 +1520,10 @@
       if (event.target.id === 'overlay') closeSheet();
     });
 
+    /* =====================================
+       START JOURNEY
+    ===================================== */
+
     function startJourney() {
       openSheet(`
       <h2>Start a Journey</h2>
@@ -1249,9 +1533,12 @@
       </p>
 
       <form id="startForm">
-        <label class="form-label">Journey Name</label>
+        <label class="form-label" for="journeyName">
+          Journey Name
+        </label>
 
         <input
+          id="journeyName"
           class="field"
           name="name"
           maxlength="60"
@@ -1259,9 +1546,12 @@
           required
         >
 
-        <label class="form-label">Destinations</label>
+        <label class="form-label" for="journeyDestinations">
+          Destinations
+        </label>
 
         <input
+          id="journeyDestinations"
           class="field"
           name="destination"
           maxlength="200"
@@ -1270,16 +1560,22 @@
         >
 
         <p class="sub">
-          You can add multiple destinations separated by commas.
+          Add multiple destinations separated by commas.
         </p>
 
-        <button
-          class="btn primary full"
-          style="margin-top:15px"
-          type="submit"
-        >
-          Start Journey
-        </button>
+        <div class="sheet-actions">
+          <button
+            type="button"
+            class="btn secondary"
+            data-action="close"
+          >
+            Cancel
+          </button>
+
+          <button class="btn primary" type="submit">
+            Start Journey
+          </button>
+        </div>
       </form>
     `);
 
@@ -1291,7 +1587,7 @@
         const data = new FormData(event.target);
         const name = String(data.get('name') || '').trim();
 
-        const destinations = [
+        const destinationList = [
           ...new Set(
             String(data.get('destination') || '')
               .split(',')
@@ -1300,13 +1596,13 @@
           )
         ];
 
-        if (!name || !destinations.length) return;
+        if (!name || !destinationList.length) return;
 
         const journey = {
           id: 'J-' + Date.now(),
           name,
-          destination: destinations.join(', '),
-          destinations,
+          destination: destinationList.join(', '),
+          destinations: destinationList,
           startedAt: new Date().toISOString(),
           status: 'active',
           placeIds: []
@@ -1324,6 +1620,115 @@
       };
     }
 
+    /* =====================================
+       EDIT JOURNEY
+    ===================================== */
+
+    function editJourney() {
+      const journey = view === 'pastDetail'
+        ? selected
+        : active();
+
+      if (!journey) return;
+
+      openSheet(`
+      <h2>Edit Journey</h2>
+
+      <p class="sub">
+        Update your journey name and destinations.
+      </p>
+
+      <form id="editForm">
+        <label class="form-label" for="editName">
+          Journey Name
+        </label>
+
+        <input
+          id="editName"
+          class="field"
+          name="name"
+          maxlength="60"
+          value="${esc(journey.name || journey.title || '')}"
+          required
+        >
+
+        <label class="form-label" for="editDestinations">
+          Destinations
+        </label>
+
+        <input
+          id="editDestinations"
+          class="field"
+          name="destination"
+          maxlength="200"
+          value="${esc(destinations(journey).join(', '))}"
+          required
+        >
+
+        <p class="sub">
+          Separate multiple destinations with commas.
+        </p>
+
+        <div class="sheet-actions">
+          <button
+            type="button"
+            class="btn secondary"
+            data-action="close"
+          >
+            Cancel
+          </button>
+
+          <button class="btn primary" type="submit">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    `);
+
+      $('#editForm').onsubmit = event => {
+        event.preventDefault();
+
+        const data = new FormData(event.target);
+        const name = String(data.get('name') || '').trim();
+
+        const destinationList = [
+          ...new Set(
+            String(data.get('destination') || '')
+              .split(',')
+              .map(value => value.trim())
+              .filter(Boolean)
+          )
+        ];
+
+        if (!name || !destinationList.length) return;
+
+        const list = journeys();
+
+        const target = list.find(
+          item => String(item.id) === String(journey.id)
+        );
+
+        if (!target) return;
+
+        target.name = name;
+        target.destination = destinationList.join(', ');
+        target.destinations = destinationList;
+
+        if (write(journeyKey, list)) {
+          if (view === 'pastDetail') {
+            selected = target;
+          }
+
+          closeSheet();
+          render();
+        }
+      };
+    }
+
+    /* =====================================
+       SCAN QR / COLLECT STAMP
+    ===================================== */
+
     function scanQR() {
       const journey = active();
       if (!journey) return;
@@ -1336,7 +1741,7 @@
       <h2>Scan Location QR</h2>
 
       <p class="sub">
-        Prototype: select the location you visited to collect its stamp.
+        Select the location you visited to collect its stamp.
       </p>
 
       ${places.map(place => `
@@ -1347,8 +1752,9 @@
         >
           <strong>
             ${esc(place.name)}
-            ${collected.has(place.id) ? '✓' : ''}
+            ${collected.has(place.id) ? ' · Collected' : ''}
           </strong>
+
           <small>${esc(place.city)}</small>
         </button>
       `).join('')}
@@ -1369,9 +1775,11 @@
 
       if (!journey || !place) return;
 
-      if (stamps(journey).some(s =>
-        (s.placeId || s.id) === id
-      )) return;
+      if (
+        stamps(journey).some(s =>
+          (s.placeId || s.id) === id
+        )
+      ) return;
 
       const list = read(stampKey);
 
@@ -1390,6 +1798,10 @@
         render();
       }
     }
+
+    /* =====================================
+       ADD PHOTOS
+    ===================================== */
 
     function addPhoto() {
       $('#photoInput').click();
@@ -1419,11 +1831,18 @@
           );
 
           canvas.getContext('2d').drawImage(
-            image, 0, 0, canvas.width, canvas.height
+            image,
+            0,
+            0,
+            canvas.width,
+            canvas.height
           );
 
           URL.revokeObjectURL(url);
-          resolve(canvas.toDataURL('image/jpeg', 0.65));
+
+          resolve(
+            canvas.toDataURL('image/jpeg', 0.65)
+          );
         };
 
         image.onerror = () => {
@@ -1455,6 +1874,7 @@
             src,
             takenAt: new Date().toISOString()
           });
+
         } catch (error) {
           console.error(error);
         }
@@ -1465,6 +1885,10 @@
         render();
       }
     };
+
+    /* =====================================
+       PHOTO PREVIEW
+    ===================================== */
 
     function previewPhoto(id) {
       const journey = view === 'pastDetail'
@@ -1492,6 +1916,10 @@
       $('#preview').classList.remove('show');
     };
 
+    /* =====================================
+       END JOURNEY
+    ===================================== */
+
     function endJourney() {
       const journey = active();
 
@@ -1517,6 +1945,10 @@
         render();
       }
     }
+
+    /* =====================================
+       DELETE JOURNEY
+    ===================================== */
 
     function deleteJourney() {
       const journey = view === 'pastDetail'
@@ -1580,9 +2012,14 @@
       }
     }
 
+    /* =====================================
+       BUTTON EVENTS
+    ===================================== */
+
     document.addEventListener('click', event => {
       const element = event.target.closest(
-        '[data-action],[data-tab],[data-past],[data-collect],[data-preview]'
+        '[data-action],[data-tab],[data-past],' +
+        '[data-collect],[data-preview]'
       );
 
       if (!element) return;
@@ -1595,7 +2032,8 @@
 
       if (element.dataset.past) {
         selected = past().find(
-          journey => String(journey.id) === element.dataset.past
+          journey =>
+            String(journey.id) === element.dataset.past
         );
 
         if (selected) {
@@ -1603,6 +2041,7 @@
           tab = 'photos';
           render();
         }
+
         return;
       }
 
@@ -1634,6 +2073,10 @@
           startJourney();
           break;
 
+        case 'edit':
+          editJourney();
+          break;
+
         case 'scan':
           scanQR();
           break;
@@ -1660,23 +2103,25 @@
       }
     });
 
-    /* RESPONSIVE PHONE — NO FIXED SCALE(.88) */
-    function resizePhone() {
-      const stage = document.getElementById('stage');
+    /* =====================================
+       PHONE SCALING — MATCH HOME
+    ===================================== */
 
-      if (window.matchMedia('(max-width:500px)').matches) {
-        stage.style.transform = 'none';
+    function resizePhone() {
+      const stage = document.querySelector('.stage');
+
+      if (window.innerWidth <= 500) {
+        stage.style.transform = '';
         return;
       }
 
       const scale = Math.min(
-        (window.innerWidth - 24) / 414,
-        (window.innerHeight - 24) / 868,
-        1
+        1,
+        (window.innerHeight - 28) / 868,
+        (window.innerWidth - 28) / 414
       );
 
-      stage.style.transform =
-        `scale(${Math.max(0.35, scale)})`;
+      stage.style.transform = 'scale(' + scale + ')';
     }
 
     window.addEventListener('resize', resizePhone);

@@ -721,6 +721,46 @@
         animation: none;
       }
     }
+
+    /* Exact outer frame and status bar shared with Home */
+    body { min-height: 100dvh; overflow: hidden; }
+    .stage { flex-shrink: 0; transform-origin: center; }
+    .phone {
+      position: relative; inset: auto;
+      width: 414px; height: 868px; padding: 12px;
+      background: #111015; border-radius: 62px;
+      box-shadow: 0 24px 70px rgba(54,25,88,.23), 0 0 0 2px #343039;
+    }
+    .phone::before, .phone::after {
+      content: ''; position: absolute; left: -5px; width: 4px;
+      background: #302b35; border-radius: 4px;
+    }
+    .phone::before { top: 155px; height: 52px; }
+    .phone::after { top: 228px; height: 69px; }
+    .screen { width: 390px; height: 844px; border-radius: 50px; }
+    .island {
+      z-index: 30; top: 11px; width: 118px; height: 34px;
+      background: #08070a; border-radius: 30px;
+    }
+    .status {
+      position: absolute; top: 18px; left: 34px; right: 30px;
+      z-index: 29; display: flex; justify-content: space-between;
+      align-items: center; color: #fff; font-size: 14px; font-weight: 800;
+      text-shadow: 0 1px 4px rgba(0,0,0,.45);
+      pointer-events: none;
+    }
+    .homebar {
+      position: absolute; bottom: 8px; left: 50%; z-index: 30;
+      transform: translateX(-50%); width: 126px; height: 5px;
+      background: rgba(255,255,255,.9); border-radius: 20px;
+      pointer-events: none;
+    }
+    @media (max-width: 500px) {
+      body { overflow: auto; }
+      .phone { width: 100%; height: 100dvh; }
+      .phone::before, .phone::after, .status, .homebar { display: none; }
+      .screen { width: 100%; height: 100%; min-height: 650px; }
+    }
   </style>
 </head>
 
@@ -731,6 +771,28 @@
     <main class="screen">
 
       <div class="island"></div>
+      <!-- iPhone-style status bar (matches Home layout) -->
+      <div class="status" aria-label="Phone status">
+        <span>9:41</span>
+        <svg width="70" height="15" viewBox="0 0 70 15" fill="none" aria-hidden="true">
+          <g fill="white">
+            <rect x="0" y="10" width="3" height="5" rx="1"/>
+            <rect x="5" y="7" width="3" height="8" rx="1"/>
+            <rect x="10" y="4" width="3" height="11" rx="1"/>
+            <rect x="15" y="1" width="3" height="14" rx="1"/>
+          </g>
+          <g stroke="white" stroke-width="1.8" stroke-linecap="round">
+            <path d="M27 5Q34-1 41 5"/>
+            <path d="M30 9Q34 5 38 9"/>
+          </g>
+          <circle cx="34" cy="12" r="1.5" fill="white"/>
+          <rect x="48" y="2" width="19" height="11" rx="3" stroke="white" stroke-width="1.3"/>
+          <rect x="50" y="4" width="15" height="7" rx="1.6" fill="white"/>
+          <path d="M69 5v5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="homebar"></div>
+
 
       <!-- SIMULATED CAMERA SCENE -->
 
@@ -1065,13 +1127,13 @@
       }
 
       const scale = Math.min(
-        (innerWidth - 24) / 414,
-        (innerHeight - 24) / 868,
+        (innerWidth - 28) / 414,
+        (innerHeight - 28) / 868,
         1
       );
 
       $('stage').style.transform =
-        'scale(' + Math.max(0.35, scale) + ')';
+        'scale(' + scale + ')';
     }
 
     addEventListener('resize', resize);

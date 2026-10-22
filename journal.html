@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +41,13 @@
       border-radius:62px;
       box-shadow:0 24px 70px #3619583b,0 0 0 2px #343039;
     }
+    .phone{position:relative}
+    .phone::before,.phone::after{
+      content:"";position:absolute;left:-5px;width:4px;
+      background:#302b35;border-radius:4px;
+    }
+    .phone::before{top:155px;height:52px}
+    .phone::after{top:228px;height:69px}
     .screen{
       position:relative;
       width:390px;
@@ -66,6 +72,10 @@
       z-index:49;
       top:18px;
       left:34px;
+      right:30px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       font-size:14px;
       font-weight:800;
     }
@@ -112,6 +122,16 @@
       gap:24px 20px;
       perspective:900px;
     }
+    .journal-entry{min-width:0;display:flex;flex-direction:column;gap:10px}
+    .journal-actions{display:flex;justify-content:center;align-items:center;gap:12px}
+    .journal-icon-btn{width:36px;height:36px;border:1px solid #e5d6f0;border-radius:50%;background:#fffafeee;color:var(--purple);display:grid;place-items:center;cursor:pointer;box-shadow:0 3px 9px #5724a315}
+    .journal-icon-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .journal-icon-btn.delete{color:#b33361}
+    .journal-icon-btn:hover{background:#f1e7fa}
+    .colour-options{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:22px 0 10px}
+    .colour-choice{aspect-ratio:1;border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #d7c6e6;cursor:pointer}
+    .colour-choice.selected{box-shadow:0 0 0 3px var(--purple)}
+    .colour-note{font-size:11px;color:var(--muted);line-height:1.6}
     .book{
       position:relative;
       width:100%;
@@ -330,7 +350,7 @@
         height:100%;
         border-radius:0;
       }
-      .island,.status,.homebar{display:none}
+      .phone::before,.phone::after,.island,.status,.homebar{display:none}
       .scroll{padding-top:30px}
     }
   </style>
@@ -342,7 +362,25 @@
     <div class="screen">
 
       <div class="island"></div>
-      <div class="status">9:41</div>
+      <div class="status">
+        <span>9:41</span>
+        <svg width="70" height="15" viewBox="0 0 70 15" fill="none" aria-label="Signal, Wi-Fi and battery">
+          <g fill="#32204B">
+            <rect x="0" y="10" width="3" height="5" rx="1"/>
+            <rect x="5" y="7" width="3" height="8" rx="1"/>
+            <rect x="10" y="4" width="3" height="11" rx="1"/>
+            <rect x="15" y="1" width="3" height="14" rx="1"/>
+          </g>
+          <g stroke="#32204B" stroke-width="1.8" stroke-linecap="round">
+            <path d="M27 5Q34-1 41 5"/>
+            <path d="M30 9Q34 5 38 9"/>
+          </g>
+          <circle cx="34" cy="12" r="1.5" fill="#32204B"/>
+          <rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/>
+          <rect x="50" y="4" width="15" height="7" rx="1.6" fill="#32204B"/>
+          <path d="M69 5v5" stroke="#32204B" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
 
       <main class="scroll">
         <h1>My Journal</h1>
@@ -478,7 +516,7 @@
         const button=document.createElement('button');
         button.type='button';
         button.className='book';
-        button.style.background=cover(b);
+        button.style.background=b.customCoverColor || cover(b);
 
         const spine=document.createElement('span');
         spine.className='spine';
@@ -505,7 +543,32 @@
             encodeURIComponent(b.id);
         };
 
-        shelf.appendChild(button);
+        const entry=document.createElement('div');
+        entry.className='journal-entry';
+        entry.appendChild(button);
+
+        const actions=document.createElement('div');
+        actions.className='journal-actions';
+
+        const pencil=document.createElement('button');
+        pencil.type='button';
+        pencil.className='journal-icon-btn';
+        pencil.setAttribute('aria-label','Change journal cover colour');
+        pencil.title='Change cover colour';
+        pencil.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L9 17l-4 1 1-4Z"/></svg>';
+        pencil.onclick=()=>changeJournalColour(b);
+
+        const bin=document.createElement('button');
+        bin.type='button';
+        bin.className='journal-icon-btn delete';
+        bin.setAttribute('aria-label','Delete journal');
+        bin.title='Delete journal';
+        bin.innerHTML='<svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M5 6l1 15h12l1-15M10 10v7M14 10v7"/></svg>';
+        bin.onclick=()=>deleteJournal(b);
+
+        actions.append(pencil,bin);
+        entry.appendChild(actions);
+        shelf.appendChild(entry);
       });
 
       // Visible + symbol for New Journal
@@ -524,6 +587,62 @@
       newBook.append(plus,label);
       newBook.onclick=createJournal;
       shelf.appendChild(newBook);
+    }
+
+    function changeJournalColour(book){
+      const colours=[
+        ['Lavender','#9B75D0'],['Rose','#D86D9D'],
+        ['Peach','#EBA27E'],['Sage','#78A993'],
+        ['Sky','#78A8D7'],['Plum','#7453A9'],
+        ['Coral','#D87976'],['Sunshine','#D9AE57'],
+        ['Teal','#5D9EAB'],['Midnight','#4B567F']
+      ];
+      const content=document.createElement('div');
+      const heading=document.createElement('h2');
+      heading.textContent='Change Cover Colour';
+      const description=document.createElement('p');
+      description.className='sub';
+      description.textContent=book.title||'Your journal';
+      const palette=document.createElement('div');
+      palette.className='colour-options';
+      colours.forEach(([name,colour])=>{
+        const choice=document.createElement('button');
+        choice.type='button';
+        choice.className='colour-choice'+(book.customCoverColor===colour?' selected':'');
+        choice.style.background=colour;
+        choice.title=name;
+        choice.setAttribute('aria-label',name);
+        choice.onclick=()=>{
+          const previous=book.customCoverColor;
+          book.customCoverColor=colour;
+          if(!save()){
+            book.customCoverColor=previous;
+            alert('Could not save cover colour.');
+            return;
+          }
+          closeSheet();
+          render();
+        };
+        palette.appendChild(choice);
+      });
+      const note=document.createElement('p');
+      note.className='colour-note';
+      note.textContent='Choose a colour to update this journal cover. Your pages and photos stay the same.';
+      content.append(heading,description,palette,note);
+      openSheet(content);
+    }
+
+    function deleteJournal(book){
+      if(!confirm('Delete "'+(book.title||'Untitled Journal')+'" permanently? All pages in this journal will be lost.'))return;
+      const index=books.findIndex(item=>String(item.id)===String(book.id));
+      if(index<0)return;
+      const removed=books.splice(index,1)[0];
+      if(!save()){
+        books.splice(index,0,removed);
+        alert('Could not delete journal.');
+        return;
+      }
+      render();
     }
 
     function createJournal(){
