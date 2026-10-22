@@ -146,31 +146,20 @@ function el(tag, props) {
 */
 
 function cover(b) {
+  var color = b.customCoverColor || b.coverColor;
 
-  if (b.coverColor) {
-
-    // Support full CSS gradients
-    if (
-      b.coverColor.indexOf('linear-gradient') === 0
-    ) {
-      return b.coverColor;
+  if (color) {
+    if (color.indexOf('linear-gradient') === 0) {
+      return color;
     }
-
-    // Support two colours separated by a comma
-    if (b.coverColor.indexOf(',') !== -1) {
-      return 'linear-gradient(135deg,' +
-        b.coverColor + ')';
+    if (color.indexOf(',') !== -1) {
+      return 'linear-gradient(135deg,' + color + ')';
     }
-
-    // Support a single HEX colour
-    return b.coverColor;
+    return color;
   }
 
-  var index =
-    Math.abs(Number(b.id) || 0) % COVERS.length;
-
-  return 'linear-gradient(135deg,' +
-    COVERS[index] + ')';
+  var index = Math.abs(Number(b.id) || 0) % COVERS.length;
+  return 'linear-gradient(135deg,' + COVERS[index] + ')';
 }
 
 /* UPDATE COVER COLOUR */

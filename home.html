@@ -807,7 +807,7 @@
       var rail = el('div', { class: 'journal-rail', 'aria-label': 'Recent journal books' });
       journalBooks.slice(0, 8).forEach(function(b,i) {
         var book=el('a',{class:'journal-book',href:'journal-edit.html?id='+encodeURIComponent(b.id),'aria-label':'Open '+(b.title||'Journal')});
-        book.style.background = cover(b);
+        book.style.background = b.customCoverColor || b.coverColor || cover(b);
         book.appendChild(el('span',{class:'journal-book-spine','aria-hidden':'true'}));
         book.appendChild(el('span',{class:'journal-bookmark','aria-hidden':'true'}));
         book.appendChild(el('span',{class:'journal-plate',text:b.title||'Untitled Journal'}));
@@ -922,6 +922,18 @@
 
     renderMemories();
     syncNav();
+
+    // Re-read the shared journal store whenever Home becomes active again.
+    // This keeps cover colours in sync after editing a journal on another page.
+    window.addEventListener('pageshow', function () {
+      renderMemories();
+    });
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) renderMemories();
+    });
+    window.addEventListener('storage', function (event) {
+      if (event.key === TKEY) renderMemories();
+    });
 
     /* ================= PHONE SCALING ================= */
     var stage = $('#stage');

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,10 +62,31 @@
     }
     .scroll::-webkit-scrollbar{display:none}
     .back{
-      display:inline-flex;align-items:center;gap:8px;
-      color:var(--purple);text-decoration:none;
-      font-size:12px;font-weight:800;margin-bottom:22px;
+      width:40px;height:40px;display:grid;place-items:center;
+      border:1px solid rgba(255,255,255,.9);border-radius:13px;
+      background:rgba(255,255,255,.78);color:var(--purple);
+      text-decoration:none;flex:0 0 40px;padding:0;
     }
+    .back svg{width:22px;height:22px}
+    .header{display:flex;align-items:center;gap:12px;margin-bottom:19px}
+    .header-label{font-size:12px;font-weight:800;letter-spacing:.05em}
+    .header-sub{font-size:10px;color:var(--muted);margin-top:3px}
+    .view[hidden]{display:none!important}
+    .view-link{border:0;background:none;color:var(--purple);font-size:11px;font-weight:800;cursor:pointer;padding:6px 0}
+    .saved-entry{width:100%;border:1px solid #fff;background:#ffffffb9;border-radius:17px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px;
+      color:var(--ink);text-align:left;cursor:pointer;margin-bottom:23px}
+    .saved-entry strong{display:block;font:600 17px Fraunces,serif;margin-bottom:5px}
+    .saved-entry small{display:block;font-size:10px;color:var(--muted)}
+    .saved-entry .arrow{color:var(--purple);font-size:23px}
+    .search-wrap{position:relative;margin-bottom:19px}
+    .search-wrap svg{position:absolute;left:14px;top:13px;width:19px;height:19px;color:var(--muted);pointer-events:none}
+    .search-wrap .search{padding-left:42px;margin-bottom:0}
+    .recent-grid{display:grid;gap:10px}
+    .recent-grid .story-card{padding:10px}
+    .recent-grid .story-art{width:55px;height:55px}
+    .recent-grid .story-info small{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+
     .eyebrow{
       font-size:10px;letter-spacing:.19em;
       color:var(--pink);font-weight:800;
@@ -204,47 +224,56 @@
       </div>
 
       <main class="scroll">
-        <a class="back" href="home.html">← Back to Home</a>
+        <header class="header">
+          <button class="back" id="back-btn" type="button" aria-label="Go back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <div><div class="header-label" id="header-label">CULTURE DISCOVERY</div><div class="header-sub">Terooka Heritage Discovery</div></div>
+        </header>
+        <div class="view" id="main-view">
 
-        <p class="eyebrow">Terooka · Culture & Heritage</p>
-        <h1>Discover Our Culture</h1>
-        <p class="intro">
-          Every tradition has a story. Explore the people,
-          flavours, crafts and celebrations that make Malaysia unique.
-        </p>
+          <p class="eyebrow">Terooka · Culture & Heritage</p>
+          <h1>Discover Our Culture</h1>
+          <p class="intro">
+            Every tradition has a story. Explore the people,
+            flavours, crafts and celebrations that make Malaysia unique.
+          </p>
 
-        <div class="hero">
-          <span class="flower">🌺</span>
-          <h2>More than a destination.</h2>
-          <p>Learn the meaning behind the moments you experience on your journey.</p>
+          <div class="hero">
+            <span class="flower">🌺</span>
+            <h2>More than a destination.</h2>
+            <p>Learn the meaning behind the moments you experience on your journey.</p>
+          </div>
+
+          <button class="saved-entry" id="open-saved" type="button">
+            <span><strong>♡ Saved Stories</strong><small><span id="saved-count">0 saved</span> · Your bookmarked cultural stories</small></span>
+            <span class="arrow">›</span>
+          </button>
+
+          <section class="section" id="recent-section">
+            <div class="section-head"><h2 class="section-title">Recently Viewed</h2><small id="recent-count">0 stories</small></div>
+            <div class="recent-grid" id="recent-list"></div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">Explore Cultural Stories</h2>
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+              <input class="search" id="story-search" type="search" placeholder="Search cultural stories...">
+            </div>
+            <div class="cards" id="all-stories"></div>
+          </section>
+
+          <p class="footer">
+            Keep exploring — every place has a story worth remembering. 🌺
+          </p>
         </div>
-
-        <section class="section" id="saved-section">
-          <div class="section-head">
-            <h2 class="section-title">Saved Stories</h2>
-            <small id="saved-count">0 saved</small>
-          </div>
+        <div class="view" id="saved-view" hidden>
+          <p class="eyebrow">YOUR COLLECTION</p>
+          <h1>Saved Stories</h1>
+          <p class="intro">All the cultural stories you have bookmarked, in one place.</p>
           <div class="cards" id="saved-list"></div>
-        </section>
-
-        <section class="section" id="recent-section">
-          <div class="section-head">
-            <h2 class="section-title">Recently Viewed</h2>
-            <small id="recent-count">0 stories</small>
-          </div>
-          <div class="cards" id="recent-list"></div>
-        </section>
-
-        <section class="section">
-          <h2 class="section-title">Explore Cultural Stories</h2>
-          <input class="search" id="story-search"
-                 type="search" placeholder="Search cultural stories...">
-          <div class="cards" id="all-stories"></div>
-        </section>
-
-        <p class="footer">
-          Keep exploring — every place has a story worth remembering. 🌺
-        </p>
+        </div>
       </main>
 
       <div class="homebar"></div>
@@ -365,7 +394,7 @@
 
     renderList(
       "recent-list",
-      recent,
+      recent.filter(id => stories[id]).slice(0, 3),
       "Stories you read will appear here."
     );
 
@@ -373,7 +402,7 @@
       saved.length + " saved";
 
     document.getElementById("recent-count").textContent =
-      recent.length + " stories";
+      Math.min(recent.filter(id => stories[id]).length, 3) + " recent";
 
     const query = document.getElementById("story-search")
       .value.trim().toLowerCase();
@@ -397,6 +426,23 @@
 
   document.getElementById("story-search")
     .addEventListener("input", render);
+
+  let currentView = "main";
+  function showView(view) {
+    currentView = view;
+    document.getElementById("main-view").hidden = view !== "main";
+    document.getElementById("saved-view").hidden = view !== "saved";
+    document.getElementById("header-label").textContent = view === "saved" ? "SAVED STORIES" : "CULTURE DISCOVERY";
+    document.querySelector(".scroll").scrollTop = 0;
+    render();
+  }
+  document.getElementById("open-saved").onclick = () => showView("saved");
+  document.getElementById("back-btn").onclick = () => {
+    if (currentView === "saved") showView("main");
+    else location.href = "home.html";
+  };
+  window.addEventListener("pageshow", render);
+
 
   render();
 

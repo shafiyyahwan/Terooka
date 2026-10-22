@@ -96,7 +96,7 @@
       z-index:45;
       display:flex;
       flex-direction:column;
-      padding:56px 14px 26px;
+      padding:62px 20px 26px;
       color:white;
       background:radial-gradient(120% 70% at 50% 36%,#5a2a98,#341768 55%,#1f0f40);
     }
@@ -844,7 +844,7 @@
       }
       .island,.status,.homebar{display:none}
       .viewer{
-        padding-top:24px;
+        padding-top:calc(20px + env(safe-area-inset-top));
         padding-bottom:max(18px,env(safe-area-inset-bottom));
       }
       .picker{padding-top:24px}
@@ -998,10 +998,50 @@
       showToast.timer=setTimeout(()=>n.classList.remove('show'),2600);
     }
 
+    // Preserve the latest cover colour when saving journal page edits.
+    // journal.html is the source of truth for colour customisation.
+    function saveEditor() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(TKEY) || '[]');
+        if (Array.isArray(stored)) {
+          const latest = stored.find(b => String(b.id) === String(cur.id));
+          if (latest && latest.customCoverColor !== undefined) {
+            cur.customCoverColor = latest.customCoverColor;
+          }
+          // Keep unrelated journals fresh as well.
+          stored.forEach(latestBook => {
+            if (String(latestBook.id) === String(cur.id)) return;
+            const index = books.findIndex(b => String(b.id) === String(latestBook.id));
+            if (index >= 0) books[index] = latestBook;
+            else books.push(latestBook);
+          });
+        }
+      } catch (e) { /* Continue with current in-memory data. */ }
+      return save();
+    }
+
     function closeBook(){
-      save();
+      saveEditor();
       location.href='journal.html';
     }
+
+    /* Keep journal cover colour in sync with changes made on journal.html. */
+    function refreshCoverColour() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(TKEY) || '[]');
+        const latest = Array.isArray(stored) ? stored.find(b => String(b.id) === String(cur.id)) : null;
+        if (!latest || latest.customCoverColor === cur.customCoverColor) return;
+        cur.customCoverColor = latest.customCoverColor;
+        document.querySelectorAll('.pgv.cover').forEach(node => {
+          node.style.background = cover(cur);
+        });
+      } catch (e) { /* Keep the current cover if storage is unavailable. */ }
+    }
+    window.addEventListener('focus', refreshCoverColour);
+    window.addEventListener('pageshow', refreshCoverColour);
+    window.addEventListener('storage', event => {
+      if (event.key === TKEY) refreshCoverColour();
+    });
 
     /* PAGE CONTENT */
 
@@ -1052,8 +1092,8 @@
           span.addEventListener('focus',()=>{
             if(sel!==it){sel=it;sync();}
           });
-          span.addEventListener('input',()=>{it.txt=span.innerText.slice(0,400);save();});
-          span.addEventListener('blur',()=>{it.txt=span.innerText.slice(0,400);save();});
+          span.addEventListener('input',()=>{it.txt=span.innerText.slice(0,400);saveEditor();});
+          span.addEventListener('blur',()=>{it.txt=span.innerText.slice(0,400);saveEditor();});
         }
         n.appendChild(span);
       }else if(it.t==='sticker'){
@@ -1270,7 +1310,7 @@
         tool('plus','Page',()=>{
           cur.pages.push({caption:'',items:[]});
           pi=cur.pages.length-1;
-          save();
+          saveEditor();
           renderPage();
         })
       ));
@@ -1377,7 +1417,7 @@
     function addPage(){
       if(busy)return;
       cur.pages.push({caption:'',items:[]});
-      save();
+      saveEditor();
       go(Math.floor((cur.pages.length-1)/2)*2);
     }
 
@@ -1535,7 +1575,7 @@
     function editPage(i){
       if(i>=cur.pages.length){
         cur.pages.push({caption:'',items:[]});
-        save();
+        saveEditor();
       }
 
       pi=i;
@@ -1569,7 +1609,7 @@
 
       cur.pages.splice(pi,1);
       pi=Math.min(pi,cur.pages.length-1);
-      save();
+      saveEditor();
       renderPage();
     }
 
@@ -1639,7 +1679,7 @@
           e.stopPropagation();
           const items=pg().items;
           items.splice(items.indexOf(it),1);
-          save();
+          saveEditor();
           renderPage();
         }
       },ctlIcon('x')));
@@ -1695,7 +1735,7 @@
         function up(){
           resize.removeEventListener('pointermove',move);
           resize.removeEventListener('pointerup',up);
-          save();
+          saveEditor();
         }
 
         resize.addEventListener('pointermove',move);
@@ -1730,7 +1770,7 @@
         function up(){
           rotate.removeEventListener('pointermove',move);
           rotate.removeEventListener('pointerup',up);
-          save();
+          saveEditor();
         }
 
         rotate.addEventListener('pointermove',move);
@@ -1740,8 +1780,8 @@
       n.appendChild(rotate);
 
       if(it.t==='text'){
-        const smaller=el('button',{class:'ctl font-down',type:'button',text:'A−','aria-label':'Decrease font size',onclick:e=>{e.stopPropagation();it.fontSize=Math.max(10,(it.fontSize||17)-2);styleIt(n,it);save();}});
-        const larger=el('button',{class:'ctl font-up',type:'button',text:'A+','aria-label':'Increase font size',onclick:e=>{e.stopPropagation();it.fontSize=Math.min(42,(it.fontSize||17)+2);styleIt(n,it);save();}});
+        const smaller=el('button',{class:'ctl font-down',type:'button',text:'A−','aria-label':'Decrease font size',onclick:e=>{e.stopPropagation();it.fontSize=Math.max(10,(it.fontSize||17)-2);styleIt(n,it);saveEditor();}});
+        const larger=el('button',{class:'ctl font-up',type:'button',text:'A+','aria-label':'Increase font size',onclick:e=>{e.stopPropagation();it.fontSize=Math.min(42,(it.fontSize||17)+2);styleIt(n,it);saveEditor();}});
         n.append(smaller,larger);
       }
     }
@@ -1774,7 +1814,7 @@
         function up(){
           n.removeEventListener('pointermove',move);
           n.removeEventListener('pointerup',up);
-          save();
+          saveEditor();
         }
 
         n.addEventListener('pointermove',move);
@@ -1789,7 +1829,7 @@
 
       pg().items.push(it);
 
-      if(!save()){
+      if(!saveEditor()){
         pg().items.pop();
         return;
       }
@@ -1812,7 +1852,7 @@
 
       pg().items.push(it);
 
-      if(!save()){
+      if(!saveEditor()){
         pg().items.pop();
         return;
       }
@@ -1830,7 +1870,7 @@
       n.className='it photo frame-'+it.frameStyle+
         (sel===it?' sel':'');
 
-      save();
+      saveEditor();
     }
 
     function addTape(color,pattern){
@@ -2041,7 +2081,7 @@
           r:0,fontSize:15
         };
         pg().items.push(text);
-        if(!save()){pg().items.pop();return;}
+        if(!saveEditor()){pg().items.pop();return;}
         renderPage();
         sel=text;
         sync();
@@ -2139,7 +2179,7 @@
       }
     });
 
-    save();
+    saveEditor();
     build();
     function fitPhone(){const stage=document.querySelector('.stage');if(innerWidth<=500){stage.style.transform='none';return;}stage.style.transform='scale('+Math.min(1,(innerHeight-28)/868,(innerWidth-28)/414)+')';}
     fitPhone();addEventListener('resize',fitPhone);
