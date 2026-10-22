@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Discover Our Culture — Terooka</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --purple:#5724A3;
+      --pink:#D842A0;
+      --ink:#32204B;
+      --muted:#796B85;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;min-height:100dvh;
+      background:#EDE4F5;
+      font-family:'Plus Jakarta Sans',sans-serif;
+      display:grid;place-items:center;color:var(--ink);
+    }
+    button,input{font:inherit}
+    button{cursor:pointer}
+    .stage{width:414px;height:868px;transform-origin:center}
+    .phone{
+      width:414px;height:868px;padding:12px;
+      background:#111015;border-radius:62px;
+      position:relative;
+      box-shadow:0 24px 70px #3619583b,0 0 0 2px #343039;
+    }
+    .phone::before,.phone::after{
+      content:"";position:absolute;left:-5px;width:4px;
+      background:#302b35;border-radius:4px;
+    }
+    .phone::before{top:155px;height:52px}
+    .phone::after{top:228px;height:69px}
+    .screen{
+      width:390px;height:844px;
+      border-radius:50px;overflow:hidden;position:relative;
+      background:linear-gradient(160deg,#F0E4FB,#F9EAF5 38%,#FFF9F7 72%,#FFECE5);
+    }
+    .island{
+      position:absolute;z-index:20;top:11px;left:50%;
+      transform:translateX(-50%);
+      width:118px;height:34px;background:#08070a;border-radius:30px;
+    }
+    .status{
+      position:absolute;top:18px;left:34px;right:30px;z-index:19;
+      display:flex;justify-content:space-between;
+      font-size:14px;font-weight:800;
+    }
+    .homebar{
+      position:absolute;bottom:8px;left:50%;
+      transform:translateX(-50%);
+      width:126px;height:5px;background:#2F2837;
+      border-radius:20px;z-index:20;
+    }
+    .scroll{
+      position:absolute;inset:0;overflow-y:auto;
+      padding:65px 22px 95px;scrollbar-width:none;
+    }
+    .scroll::-webkit-scrollbar{display:none}
+    .back{
+      display:inline-flex;align-items:center;gap:8px;
+      color:var(--purple);text-decoration:none;
+      font-size:12px;font-weight:800;margin-bottom:22px;
+    }
+    .eyebrow{
+      font-size:10px;letter-spacing:.19em;
+      color:var(--pink);font-weight:800;
+      text-transform:uppercase;margin:0 0 7px;
+    }
+    h1{
+      font:600 31px/1.15 Fraunces,Georgia,serif;
+      margin:0 0 10px;color:#32145B;
+    }
+    .intro{
+      font-size:12px;line-height:1.65;
+      color:var(--muted);margin:0 0 21px;
+    }
+    .hero{
+      padding:22px 20px;border-radius:23px;
+      background:linear-gradient(130deg,#5724A3,#8834B9 65%,#D842A0);
+      color:white;position:relative;overflow:hidden;margin-bottom:24px;
+    }
+    .hero .flower{
+      position:absolute;right:-10px;top:-26px;
+      font-size:105px;opacity:.18;
+    }
+    .hero h2{
+      font:600 21px/1.25 Fraunces,serif;
+      margin:0 0 7px;position:relative;
+    }
+    .hero p{
+      font-size:11px;line-height:1.65;
+      margin:0;max-width:230px;position:relative;
+    }
+    .section-title{
+      font:600 21px Fraunces,serif;
+      margin:0 0 12px;
+    }
+    .section-head{
+      display:flex;align-items:center;
+      justify-content:space-between;margin-bottom:12px;
+    }
+    .section-head .section-title{margin:0}
+    .section-head small{
+      font-size:10px;color:var(--muted);font-weight:700;
+    }
+    .section{margin-bottom:25px}
+    .search{
+      width:100%;padding:13px 15px;
+      border:1px solid white;border-radius:15px;
+      background:#ffffffb9;color:var(--ink);
+      font-size:12px;outline:none;margin-bottom:15px;
+    }
+    .search:focus{border-color:#B77BDB}
+    .cards{display:grid;gap:11px}
+    .story-card{
+      width:100%;display:flex;align-items:center;
+      gap:13px;padding:12px;
+      border:1px solid #ffffffdd;
+      background:#ffffffba;
+      border-radius:18px;text-align:left;color:var(--ink);
+      box-shadow:0 5px 16px #5724a30a;
+    }
+    .story-art{
+      width:68px;height:68px;flex-shrink:0;
+      border-radius:13px;display:grid;place-items:center;
+      font-size:30px;overflow:hidden;
+    }
+    .story-art img{
+      width:100%;height:100%;object-fit:cover;
+    }
+    .story-info{flex:1;min-width:0}
+    .story-info strong{
+      display:block;font:600 15px Fraunces,serif;
+      margin-bottom:5px;
+    }
+    .story-info small{
+      display:block;font-size:10px;
+      color:var(--muted);line-height:1.5;
+    }
+    .story-arrow{
+      color:var(--purple);font-size:20px;
+    }
+    .empty{
+      padding:20px 15px;
+      text-align:center;border-radius:17px;
+      background:#ffffff7a;
+      font-size:11px;line-height:1.7;color:var(--muted);
+    }
+    .category{
+      font-size:9px;color:var(--pink);
+      font-weight:800;margin-bottom:4px;
+    }
+    .footer{
+      font-size:11px;color:var(--muted);
+      line-height:1.6;margin:20px 0;
+    }
+    @media(max-width:500px){
+      body{display:block}
+      .stage,.phone{
+        width:100%;height:100dvh;transform:none!important;
+      }
+      .phone{
+        padding:0;border-radius:0;box-shadow:none;
+      }
+      .phone::before,.phone::after,
+      .island,.status,.homebar{display:none}
+      .screen{width:100%;height:100%;border-radius:0}
+      .scroll{padding-top:30px}
+    }
+  </style>
+</head>
+
+<body>
+<div class="stage" id="stage">
+  <div class="phone">
+    <div class="screen">
+
+      <div class="island"></div>
+
+      <div class="status">
+        <span>9:41</span>
+        <svg width="70" height="15" viewBox="0 0 70 15" fill="none">
+          <g fill="#32204B">
+            <rect x="0" y="10" width="3" height="5" rx="1"/>
+            <rect x="5" y="7" width="3" height="8" rx="1"/>
+            <rect x="10" y="4" width="3" height="11" rx="1"/>
+            <rect x="15" y="1" width="3" height="14" rx="1"/>
+          </g>
+          <g stroke="#32204B" stroke-width="1.8" stroke-linecap="round">
+            <path d="M27 5Q34-1 41 5"/>
+            <path d="M30 9Q34 5 38 9"/>
+          </g>
+          <circle cx="34" cy="12" r="1.5" fill="#32204B"/>
+          <rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/>
+          <rect x="50" y="4" width="15" height="7" rx="1.6" fill="#32204B"/>
+          <path d="M69 5v5" stroke="#32204B" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <main class="scroll">
+        <a class="back" href="home.html">← Back to Home</a>
+
+        <p class="eyebrow">Terooka · Culture & Heritage</p>
+        <h1>Discover Our Culture</h1>
+        <p class="intro">
+          Every tradition has a story. Explore the people,
+          flavours, crafts and celebrations that make Malaysia unique.
+        </p>
+
+        <div class="hero">
+          <span class="flower">🌺</span>
+          <h2>More than a destination.</h2>
+          <p>Learn the meaning behind the moments you experience on your journey.</p>
+        </div>
+
+        <section class="section" id="saved-section">
+          <div class="section-head">
+            <h2 class="section-title">Saved Stories</h2>
+            <small id="saved-count">0 saved</small>
+          </div>
+          <div class="cards" id="saved-list"></div>
+        </section>
+
+        <section class="section" id="recent-section">
+          <div class="section-head">
+            <h2 class="section-title">Recently Viewed</h2>
+            <small id="recent-count">0 stories</small>
+          </div>
+          <div class="cards" id="recent-list"></div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Explore Cultural Stories</h2>
+          <input class="search" id="story-search"
+                 type="search" placeholder="Search cultural stories...">
+          <div class="cards" id="all-stories"></div>
+        </section>
+
+        <p class="footer">
+          Keep exploring — every place has a story worth remembering. 🌺
+        </p>
+      </main>
+
+      <div class="homebar"></div>
+    </div>
+  </div>
+</div>
+
+<script src="cultural-stories.js"></script>
+<script>
+  const stories = window.CULTURAL_STORIES || {};
+
+  const session = (() => {
+    try {
+      return JSON.parse(localStorage.getItem("terooka_session"));
+    } catch {
+      return null;
+    }
+  })();
+
+  const uid = session?.username || session?.email || "guest";
+  const savedKey = "terooka_culture_saved_" + uid;
+  const recentKey = "terooka_culture_recent_" + uid;
+
+  function readList(key) {
+    try {
+      const value = JSON.parse(localStorage.getItem(key));
+      return Array.isArray(value) ? value : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function openStory(id) {
+    location.href =
+      "cultural-story.html?id=" +
+      encodeURIComponent(id) +
+      "&from=culture";
+  }
+
+  function createCard(id) {
+    const story = stories[id];
+    if (!story) return null;
+
+    const button = document.createElement("button");
+    button.className = "story-card";
+    button.type = "button";
+    button.onclick = () => openStory(id);
+
+    const art = document.createElement("div");
+    art.className = "story-art";
+    art.style.background = story.colour || "#E8D7F4";
+
+    const emoji = document.createElement("span");
+    emoji.textContent = story.emoji || "🌺";
+    art.appendChild(emoji);
+
+    const imagePath = story.images?.[0];
+    if (imagePath) {
+      const img = document.createElement("img");
+      img.src = imagePath;
+      img.alt = "";
+      img.onload = () => {
+        art.replaceChildren(img);
+      };
+    }
+
+    const info = document.createElement("div");
+    info.className = "story-info";
+
+    const category = document.createElement("div");
+    category.className = "category";
+    category.textContent = story.category;
+
+    const title = document.createElement("strong");
+    title.textContent = story.title;
+
+    const description = document.createElement("small");
+    description.textContent = story.summary;
+
+    info.append(category, title, description);
+
+    const arrow = document.createElement("span");
+    arrow.className = "story-arrow";
+    arrow.textContent = "›";
+
+    button.append(art, info, arrow);
+    return button;
+  }
+
+  function renderList(containerId, ids, emptyMessage) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+
+    const validIds = ids.filter(id => stories[id]);
+
+    if (!validIds.length) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = emptyMessage;
+      container.appendChild(empty);
+      return;
+    }
+
+    validIds.forEach(id => {
+      container.appendChild(createCard(id));
+    });
+  }
+
+  function render() {
+    const saved = readList(savedKey);
+    const recent = readList(recentKey);
+
+    renderList(
+      "saved-list",
+      saved,
+      "No saved stories yet. Bookmark a story to find it here!"
+    );
+
+    renderList(
+      "recent-list",
+      recent,
+      "Stories you read will appear here."
+    );
+
+    document.getElementById("saved-count").textContent =
+      saved.length + " saved";
+
+    document.getElementById("recent-count").textContent =
+      recent.length + " stories";
+
+    const query = document.getElementById("story-search")
+      .value.trim().toLowerCase();
+
+    const all = Object.keys(stories).filter(id => {
+      const s = stories[id];
+      return (
+        s.title + " " +
+        s.category + " " +
+        s.location + " " +
+        s.summary
+      ).toLowerCase().includes(query);
+    });
+
+    renderList(
+      "all-stories",
+      all,
+      "No stories match your search."
+    );
+  }
+
+  document.getElementById("story-search")
+    .addEventListener("input", render);
+
+  render();
+
+  function scalePhone() {
+    const stage = document.getElementById("stage");
+
+    stage.style.transform = innerWidth <= 500
+      ? ""
+      : `scale(${Math.min(
+        (innerWidth - 32) / 414,
+        (innerHeight - 32) / 868,
+        1
+      )})`;
+  }
+
+  addEventListener("resize", scalePhone);
+  scalePhone();
+</script>
+</body>
+</html>

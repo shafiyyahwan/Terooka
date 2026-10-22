@@ -620,6 +620,41 @@
       border-radius: 15px;
     }
 
+
+    /* Read Full Story and saved-story bookmark */
+    .story-action-row {
+      display: none;
+      align-items: stretch;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .story-action-row .story {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      min-height: 51px;
+      padding: 13px 15px;
+    }
+    .story-bookmark {
+      width: 51px;
+      min-width: 51px;
+      height: 51px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #e4d2ef;
+      border-radius: 15px;
+      background: white;
+      color: var(--purple);
+    }
+    .story-bookmark svg { width: 21px; height: 21px; }
+    .story-bookmark.saved {
+      background: #f0e4f8;
+      border-color: #b58cda;
+    }
+    .story-bookmark.saved svg { fill: var(--purple); }
+
     /* NOTIFICATION */
 
     .toast {
@@ -959,9 +994,20 @@
 
         <p id="sheetText"></p>
 
-        <a class="story" id="storyLink" href="#">
-          Read Full Story
-        </a>
+        <div class="story-action-row" id="storyActionRow">
+          <a class="story" id="storyLink" href="#">
+            Read Full Story
+          </a>
+          <button type="button" class="story-bookmark" id="storyBookmark"
+                  aria-label="Save cultural story" aria-pressed="false"
+                  title="Save Story">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </button>
+        </div>
       </section>
 
       <div
@@ -1197,21 +1243,55 @@
       $('sheetDim').classList.remove('open');
     }
 
+    const cultureSavedKey = 'terooka_culture_saved_' + uid;
+    let currentStoryId = null;
+
+    function updateStoryBookmark() {
+      const isSaved = Boolean(
+        currentStoryId && read(cultureSavedKey).includes(currentStoryId)
+      );
+      $('storyBookmark').classList.toggle('saved', isSaved);
+      $('storyBookmark').setAttribute('aria-pressed', String(isSaved));
+      $('storyBookmark').setAttribute('aria-label',
+        isSaved ? 'Remove saved story' : 'Save cultural story');
+      $('storyBookmark').title = isSaved ? 'Remove Saved Story' : 'Save Story';
+    }
+
+    $('storyBookmark').onclick = () => {
+      if (!currentStoryId) return;
+      const savedStories = read(cultureSavedKey);
+      const alreadySaved = savedStories.includes(currentStoryId);
+      const next = alreadySaved
+        ? savedStories.filter(id => id !== currentStoryId)
+        : [currentStoryId, ...savedStories];
+      try {
+        localStorage.setItem(cultureSavedKey, JSON.stringify(next));
+        updateStoryBookmark();
+        toast(alreadySaved
+          ? 'Story removed from saved collection'
+          : 'Story saved to your collection!');
+      } catch (error) {
+        toast('Unable to save story');
+      }
+    };
+
     function openSheet(data) {
       $('sheetCategory').textContent =
         data.category || 'Cultural information';
 
-      $('sheetTitle').textContent =
-        data.title || '';
+      $('sheetTitle').textContent = data.title || '';
+      $('sheetText').textContent = data.description || '';
 
-      $('sheetText').textContent =
-        data.description || '';
-
-      $('storyLink').style.display =
-        data.storyUrl ? 'block' : 'none';
-
+      currentStoryId = null;
       if (data.storyUrl) {
-        $('storyLink').href = data.storyUrl;
+        const url = new URL(data.storyUrl, location.href);
+        currentStoryId = url.searchParams.get('id');
+        url.searchParams.set('from', 'camera');
+        $('storyLink').href = url.href;
+        $('storyActionRow').style.display = 'flex';
+        updateStoryBookmark();
+      } else {
+        $('storyActionRow').style.display = 'none';
       }
 
       $('sheetDim').classList.add('open');

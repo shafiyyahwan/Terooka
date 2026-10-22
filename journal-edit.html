@@ -477,6 +477,7 @@
       overflow-wrap:anywhere;
       padding:2px;
     }
+    .it.sticker{font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-size:52px;line-height:1.15;white-space:nowrap}
     .it .fb{
       display:flex;
       aspect-ratio:1;
@@ -724,8 +725,8 @@
     }
     .tools{
       display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:6px;
+      grid-template-columns:repeat(6,1fr);
+      gap:5px;
       margin-top:10px;
     }
     .tools button{
@@ -749,6 +750,7 @@
       flex-shrink:0;
     }
     .tools button{line-height:1.2;text-align:center}
+    .tray button.sticker-choice{font-size:28px;min-width:52px;min-height:52px;padding:5px;line-height:1}
     .picker{
       position:absolute;
       inset:0;
@@ -1009,7 +1011,7 @@
         el('div',{class:'cover-plate'},el('div',{class:'ct',text:cur.title||'Untitled journal'})),
         el('div',{class:'cp',text:cur.place||''})
       );
-      if(cur.customCoverColor)node.style.background=cur.customCoverColor;
+      node.style.background=cover(cur);
       return node;
     }
 
@@ -1021,6 +1023,7 @@
       n.style.transform='rotate('+(it.r||0)+'deg)';
       if(it.t==='text')n.style.fontSize=(it.fontSize||17)+'px';
       if(it.t==='stamp')n.style.fontSize=(fs*.13)+'px';
+      if(it.t==='sticker')n.style.fontSize=(fs*.75)+'px';
     }
 
     function itemEl(it,readOnly){
@@ -1053,6 +1056,8 @@
           span.addEventListener('blur',()=>{it.txt=span.innerText.slice(0,400);save();});
         }
         n.appendChild(span);
+      }else if(it.t==='sticker'){
+        n.textContent=it.emoji||'🌺';
       }else if(it.t==='label'){
         n.textContent=it.txt||'';
       }else if(it.t==='tape'){
@@ -1113,6 +1118,7 @@
       photo:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="9" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 5"/>',
       text:'<path d="M4 6h16M12 6v14M8 20h8"/>',
       stamp:'<circle cx="12" cy="10" r="5"/><path d="m9 15-2 6 5-3 5 3-2-6"/>',
+      sticker:'<path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"/>',
       decor:'<path d="M4 5h16v14H4zM8 5v14M4 10h16"/>',
       plus:'<path d="M12 5v14M5 12h14"/>'
     };
@@ -1259,6 +1265,7 @@
         tool('photo','Photos',pickJourneyPhoto),
         tool('text','Caption',()=>showTray('caption')),
         tool('stamp','Stamps',()=>showTray('stamp')),
+        tool('sticker','Stickers',()=>showTray('sticker')),
         tool('decor','Decor',()=>showTray('tape')),
         tool('plus','Page',()=>{
           cur.pages.push({caption:'',items:[]});
@@ -1921,6 +1928,16 @@
         return;
       }
 
+      if(m==='sticker'){
+        const stickers=['🌺','🌸','🌼','🌻','🌷','🍃','🌿','🦋','🐱','🐢','🍜','🍡','🥥','🍉','☕','📸','🎒','✈️','🗺️','📍','🏝️','🌈','⭐','💜','✨','🎨','🎭','🏮','🛺','❤️'];
+        stickers.forEach(emoji=>tray.appendChild(el('button',{
+          class:'sticker-choice',type:'button',text:emoji,
+          'aria-label':'Add '+emoji+' sticker',
+          onclick:()=>addItem({t:'sticker',emoji:emoji,w:22})
+        })));
+        return;
+      }
+
       if(m==='tape'){
         [
           ['#F5A9BA','plain','Rose'],
@@ -2144,4 +2161,3 @@
 </script>
 </body>
 </html>
-

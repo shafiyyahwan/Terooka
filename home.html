@@ -184,17 +184,17 @@
     .count { font-size: 11px; font-weight: 700; color: var(--muted); }
 
     /* ===== PLACE CARDS ===== */
-    .rail { display: flex; gap: 14px; overflow-x: auto; scrollbar-width: none; padding: 4px 22px 14px; scroll-padding-left: 22px; scroll-snap-type: x proximity; }
+    .rail { display: flex; align-items: stretch; gap: 14px; overflow-x: auto; scrollbar-width: none; padding: 4px 22px 14px; scroll-padding-left: 22px; scroll-snap-type: x proximity; }
     .rail::-webkit-scrollbar { display: none; }
     .rail::after { content:""; flex:0 0 8px; }
     .place {
-      flex: 0 0 214px; scroll-snap-align: start; border-radius: 22px; overflow: hidden;
+      flex: 0 0 214px; width:214px; min-width:214px; align-self:stretch; scroll-snap-align: start; border-radius: 22px; overflow: hidden; display:flex; flex-direction:column;
       background: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.9);
       box-shadow: 0 10px 26px rgba(87,36,163,.10); transition: transform .3s, box-shadow .3s;
     }
     .place:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(87,36,163,.16); }
     .cover {
-      position: relative; height: 116px; padding: 12px; display: flex; flex-direction: column; justify-content: flex-end;
+      position: relative; height: 116px; flex:0 0 116px; padding: 12px; display: flex; flex-direction: column; justify-content: flex-end;
       color: #fff; overflow: hidden;
     }
     .cover::before {
@@ -220,7 +220,7 @@
     .heart svg { width: 17px; height: 17px; }
     .heart[aria-pressed="true"] { color: var(--pink); }
     .heart[aria-pressed="true"] svg path { fill: currentColor; }
-    .body { padding: 12px 14px 14px; }
+    .place .body { padding: 12px 14px 14px; flex:1; }
     .body h3 { font: 600 16px var(--serif); letter-spacing: -.01em; margin: 0 0 4px; color: #32145B; }
     .body p { font-size: 11.5px; line-height: 1.55; color: var(--muted); margin: 0; }
 
@@ -250,9 +250,14 @@
     .know .k-eyebrow { font-size: 9.5px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; opacity: .85; margin: 0 0 8px; position: relative; }
     .know p.k-text { font: 500 17px/1.35 var(--serif); letter-spacing: -.01em; margin: 0; position: relative; max-width: 270px; }
 
+    /* Compact action beside the fact carousel dots */
+    .fact-footer{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:15px;min-height:28px;z-index:2}
+    .culture-link{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;color:#fff;text-decoration:none;font-size:11px;font-weight:800;padding:6px 0 6px 8px;border-radius:8px;transition:opacity .2s}
+    .culture-link:hover{opacity:.8}
+    .culture-link svg{width:14px;height:14px;flex:none}
     .know .k-text { min-height: 94px; opacity: 0; transition: opacity .25s ease; }
     .know .k-text.fact-visible { opacity: 1; }
-    .fact-dots { position: relative; display: flex; gap: 7px; margin-top: 15px; }
+    .fact-dots { position: relative; display: flex; gap: 7px; margin-top: 0; }
     .fact-dot { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 10px; background: rgba(255,255,255,.35); cursor: pointer; transition: width .25s, background .25s; }
     .fact-dot.selected { width: 23px; background: #fff; }
 
@@ -487,7 +492,11 @@
           <div class="know">
             <svg class="bg" viewBox="0 0 200 200" aria-hidden="true"><use href="#hibiscus"/></svg>
             <p class="k-eyebrow">Did you know</p>
-            <p class="k-text" id="fun-fact" aria-live="polite">Malaysia is home to a wonderful variety of cultures, languages and traditions.</p><div class="fact-dots" id="fact-dots" aria-label="Fun fact progress"></div>
+            <p class="k-text" id="fun-fact" aria-live="polite">Songket is a traditional handwoven textile decorated with shimmering metallic threads, often worn during special ceremonies.</p>
+            <div class="fact-footer">
+              <div class="fact-dots" id="fact-dots" aria-label="Cultural facts"></div>
+              <a class="culture-link" href="culture-discovery.html">Discover more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            </div>
           </div>
         </section>
 
@@ -591,12 +600,12 @@
     ];
 
     var FACTS = [
-      'Malaysia is home to many ethnic communities, including Malay, Chinese, Indian, Iban, Bidayuh, Kadazan-Dusun and many more.',
-      'Malaysia has 13 states and 3 federal territories, each with its own stories and cultural traditions.',
-      'The bunga raya (hibiscus) is Malaysia’s national flower, chosen in 1960.',
-      'Sarawak is home to diverse Indigenous communities and a rich tradition of weaving, beadwork and music.',
-      'George Town and Melaka are recognised together as UNESCO World Heritage cities.',
-      'The Rainforest World Music Festival in Sarawak brings musicians and cultures together from around the world.'
+      'Songket is a traditional handwoven textile decorated with shimmering metallic threads, often worn during special ceremonies.',
+      'In Sarawak, the Iban ngajat dance is performed during celebrations and cultural gatherings.',
+      'Batik makers use wax-resist techniques to create colourful patterns on fabric.',
+      'The kompang is a traditional frame drum commonly played during Malay wedding processions.',
+      'In Sabah, the Kadazan-Dusun sumazau dance is associated with harvest celebrations.',
+      'Peranakan culture blends influences reflected in distinctive food, clothing, architecture and beadwork.'
     ];
     var factIndex = 0;
     function showFact(index) {
@@ -610,7 +619,7 @@
       FACTS.forEach(function (_, i) {
         var b = document.createElement('button');
         b.type = 'button'; b.className = 'fact-dot' + (i === factIndex ? ' selected' : '');
-        b.setAttribute('aria-label', 'Show fun fact ' + (i + 1));
+        b.setAttribute('aria-label', 'Show cultural fact ' + (i + 1));
         b.addEventListener('click', function () { showFact(i); });
         dots.appendChild(b);
       });
@@ -785,7 +794,9 @@
     function renderMemories() {
       var wrap = $('#memories');
       wrap.innerHTML = '';
-      var journalBooks = (typeof books !== 'undefined' && Array.isArray(books)) ? books : [];
+      var journalBooks = [];
+      try { journalBooks = JSON.parse(localStorage.getItem(TKEY)) || []; } catch(e) {}
+      if (!Array.isArray(journalBooks)) journalBooks = [];
       if (!journalBooks.length) {
         wrap.appendChild(el('div', { class: 'empty glass' },
           el('h3', { text: 'Your bookshelf is waiting' }),
@@ -794,11 +805,9 @@
         return;
       }
       var rail = el('div', { class: 'journal-rail', 'aria-label': 'Recent journal books' });
-      var palette = [['#5724A3','#D842A0'],['#2D657A','#69A5AA'],['#A34765','#E58A91'],['#6E508F','#B69BD7']];
       journalBooks.slice(0, 8).forEach(function(b,i) {
-        var c=palette[i%palette.length];
         var book=el('a',{class:'journal-book',href:'journal-edit.html?id='+encodeURIComponent(b.id),'aria-label':'Open '+(b.title||'Journal')});
-        book.style.setProperty('--book-a',c[0]);book.style.setProperty('--book-b',c[1]);
+        book.style.background = cover(b);
         book.appendChild(el('span',{class:'journal-book-spine','aria-hidden':'true'}));
         book.appendChild(el('span',{class:'journal-bookmark','aria-hidden':'true'}));
         book.appendChild(el('span',{class:'journal-plate',text:b.title||'Untitled Journal'}));
