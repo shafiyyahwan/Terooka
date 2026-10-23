@@ -396,26 +396,25 @@
     }
 
 
-    /* OPTIONAL PHOTO CAPTION — SAME INTERACTION AS JOURNEY */
+    /* OPTIONAL PHOTO CAPTION — MATCH JOURNEY POPUP */
     .photo-caption-trigger { position:absolute;z-index:12;bottom:114px;left:20px;right:20px;display:none;justify-content:center; }
     .photo-caption-trigger button { width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border:1px solid #e8d8f5;border-radius:14px;background:#fff9fd;color:#5724a3;font-weight:800;font-size:12px;box-shadow:0 5px 18px #180a3040; }
     .photo-caption-trigger svg {width:18px;height:18px;}
     .photo-caption-dim {position:absolute;inset:0;z-index:27;background:#180a3070;display:none;}
     .photo-caption-dim.show {display:block;}
-    .photo-caption-panel {position:absolute;z-index:28;left:18px;right:18px;bottom:95px;display:none;padding:18px;border-radius:20px;background:#fff9fd;color:#32204b;box-shadow:0 14px 35px #0006;}
+    .photo-caption-panel {position:absolute;z-index:28;left:18px;right:18px;bottom:67px;display:none;padding:17px;border-radius:20px;background:#fff9fd;color:#32204b;box-shadow:0 14px 35px #0006;}
     .photo-caption-panel.show {display:block;}
-    .photo-caption-panel strong {display:block;font-size:15px;padding-right:30px;}
-    .photo-caption-panel p {font-size:11px;color:#796b85;line-height:1.5;margin:7px 0 0;}
-    .photo-caption-panel textarea {box-sizing:border-box;width:100%;min-height:100px;resize:vertical;margin-top:12px;padding:11px;border:1px solid #e4d4ef;border-radius:11px;font:12px/1.6 'Plus Jakarta Sans',sans-serif;color:#32204b;background:white;}
+    .photo-caption-panel > strong {display:block;color:#32204b;font-size:14px;padding-right:44px;margin-bottom:18px;}
+    .photo-caption-panel > p {font-size:12px;color:#796b85;line-height:1.7;margin:6px 0 0;}
+    .photo-caption-panel textarea {box-sizing:border-box;width:100%;min-height:82px;resize:vertical;margin-top:10px;padding:11px;border:1px solid #e4d4ef;border-radius:11px;font:12px/1.6 'Plus Jakarta Sans',sans-serif;color:#32204b;background:white;}
     .photo-caption-panel .caption-buttons {display:flex;gap:8px;margin-top:10px;}
-    .photo-caption-panel .caption-buttons button {flex:1;min-height:42px;padding:10px 5px;border:0;border-radius:10px;background:#f0e4f8;color:#5724a3;font-weight:800;font-size:11px;}
-    .photo-caption-panel .caption-buttons button:last-child {background:#efe5f9;color:#5724a3;}
-    .photo-caption-panel .share-photo-btn{width:100%;margin-top:9px;min-height:44px;border:0;border-radius:12px;background:var(--gradient);color:white;font-size:12px;font-weight:800;}
-    .photo-caption-panel .caption-buttons button{background:#efe5f9;}
-    .photo-caption-panel .caption-buttons button,.photo-caption-panel .share-photo-btn{display:flex;align-items:center;justify-content:center;gap:8px;}
-    .photo-caption-panel .caption-buttons svg,.photo-caption-panel .share-photo-btn svg{width:17px;height:17px;flex-shrink:0;}
-    .photo-caption-panel .caption-close {position:absolute;right:13px;top:12px;width:31px;height:31px;border:0;border-radius:10px;background:#f0e4f8;color:#5724a3;font-size:22px;}
-    @media(max-width:500px){.photo-caption-trigger{bottom:calc(89px + env(safe-area-inset-bottom))}.photo-caption-panel{bottom:calc(100px + env(safe-area-inset-bottom))}}
+    .photo-caption-panel .caption-buttons button {flex:1;min-width:0;min-height:46px;padding:0 14px;border:0;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:7px;font-weight:800;font-size:11px;}
+    .photo-caption-panel .caption-buttons button:first-child {border:1.5px solid #cbb1e1;background:#fff;color:#5724a3;}
+    .photo-caption-panel .caption-buttons button:last-child {background:linear-gradient(110deg,#5724a3,#d842a0);color:white;}
+    .photo-caption-panel .caption-buttons svg {display:block;width:17px;height:17px;flex-shrink:0;}
+    .photo-caption-panel .caption-close {position:absolute;top:14px;right:14px;display:flex;align-items:center;justify-content:center;width:36px;height:36px;min-width:36px;padding:0;margin:0;border:0;border-radius:10px;background:#eee1f7;color:#5724a3;line-height:0;}
+    .photo-caption-panel .caption-close svg {display:block;width:18px;height:18px;flex:none;margin:auto;}
+    @media(max-width:500px){.photo-caption-trigger{bottom:calc(89px + env(safe-area-inset-bottom))}.photo-caption-panel{bottom:67px}}
 
     /* CULTURE LENS SCANNING */
 
@@ -604,6 +603,12 @@
       color: var(--purple);
       font-size: 23px;
       flex-shrink: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      line-height: 1;
     }
 
     .note {
@@ -1008,12 +1013,12 @@
       </div>
       <div class="photo-caption-dim" id="photoCaptionDim"></div>
       <section class="photo-caption-panel" id="photoCaptionPanel" role="dialog" aria-modal="true" aria-label="Photo caption suggestion">
-        <button class="caption-close" id="closePhotoCaption" type="button" aria-label="Close caption">&times;</button>
+        <button class="caption-close" id="closePhotoCaption" type="button" aria-label="Close caption"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
         <strong>Caption Suggestion</strong>
-        <p>Generate a caption, edit it, then share your photo. Saving to Journey is optional.</p>
+        <p>Create a fun caption to share your travel memories on social media.</p>
         <textarea id="photoCaptionText" aria-label="Suggested photo caption"></textarea>
-        <div class="caption-buttons"><button id="regeneratePhotoCaption" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.9L3 10"/><path d="M3 4v6h6"/><path d="M4 13a8 8 0 0 0 14.9 3.9L21 14"/><path d="M15 14h6v6"/></svg>Regenerate</button></div>
-        <button class="share-photo-btn" id="sharePhotoCaption" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 13.5 6.6 4"/><path d="m15.3 6.5-6.6 4"/></svg>Share</button>
+        <div class="caption-buttons"><button id="regeneratePhotoCaption" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.9L3 10"/><path d="M3 4v6h6"/><path d="M4 13a8 8 0 0 0 14.9 3.9L21 14"/><path d="M15 14h6v6"/></svg>Regenerate</button>
+          <button class="share-photo-btn" id="sharePhotoCaption" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="12" rx="2"/><path d="M12 16V2m-5 5 5-5 5 5"/></svg>Share</button></div>
       </section>
 
       <!-- INFORMATION BOTTOM SHEET -->

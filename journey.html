@@ -940,12 +940,10 @@
     .photo-story { position:absolute; z-index:60; inset:0; display:none; align-items:flex-end; background:#160a27a8; }
     .photo-story.show { display:flex; }
     .photo-story-sheet { width:100%; max-height:78%; overflow-y:auto; padding:24px 22px 40px; border-radius:26px 26px 0 0; background:#fff9fd; color:#32204b; }
-    .story-close { float:right; border:0; background:#eee1f7; color:#5724a3; border-radius:10px; font-size:24px; width:36px; height:36px; }
     .story-category { color:#d842a0; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; }
     .photo-story-sheet h2 { font-size:24px; margin:12px 0; }
     .photo-story-sheet p { white-space:pre-line; font-size:12px; line-height:1.85; color:#6c5b79; }
     .photo-story-sheet .story-source { font-size:10px; color:#9987a7; }
-    .story-close { display:flex; align-items:center; justify-content:center; padding:0; line-height:1; font-family:Arial,sans-serif; }
     .story-actions { display:flex; align-items:stretch; gap:10px; margin-top:14px; }
     #storyLinkSaved { flex:1; display:flex !important; align-items:center; justify-content:center; margin-top:0 !important; }
     #storyLinkSaved[hidden] { display:none !important; }
@@ -1050,9 +1048,55 @@
     .destination-chip > span { display:inline-flex; align-items:center; line-height:1.3; }
     .destination-chip button { display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; min-width:16px; padding:0; margin:0; line-height:0; vertical-align:middle; }
     .destination-chip button svg { display:block; width:12px; height:12px; flex:none; }
+
+    /* Caption panel: rectangular buttons with slightly rounded corners */
+    .caption-actions button {
+      border-radius: 8px;
+      min-height: 46px;
+      padding: 0 14px;
+    }
+
+    /* Space for the close button beside the caption title */
+    .caption-panel > strong { padding-right: 44px; }
+
+    /* Shared close button: same size, colour and centred X for both popups */
+    .story-close,
+    #captionPanel .caption-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      border-radius: 10px;
+      background: #eee1f7;
+      color: #5724a3;
+      font-size: 0;
+      line-height: 0;
+      align-self: auto;
+    }
+
+    .story-close svg,
+    #captionPanel .caption-close svg {
+      display: block;
+      width: 18px;
+      height: 18px;
+      flex: none;
+      margin: auto;
+    }
+
+    .story-close { float: right; }
+
+    #captionPanel .caption-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+    }
   </style>
 </head>
-
 <body>
 
 <div class="stage" id="stage">
@@ -1179,17 +1223,27 @@
         </button>
         <p id="previewText"></p>
         <div id="captionPanel" class="caption-panel" role="dialog" aria-label="Caption suggestion">
-          <strong>Caption Suggestion</strong><p class="sub" style="color:#796b85;">Create a fun caption to share your travel memories on social media.</p>
+          <button id="closeCaption" type="button" class="caption-close" aria-label="Close caption suggestion">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+          <strong>Caption Suggestion</strong>
+          <p class="sub" style="color:#796b85;">Create a fun caption to share your travel memories on social media.</p>
           <textarea id="captionText" aria-label="Suggested caption"></textarea>
           <div class="caption-actions">
-            <button id="refreshCaption" type="button" aria-label="Try another caption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.9L3 10"/><path d="M3 4v6h6"/><path d="M4 13a8 8 0 0 0 14.9 3.9L21 14"/><path d="M15 14h6v6"/></svg>Try another</button>
-            <button id="shareCaption" type="button" aria-label="Share photo and caption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="12" rx="2"/><path d="M12 16V2m-5 5 5-5 5 5"/></svg>Share</button>
+            <button id="refreshCaption" type="button" aria-label="Regenerate caption">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.9L3 10"/><path d="M3 4v6h6"/><path d="M4 13a8 8 0 0 0 14.9 3.9L21 14"/><path d="M15 14h6v6"/></svg>Regenerate
+            </button>
+            <button id="shareCaption" type="button" aria-label="Share photo and caption">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="12" rx="2"/><path d="M12 16V2m-5 5 5-5 5 5"/></svg>Share
+            </button>
           </div>
         </div>
       </div>
       <div class="photo-story" id="photoStory">
         <div class="photo-story-sheet">
-          <button id="closeStory" type="button" class="story-close">×</button>
+          <button id="closeStory" type="button" class="story-close" aria-label="Close story">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
           <div class="story-category" id="storyCategory"></div>
           <h2 id="storyTitle"></h2>
           <p id="storyDescription"></p>
@@ -2045,43 +2099,7 @@
     ===================================== */
 
     function scanQR() {
-      const journey = active();
-      if (!journey) return;
-
-      const collected = new Set(
-        stamps(journey).map(s => s.placeId || s.id)
-      );
-
-      openSheet(`
-      <h2>Scan Location QR</h2>
-
-      <p class="sub">
-        Select the location you visited to collect its stamp.
-      </p>
-
-      ${places.map(place => `
-        <button
-          class="option"
-          data-collect="${esc(place.id)}"
-          ${collected.has(place.id) ? 'disabled' : ''}
-        >
-          <strong>
-            ${esc(place.name)}
-            ${collected.has(place.id) ? ' · Collected' : ''}
-          </strong>
-
-          <small>${esc(place.city)}</small>
-        </button>
-      `).join('')}
-
-      <button
-        class="btn secondary full"
-        data-action="close"
-        style="margin-top:12px"
-      >
-        Cancel
-      </button>
-    `);
+      window.location.href = 'scan-qr.html';
     }
 
     function collectStamp(id) {
@@ -2203,6 +2221,7 @@
     }
     $('#captionSparkle').onclick=()=>{if($('#captionPanel').classList.contains('show'))$('#captionPanel').classList.remove('show');else suggestCaption();};
     $('#refreshCaption').onclick=suggestCaption;
+    $('#closeCaption').onclick = () => $('#captionPanel').classList.remove('show');
     $('#shareCaption').onclick=async()=>{
       const caption=$('#captionText').value.trim();
       const journey=view==='pastDetail'?selected:active();
