@@ -138,17 +138,17 @@ window.CULTURAL_STORIES = {
     imageSources: [
       {
         image: "img/wood-carving-1.jpg",
-        title: "Traditional Sarawak wood carving photograph 1",
-        credit: "Attribution pending",
-        url: "",
-        licence: "To be confirmed"
+        title: "Carved wooden sculpture",
+        credit: "Jonathan Lim",
+        url: "https://unsplash.com/photos/colorful-carved-wooden-sculpture-with-intricate-patterns-4cW4w_8l8d0",
+        licence: "Unsplash license"
       },
       {
         image: "img/wood-carving-2.jpg",
-        title: "Traditional Sarawak wood carving photograph 2",
-        credit: "Attribution pending",
-        url: "",
-        licence: "To be confirmed"
+        title: "Sarawak aboriginal shield",
+        credit: "Thomas Quine",
+        url: "https://commons.wikimedia.org/wiki/File:Sarawak_aboriginal_shield_(28905786095).jpg",
+        licence: "Creative Commons Attribution 2.0 Generic license"
       }
     ],
 
