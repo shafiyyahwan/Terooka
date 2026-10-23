@@ -279,10 +279,10 @@ window.CULTURAL_STORIES = {
     imageSources: [
       {
         image: "img/kek-lapis-1.jpg",
-        title: "Kek Lapis Sarawak photograph 1",
-        credit: "Attribution pending",
-        url: "https://pemetaanbudaya.jkkn.gov.my/senibudaya/detail/1062/galeri",
-        licence: "Gallery reference only; reuse permission not confirmed"
+        title: "Close up of Kek Lapis Sarawak",
+        credit: "bob P-&-S",
+        url: "https://commons.wikimedia.org/wiki/File:Kek_Lapis_Sarawak.jpg",
+        licence: "Creative Commons Attribution 2.0 Generic license"
       },
       {
         image: "img/kek-lapis-2.jpg",
@@ -630,7 +630,7 @@ window.CULTURAL_STORIES = {
       },
       {
         image: "img/pua-kumbu-2.jpg",
-        title: "Pua Kumbu textile photograph 2",
+        title: "A weaver working on the textile",
         credit: "Thomas Quine",
         url: "https://commons.wikimedia.org/wiki/File:Malaysian_Iban_weaving_techniques_(29046933783).jpg",
         licence: "Creative Commons Attribution 2.0 Generic license"
