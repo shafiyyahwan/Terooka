@@ -212,17 +212,17 @@ window.CULTURAL_STORIES = {
     imageSources: [
       {
         image: "img/ngajat-1.jpg",
-        title: "Ngajat performance photograph 1",
-        credit: "Menuaibansarawak",
-        url: "https://commons.wikimedia.org/wiki/File%3ANgajatofSarawak.jpg",
-        licence: "To be confirmed"
+        title: "A dancer in traditional attire performing Ngajat",
+        credit: "Thomas Quine",
+        url: "https://commons.wikimedia.org/wiki/File:Sarawak_dancer_(28885241185).jpg",
+        licence: "Creative Commons Attribution 2.0 Generic license"
       },
       {
         image: "img/ngajat-2.jpg",
-        title: "Ngajat performance photograph 2",
-        credit: "Attribution pending",
-        url: "",
-        licence: "To be confirmed"
+        title: "A wider view showing the dance movements and performance setting",
+        credit: "Menuaibansarawak",
+        url: "https://commons.wikimedia.org/wiki/File%3ANgajatofSarawak.jpg",
+        licence: "Creative Commons CC0 1.0 Universal Public Domain Dedication"
       }
     ],
 
@@ -489,10 +489,10 @@ window.CULTURAL_STORIES = {
       },
       {
         image: "img/sape-2.jpg",
-        title: "Sape performance photograph 2",
-        credit: "Attribution pending",
-        url: "",
-        licence: "To be confirmed"
+        title: "A musician playing the Sape",
+        credit: "AjarnRichard",
+        url: "https://commons.wikimedia.org/wiki/File:Orang_Ulu_Musician_on_the_Sape_(boat_lute).jpg",
+        licence: "Creative Commons Attribution-Share Alike 4.0 International license"
       }
     ],
 
