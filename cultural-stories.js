@@ -347,10 +347,10 @@ window.CULTURAL_STORIES = {
     imageSources: [
       {
         image: "img/songket-1.jpg",
-        title: "Songket textile photograph 1",
-        credit: "Attribution pending",
-        url: "",
-        licence: "To be confirmed"
+        title: "Close up of Songket textile",
+        credit: "Salahuddin Al Muzaffar bin Mohd Amri",
+        url: "https://commons.wikimedia.org/wiki/File:Kain_songket_baju_melayu.jpg",
+        licence: "Creative Commons CC0 1.0 Universal Public Domain Dedication"
       },
       {
         image: "img/songket-2.jpg",
