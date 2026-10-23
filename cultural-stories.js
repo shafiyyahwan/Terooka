@@ -213,8 +213,8 @@ window.CULTURAL_STORIES = {
       {
         image: "img/ngajat-1.jpg",
         title: "Ngajat performance photograph 1",
-        credit: "Attribution pending",
-        url: "",
+        credit: "Menuaibansarawak",
+        url: "https://commons.wikimedia.org/wiki/File%3ANgajatofSarawak.jpg",
         licence: "To be confirmed"
       },
       {
