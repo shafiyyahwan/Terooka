@@ -1265,7 +1265,7 @@
         captured && !scanning ? 'flex' : 'none';
 
       $('aboutPose').style.display =
-        mode === 'pose' && !scanning && !captured ? 'flex' : 'none';
+        mode === 'pose' && !scanning ? 'flex' : 'none';
       $('aboutPose').classList.toggle('before-capture', !captured);
 
       const guide = mode === 'pose' && !captured;
