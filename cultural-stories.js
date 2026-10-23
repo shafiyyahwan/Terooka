@@ -623,10 +623,10 @@ window.CULTURAL_STORIES = {
     imageSources: [
       {
         image: "img/pua-kumbu-1.jpg",
-        title: "Pua Kumbu textile photograph 1",
-        credit: "Attribution pending",
-        url: "",
-        licence: "To be confirmed"
+        title: "Iban Pua Kumbu textile Sarawak",
+        credit: "Hiart",
+        url: "https://commons.wikimedia.org/wiki/File:Pua_kombu_(ceremonial_cloth)_from_Borneo,_Honolulu_Museum_of_Art_10424.1.JPG",
+        licence: "Creative Commons CC0 1.0 Universal Public Domain Dedication"
       },
       {
         image: "img/pua-kumbu-2.jpg",
