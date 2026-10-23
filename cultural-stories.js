@@ -415,17 +415,17 @@ window.CULTURAL_STORIES = {
     imageSources: [
       {
         image: "img/batik-1.jpg",
-        title: "Malaysian batik photograph 1",
-        credit: "Attribution pending",
-        url: "",
-        licence: "To be confirmed"
+        title: "Close up of Malaysia Batik",
+        credit: "Apluswiki",
+        url: "https://commons.wikimedia.org/wiki/File:Handicrafts_Malaysia_-_Batik.jpg",
+        licence: "Creative Commons Attribution-Share Alike 4.0 International license"
       },
       {
         image: "img/batik-2.jpg",
-        title: "Malaysian batik photograph 2",
-        credit: "Attribution pending",
-        url: "",
-        licence: "To be confirmed"
+        title: "Wax drawing process",
+        credit: "ARIEF RAHARDJO",
+        url: "https://commons.wikimedia.org/wiki/File:Melilin_Batik.jpg",
+        licence: "Creative Commons Attribution-Share Alike 4.0 International license"
       }
     ],
 
