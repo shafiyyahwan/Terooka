@@ -69,17 +69,17 @@ window.CULTURAL_STORIES = {
     imageSources: [
       {
         image: "img/beadwork-1.jpg",
-        title: "Bead Weaving, Sarawak",
-        credit: "Rod Waddington",
-        url: "https://commons.wikimedia.org/wiki/File:Bead_Weaving,_Sarawak_(7246866286).jpg",
-        licence: "Creative Commons Attribution-Share Alike 2.0 Generic license"
+        title: "Close up of Traditional Beadwork",
+        credit: "Anonymous",
+        url: "https://commons.wikimedia.org/wiki/File:Jacket_vest_(kalambi)_from_Malaysia,_Sarawak_Iban,_c._1920,_cotton,_sequins,_beads_(netted),_trade_cloth,_plain_weave,_warp_ikat,_HMA_10612.1.jpg",
+        licence: "Public Domain"
       },
       {
         image: "img/beadwork-2.jpg",
-        title: "Traditional beadwork photograph 2",
-        credit: "Attribution pending",
-        url: "",
-        licence: "To be confirmed"
+        title: "Making of Traditional Bead",
+        credit: "Rod Waddington",
+        url: "https://commons.wikimedia.org/wiki/File:Bead_Weaving,_Sarawak_(7246866286).jpg",
+        licence: "Creative Commons Attribution-Share Alike 2.0 Generic license"
       }
     ],
 
@@ -489,7 +489,7 @@ window.CULTURAL_STORIES = {
       },
       {
         image: "img/sape-2.jpg",
-        title: "A musician playing the Sape",
+        title: "Close up of Sape",
         credit: "AjarnRichard",
         url: "https://commons.wikimedia.org/wiki/File:Orang_Ulu_Musician_on_the_Sape_(boat_lute).jpg",
         licence: "Creative Commons Attribution-Share Alike 4.0 International license"
