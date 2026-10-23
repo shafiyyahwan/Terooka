@@ -29,8 +29,8 @@ window.TerookaData.places = [
     description:
       'A riverside storytelling walk inspired by Kuching’s history.',
 
-    image: 'img/riverfront1.jpg',
-    photos: ['img/riverfront1.jpg'],
+    image: 'img/riverfront.jpg',
+    photos: ['img/riverfront.jpg'],
 
     demo: true,
 
@@ -123,8 +123,8 @@ window.TerookaData.places = [
     description:
       'A hands-on beadwork workshop inspired by Sarawak crafts.',
 
-    image: 'img/bead.jpg',
-    photos: ['img/bead.jpg'],
+    image: 'img/bead-workshop.jpg',
+    photos: ['img/bead-workshop.jpg'],
 
     demo: true,
 
@@ -305,8 +305,8 @@ window.TerookaData.places = [
     description:
       'A food stop highlighting Sarawak layered cakes.',
 
-    image: 'img/kek-lapis.jpg',
-    photos: ['img/kek-lapis.jpg'],
+    image: 'img/kek-lapis.png',
+    photos: ['img/kek-lapis.png'],
 
     demo: true,
 

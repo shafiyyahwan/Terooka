@@ -197,12 +197,7 @@
       position: relative; height: 116px; flex:0 0 116px; padding: 12px; display: flex; flex-direction: column; justify-content: flex-end;
       color: #fff; overflow: hidden;
     }
-    .cover::before {
-      content: ""; position: absolute; inset: 0; opacity: .16;
-      background:
-        linear-gradient(45deg, #fff 25%, transparent 25%) 0 0 / 22px 22px,
-        linear-gradient(-45deg, #fff 25%, transparent 25%) 0 0 / 22px 22px;
-    }
+    .cover::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(29,15,44,.65)); pointer-events: none; }
     .cover .state { position: relative; font: italic 500 22px var(--serif); letter-spacing: -.02em; text-shadow: 0 2px 10px rgba(0,0,0,.18); }
     .tags { position: absolute; top: 11px; left: 11px; right: 48px; display: flex; flex-wrap: wrap; gap: 5px; }
     .tag {
@@ -564,22 +559,22 @@
     var PLACES = [
       { id: 'penang', name: 'George Town', state: 'Penang', cats: ['heritage', 'food'],
         blurb: 'A UNESCO-listed old town where Chinese clan houses, mosques and temples sit streets apart.',
-        grad: 'linear-gradient(135deg,#5724A3,#8834B9)' },
+        grad: 'linear-gradient(135deg,#5724A3,#8834B9)', image: 'img/george-town.jpg' },
       { id: 'melaka', name: 'Melaka', state: 'Melaka', cats: ['heritage', 'food'],
         blurb: 'Peranakan (Baba Nyonya) culture, from heritage shophouses to nyonya kuih.',
-        grad: 'linear-gradient(135deg,#C12D91,#E0679E)' },
+        grad: 'linear-gradient(135deg,#C12D91,#E0679E)', image: 'img/melaka.jpg' },
       { id: 'kelantan', name: 'Kota Bharu', state: 'Kelantan', cats: ['arts', 'crafts'],
         blurb: 'Home of wayang kulit shadow puppetry, batik and silver craft.',
-        grad: 'linear-gradient(135deg,#8834B9,#D842A0)' },
+        grad: 'linear-gradient(135deg,#8834B9,#D842A0)', image: 'img/kota-bharu.jpg' },
       { id: 'terengganu', name: 'Kuala Terengganu', state: 'Terengganu', cats: ['crafts', 'food'],
         blurb: 'Songket weaving, brassware and keropok lekor by the sea.',
-        grad: 'linear-gradient(135deg,#D9517A,#F58AA6)' },
+        grad: 'linear-gradient(135deg,#D9517A,#F58AA6)', image: 'img/kuala-terengganu.jpg' },
       { id: 'sarawak', name: 'Kuching', state: 'Sarawak', cats: ['festivals', 'arts'],
         blurb: 'Longhouse culture, Iban and Bidayuh traditions, and the Rainforest World Music Festival.',
-        grad: 'linear-gradient(135deg,#4a1d8a,#B04BC2)' },
+        grad: 'linear-gradient(135deg,#4a1d8a,#B04BC2)', image: 'img/kuching.jpg' },
       { id: 'sabah', name: 'Kota Kinabalu', state: 'Sabah', cats: ['festivals', 'heritage'],
         blurb: 'Kaamatan, the harvest festival celebrated by the Kadazan-Dusun community every May.',
-        grad: 'linear-gradient(135deg,#A33BAE,#F27A8F)' }
+        grad: 'linear-gradient(135deg,#A33BAE,#F27A8F)', image: 'img/kota-kinabalu.jpg' }
     ];
 
     var EXPS = [
@@ -740,7 +735,7 @@
         p.cats.slice(0, 2).forEach(function (c) { tags.appendChild(el('span', { class: 'tag', text: CAT_LABEL[c] })); });
 
         rail.appendChild(el('article', { class: 'place' },
-          el('div', { class: 'cover', style: 'background:' + p.grad }, tags, el('div', { class: 'state', text: p.state })),
+          el('div', { class: 'cover', style: 'background:' + (p.image ? 'linear-gradient(180deg,rgba(30,15,48,.08),rgba(30,15,48,.38)),url(\"' + p.image + '\") center/cover no-repeat,' + p.grad : p.grad) }, tags, el('div', { class: 'state', text: p.state })),
           el('div', { class: 'body' }, el('h3', { text: p.name }), el('p', { text: p.blurb }))));
       });
     }
