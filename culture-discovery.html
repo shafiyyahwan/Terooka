@@ -1,465 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Discover Our Culture — Terooka</title>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#EDE4F5">
+  <title>Cultural Discovery — Terooka</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
-    :root{
-      --purple:#5724A3;
-      --pink:#D842A0;
-      --ink:#32204B;
-      --muted:#796B85;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;min-height:100dvh;
-      background:#EDE4F5;
-      font-family:'Plus Jakarta Sans',sans-serif;
-      display:grid;place-items:center;color:var(--ink);
-    }
-    button,input{font:inherit}
-    button{cursor:pointer}
+    :root{--purple:#5724A3;--pink:#D842A0;--ink:#32204B;--muted:#796B85;--serif:'Fraunces',Georgia,serif;--sans:'Plus Jakarta Sans',sans-serif;--grad:linear-gradient(105deg,#5724A3,#8834B9 52%,#D842A0)}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%}
+    body{background:#EDE4F5;color:var(--ink);font-family:var(--sans);min-height:100dvh;display:grid;place-items:center;overflow:hidden}
+    button,input{font:inherit}button{cursor:pointer}
     .stage{width:414px;height:868px;transform-origin:center}
-    .phone{
-      width:414px;height:868px;padding:12px;
-      background:#111015;border-radius:62px;
-      position:relative;
-      box-shadow:0 24px 70px #3619583b,0 0 0 2px #343039;
-    }
-    .phone::before,.phone::after{
-      content:"";position:absolute;left:-5px;width:4px;
-      background:#302b35;border-radius:4px;
-    }
-    .phone::before{top:155px;height:52px}
-    .phone::after{top:228px;height:69px}
-    .screen{
-      width:390px;height:844px;
-      border-radius:50px;overflow:hidden;position:relative;
-      background:linear-gradient(160deg,#F0E4FB,#F9EAF5 38%,#FFF9F7 72%,#FFECE5);
-    }
-    .island{
-      position:absolute;z-index:20;top:11px;left:50%;
-      transform:translateX(-50%);
-      width:118px;height:34px;background:#08070a;border-radius:30px;
-    }
-    .status{
-      position:absolute;top:18px;left:34px;right:30px;z-index:19;
-      display:flex;justify-content:space-between;
-      font-size:14px;font-weight:800;
-    }
-    .homebar{
-      position:absolute;bottom:8px;left:50%;
-      transform:translateX(-50%);
-      width:126px;height:5px;background:#2F2837;
-      border-radius:20px;z-index:20;
-    }
-    .scroll{
-      position:absolute;inset:0;overflow-y:auto;
-      padding:65px 22px 95px;scrollbar-width:none;
-    }
-    .scroll::-webkit-scrollbar{display:none}
-    .back{
-      width:40px;height:40px;display:grid;place-items:center;
-      border:1px solid rgba(255,255,255,.9);border-radius:13px;
-      background:rgba(255,255,255,.78);color:var(--purple);
-      text-decoration:none;flex:0 0 40px;padding:0;
-    }
-    .back svg{width:22px;height:22px}
-    .header{display:flex;align-items:center;gap:12px;margin-bottom:19px}
-    .header-label{font-size:12px;font-weight:800;letter-spacing:.05em}
-    .header-sub{font-size:10px;color:var(--muted);margin-top:3px}
-    .view[hidden]{display:none!important}
-    .view-link{border:0;background:none;color:var(--purple);font-size:11px;font-weight:800;cursor:pointer;padding:6px 0}
-    .saved-entry{width:100%;border:1px solid #fff;background:#ffffffb9;border-radius:17px;
-      display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px;
-      color:var(--ink);text-align:left;cursor:pointer;margin-bottom:23px}
-    .saved-entry strong{display:block;font:600 17px Fraunces,serif;margin-bottom:5px}
-    .saved-entry small{display:block;font-size:10px;color:var(--muted)}
-    .saved-entry .arrow{color:var(--purple);font-size:23px}
-    .search-wrap{position:relative;margin-bottom:19px}
-    .search-wrap svg{position:absolute;left:14px;top:13px;width:19px;height:19px;color:var(--muted);pointer-events:none}
-    .search-wrap .search{padding-left:42px;margin-bottom:0}
-    .recent-grid{display:grid;gap:10px}
-    .recent-grid .story-card{padding:10px}
-    .recent-grid .story-art{width:55px;height:55px}
-    .recent-grid .story-info small{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
-
-    .eyebrow{
-      font-size:10px;letter-spacing:.19em;
-      color:var(--pink);font-weight:800;
-      text-transform:uppercase;margin:0 0 7px;
-    }
-    h1{
-      font:600 31px/1.15 Fraunces,Georgia,serif;
-      margin:0 0 10px;color:#32145B;
-    }
-    .intro{
-      font-size:12px;line-height:1.65;
-      color:var(--muted);margin:0 0 21px;
-    }
-    .hero{
-      padding:22px 20px;border-radius:23px;
-      background:linear-gradient(130deg,#5724A3,#8834B9 65%,#D842A0);
-      color:white;position:relative;overflow:hidden;margin-bottom:24px;
-    }
-    .hero .flower{
-      position:absolute;right:-10px;top:-26px;
-      font-size:105px;opacity:.18;
-    }
-    .hero h2{
-      font:600 21px/1.25 Fraunces,serif;
-      margin:0 0 7px;position:relative;
-    }
-    .hero p{
-      font-size:11px;line-height:1.65;
-      margin:0;max-width:230px;position:relative;
-    }
-    .section-title{
-      font:600 21px Fraunces,serif;
-      margin:0 0 12px;
-    }
-    .section-head{
-      display:flex;align-items:center;
-      justify-content:space-between;margin-bottom:12px;
-    }
-    .section-head .section-title{margin:0}
-    .section-head small{
-      font-size:10px;color:var(--muted);font-weight:700;
-    }
-    .section{margin-bottom:25px}
-    .search{
-      width:100%;padding:13px 15px;
-      border:1px solid white;border-radius:15px;
-      background:#ffffffb9;color:var(--ink);
-      font-size:12px;outline:none;margin-bottom:15px;
-    }
-    .search:focus{border-color:#B77BDB}
-    .cards{display:grid;gap:11px}
-    .story-card{
-      width:100%;display:flex;align-items:center;
-      gap:13px;padding:12px;
-      border:1px solid #ffffffdd;
-      background:#ffffffba;
-      border-radius:18px;text-align:left;color:var(--ink);
-      box-shadow:0 5px 16px #5724a30a;
-    }
-    .story-art{
-      width:68px;height:68px;flex-shrink:0;
-      border-radius:13px;display:grid;place-items:center;
-      font-size:30px;overflow:hidden;
-    }
-    .story-art img{
-      width:100%;height:100%;object-fit:cover;
-    }
-    .story-info{flex:1;min-width:0}
-    .story-info strong{
-      display:block;font:600 15px Fraunces,serif;
-      margin-bottom:5px;
-    }
-    .story-info small{
-      display:block;font-size:10px;
-      color:var(--muted);line-height:1.5;
-    }
-    .story-arrow{
-      color:var(--purple);font-size:20px;
-    }
-    .empty{
-      padding:20px 15px;
-      text-align:center;border-radius:17px;
-      background:#ffffff7a;
-      font-size:11px;line-height:1.7;color:var(--muted);
-    }
-    .category{
-      font-size:9px;color:var(--pink);
-      font-weight:800;margin-bottom:4px;
-    }
-    .footer{
-      font-size:11px;color:var(--muted);
-      line-height:1.6;margin:20px 0;
-    }
-    @media(max-width:500px){
-      body{display:block}
-      .stage,.phone{
-        width:100%;height:100dvh;transform:none!important;
-      }
-      .phone{
-        padding:0;border-radius:0;box-shadow:none;
-      }
-      .phone::before,.phone::after,
-      .island,.status,.homebar{display:none}
-      .screen{width:100%;height:100%;border-radius:0}
-      .scroll{padding-top:30px}
-    }
+    .phone{width:414px;height:868px;padding:12px;background:#111015;border-radius:62px;position:relative;box-shadow:0 24px 70px #36195838,0 0 0 2px #343039}
+    .phone:before,.phone:after{content:"";position:absolute;left:-5px;width:4px;background:#302b35;border-radius:4px}.phone:before{top:155px;height:52px}.phone:after{top:228px;height:69px}
+    .screen{width:390px;height:844px;border-radius:50px;position:relative;overflow:hidden;background:linear-gradient(155deg,#E7D4F9 0%,#F3DDF5 28%,#FCE5EE 56%,#FFF5EB 81%,#FFE3D9 100%)}
+    .glow{position:absolute;border-radius:50%;filter:blur(55px);pointer-events:none}.glow.one{width:240px;height:240px;top:-70px;right:-80px;background:#d842a033}.glow.two{width:260px;height:260px;top:430px;left:-120px;background:#8834b924}
+    .island{position:absolute;z-index:30;top:11px;left:50%;transform:translateX(-50%);height:34px;width:118px;background:#08070a;border-radius:30px}
+    .status{position:absolute;top:18px;left:34px;right:30px;z-index:29;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:800}
+    .homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:126px;height:5px;background:#2F2837;border-radius:20px;z-index:30}
+    .back-row{position:absolute;z-index:20;top:62px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between;pointer-events:none}.back-row>*{pointer-events:auto}
+    .icon-btn{border:1px solid #fff;background:#ffffffa6;border-radius:14px;color:var(--purple);width:40px;height:40px;display:grid;place-items:center;box-shadow:0 4px 14px #5724a30d}
+    svg{width:20px;height:20px;flex-shrink:0}
+    .scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:112px 0 115px;scrollbar-width:none}.scroll::-webkit-scrollbar{display:none}
+    .pad{padding:0 22px}
+    .eyebrow{font-size:10px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--pink);margin:0 0 7px}
+    h1{font:600 31px/1.12 var(--serif);color:#32145B;letter-spacing:-.025em;margin:0 0 9px}
+    .intro{font-size:12px;line-height:1.75;color:#6c5a7c;margin:0 0 20px}
+    .card{background:#ffffff9e;border:1px solid #ffffffe6;border-radius:21px;padding:17px;box-shadow:0 7px 20px #5724a30d;backdrop-filter:blur(12px)}
+    h2{font:600 21px var(--serif);color:#32145B;margin:0}
+    .section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:24px 0 12px}
+    .section-head button{border:0;background:transparent;color:var(--purple);font-size:11px;font-weight:800;padding:6px 0}
+    .featured{position:relative;overflow:hidden;min-height:216px;padding:0;display:flex;align-items:flex-end;text-decoration:none;background:linear-gradient(135deg,#5E319F,#CA70B3)}
+    .featured img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .featured .shade{position:absolute;inset:0;background:linear-gradient(0deg,#24113fcf,transparent 85%)}
+    .featured-content{position:relative;z-index:2;padding:19px;color:white;width:100%}
+    .featured .tag{display:inline-flex;background:#ffffffdf;color:var(--purple);border-radius:20px;padding:6px 10px;font-size:9px;font-weight:800;margin-bottom:8px}
+    .featured h2{color:#fff;font-size:24px;margin:0 0 5px}
+    .featured p{font-size:11px;line-height:1.5;margin:0;color:#fffdfd}
+    .search{display:flex;align-items:center;gap:9px;background:#ffffffb8;border:1px solid white;border-radius:15px;padding:12px 13px;margin-top:17px}
+    .search svg{color:var(--purple);width:18px;height:18px}.search input{background:transparent;border:0;outline:0;width:100%;font-size:12px;color:var(--ink)}
+    .chips{display:flex;gap:8px;overflow-x:auto;padding:16px 0 15px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+    .chip{flex-shrink:0;border:1px solid #e9d9f2;background:#ffffffb9;border-radius:20px;color:#76578e;font-size:10px;font-weight:800;padding:9px 13px}
+    .chip.active{background:var(--grad);border-color:transparent;color:#fff}
+    .story-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .story-card{display:block;text-decoration:none;color:inherit;background:#ffffffbc;border:1px solid #fff;border-radius:19px;overflow:hidden;box-shadow:0 6px 16px #5724a30c}
+    .story-photo{height:119px;position:relative;background:linear-gradient(135deg,#a47cbd,#f1a8bc)}
+    .story-photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .photo-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:15px;text-align:center;font:600 17px/1.2 var(--serif);color:#fff}
+    .story-photo img:not([hidden])+.photo-placeholder{display:none}
+    .story-info{padding:11px 12px 13px}.story-info .cat{font-size:9px;font-weight:800;color:var(--pink);margin:0 0 6px}
+    .story-info strong{display:block;font:600 15px/1.27 var(--serif);color:#32145B;min-height:38px}
+    .story-info small{display:block;font-size:10px;color:var(--muted);margin-top:8px}
+    .recent-row{display:flex;gap:11px;overflow-x:auto;scrollbar-width:none;padding:0 0 5px;scroll-snap-type:x mandatory}.recent-row::-webkit-scrollbar{display:none}
+    .recent-item{flex:0 0 145px;scroll-snap-align:start;text-decoration:none;color:inherit;border-radius:17px;background:#ffffffb5;border:1px solid #fff;overflow:hidden}
+    .recent-item .story-photo{height:86px}.recent-item .story-info strong{font-size:13px;min-height:0}.recent-item .story-info{padding:10px}
+    .empty{font-size:12px;line-height:1.7;color:var(--muted);padding:18px 6px}
+    .back-link{display:flex;align-items:center;gap:8px;border:0;background:none;color:var(--purple);font-size:11px;font-weight:800;padding:0;margin:0 0 15px}
+    [hidden]{display:none!important}
+    .nav{position:absolute;z-index:20;left:16px;right:16px;bottom:22px;height:66px;padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:#ffffff9e;border:1px solid #ffffffe6;border-radius:24px;backdrop-filter:blur(24px);box-shadow:0 14px 34px #5724a329}
+    .nav a{color:#9886AB;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:18px;font-size:9px;font-weight:700}
+    .nav a.active{background:#d842a01a;color:var(--purple)}
+    .nav svg{width:21px;height:21px;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    @media(max-width:500px){body{display:block;overflow:auto}.stage,.phone{width:100%;height:100dvh;transform:none!important}.phone{padding:0;border-radius:0;box-shadow:none}.phone:before,.phone:after,.island,.status,.homebar{display:none}.screen{width:100%;height:100%;min-height:650px;border-radius:0}.scroll{padding-top:83px}.back-row{top:30px}.nav{bottom:13px}}
   </style>
 </head>
-
 <body>
-<div class="stage" id="stage">
-  <div class="phone">
-    <div class="screen">
-
-      <div class="island"></div>
-
-      <div class="status">
-        <span>9:41</span>
-        <svg width="70" height="15" viewBox="0 0 70 15" fill="none">
-          <g fill="#32204B">
-            <rect x="0" y="10" width="3" height="5" rx="1"/>
-            <rect x="5" y="7" width="3" height="8" rx="1"/>
-            <rect x="10" y="4" width="3" height="11" rx="1"/>
-            <rect x="15" y="1" width="3" height="14" rx="1"/>
-          </g>
-          <g stroke="#32204B" stroke-width="1.8" stroke-linecap="round">
-            <path d="M27 5Q34-1 41 5"/>
-            <path d="M30 9Q34 5 38 9"/>
-          </g>
-          <circle cx="34" cy="12" r="1.5" fill="#32204B"/>
-          <rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/>
-          <rect x="50" y="4" width="15" height="7" rx="1.6" fill="#32204B"/>
-          <path d="M69 5v5" stroke="#32204B" stroke-width="2"/>
-        </svg>
-      </div>
-
-      <main class="scroll">
-        <header class="header">
-          <button class="back" id="back-btn" type="button" aria-label="Go back">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-          </button>
-          <div><div class="header-label" id="header-label">CULTURE DISCOVERY</div><div class="header-sub">Terooka Heritage Discovery</div></div>
-        </header>
-        <div class="view" id="main-view">
-
-          <p class="eyebrow">Terooka · Culture & Heritage</p>
-          <h1>Discover Our Culture</h1>
-          <p class="intro">
-            Every tradition has a story. Explore the people,
-            flavours, crafts and celebrations that make Malaysia unique.
-          </p>
-
-          <div class="hero">
-            <span class="flower">🌺</span>
-            <h2>More than a destination.</h2>
-            <p>Learn the meaning behind the moments you experience on your journey.</p>
-          </div>
-
-          <button class="saved-entry" id="open-saved" type="button">
-            <span><strong>♡ Saved Stories</strong><small><span id="saved-count">0 saved</span> · Your bookmarked cultural stories</small></span>
-            <span class="arrow">›</span>
-          </button>
-
-          <section class="section" id="recent-section">
-            <div class="section-head"><h2 class="section-title">Recently Viewed</h2><small id="recent-count">0 stories</small></div>
-            <div class="recent-grid" id="recent-list"></div>
-          </section>
-
-          <section class="section">
-            <h2 class="section-title">Explore Cultural Stories</h2>
-            <div class="search-wrap">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
-              <input class="search" id="story-search" type="search" placeholder="Search cultural stories...">
-            </div>
-            <div class="cards" id="all-stories"></div>
-          </section>
-
-          <p class="footer">
-            Keep exploring — every place has a story worth remembering. 🌺
-          </p>
-        </div>
-        <div class="view" id="saved-view" hidden>
-          <p class="eyebrow">YOUR COLLECTION</p>
-          <h1>Saved Stories</h1>
-          <p class="intro">All the cultural stories you have bookmarked, in one place.</p>
-          <div class="cards" id="saved-list"></div>
-        </div>
-      </main>
-
-      <div class="homebar"></div>
+<div class="stage" id="stage"><div class="phone"><div class="screen">
+  <div class="glow one"></div><div class="glow two"></div><div class="island"></div>
+  <div class="status"><span>9:41</span><svg style="width:70px;height:15px" viewBox="0 0 70 15" fill="none" aria-hidden="true"><g fill="#32204B"><rect x="0" y="10" width="3" height="5" rx="1"/><rect x="5" y="7" width="3" height="8" rx="1"/><rect x="10" y="4" width="3" height="11" rx="1"/><rect x="15" y="1" width="3" height="14" rx="1"/></g><g stroke="#32204B" stroke-width="1.8" stroke-linecap="round"><path d="M27 5Q34-1 41 5"/><path d="M30 9Q34 5 38 9"/></g><circle cx="34" cy="12" r="1.5" fill="#32204B"/><rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/><rect x="50" y="4" width="15" height="7" rx="1.6" fill="#32204B"/><path d="M69 5v5" stroke="#32204B" stroke-width="2"/></svg></div>
+  <div class="back-row"><button class="icon-btn" id="back" aria-label="Go back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+    <button class="icon-btn" id="saved-button" aria-label="View saved cultural stories" title="Saved stories"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21l-7-4.5L5 21V4.5Z"/></svg></button></div>
+  <main class="scroll" id="scroll"><div class="pad">
+    <div id="home-view">
+      <p class="eyebrow">TEROOKA · CULTURAL DISCOVERY</p><h1>Stories of Our Heritage</h1><p class="intro">Explore the traditions, flavours, crafts and performances that make Malaysia's culture special.</p>
+      <a class="card featured" id="featured" href="cultural-story.html?id=beadwork&from=culture-discovery"><div class="shade"></div><div class="featured-content"><span class="tag">FEATURED STORY</span><h2 id="featured-title">Discover Sarawak</h2><p>Tap to explore a cultural story <span aria-hidden="true">↗</span></p></div></a>
+      <div class="section-head" id="recent-head"><h2>Recently Viewed</h2></div><div class="recent-row" id="recent-row"></div>
+      <div class="section-head"><h2>Explore Stories</h2></div>
+      <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="Search cultural stories..." aria-label="Search cultural stories"></label>
+      <div class="chips" id="chips"></div><div class="story-grid" id="story-grid"></div><p class="empty" id="no-results" hidden>No stories match your search.</p>
     </div>
-  </div>
-</div>
+    <div id="saved-view" hidden><p class="eyebrow">YOUR COLLECTION</p><h1>Saved Stories</h1><p class="intro">Keep your favourite cultural discoveries in one place.</p><div class="story-grid" id="saved-grid"></div><p class="empty" id="saved-empty" hidden>No saved stories yet. Open any story and tap the bookmark icon to save it.</p></div>
 
+  </div></main>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="home.html"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="m3 11 9-8 9 8M5 10v10h14V10"/></svg>Home</a>
+    <a href="discover.html"><svg viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 4-4 2 2-4z"/></svg>Discover</a>
+    <a href="camera.html"><svg viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="6" width="18" height="15" rx="3"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8 6l1.5-3h5L16 6"/></svg>Camera</a>
+    <a href="journal.html"><svg viewBox="0 0 24 24" stroke="currentColor"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></svg>Journal</a>
+    <a href="profile.html"><svg viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 16-5 16 0"/></svg>Profile</a>
+  </nav><div class="homebar"></div></div></div></div>
 <script src="cultural-stories.js"></script>
 <script>
-  const stories = window.CULTURAL_STORIES || {};
-
-  const session = (() => {
-    try {
-      return JSON.parse(localStorage.getItem("terooka_session"));
-    } catch {
-      return null;
-    }
+  (function(){
+    'use strict';
+    const $=id=>document.getElementById(id),stories=window.CULTURAL_STORIES||{};
+    const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}};
+    const session=read('terooka_session',null),uid=session?.username||session?.email||'guest';
+    const savedKey='terooka_culture_saved_'+uid,recentKey='terooka_culture_recent_'+uid;
+    const entries=Object.entries(stories),categories=['All','Arts & Crafts','Music & Dance','Food Stories'];
+    let selected='All',view='home';
+    function scale(){if(innerWidth<=500)return;const s=Math.min((innerWidth-32)/414,(innerHeight-32)/868,1);$('stage').style.transform='scale('+s+')'}
+    addEventListener('resize',scale);scale();
+    const href=id=>'cultural-story.html?id='+encodeURIComponent(id)+'&from=culture-discovery';
+    function imageBlock(s){const src=Array.isArray(s.images)&&s.images.length?s.images[0]:'';return '<div class="story-photo">'+(src?'<img src="'+safe(src)+'" alt="" loading="lazy" onerror="this.hidden=true">':'')+'<div class="photo-placeholder">'+safe(s.title)+'</div></div>'}
+    function tile([id,s],compact=false){return '<a class="'+(compact?'recent-item':'story-card')+'" href="'+href(id)+'">'+imageBlock(s)+'<div class="story-info"><p class="cat">'+safe(s.category||'Culture')+'</p><strong>'+safe(s.title)+'</strong><small>'+safe(s.location||'Malaysia')+'</small></div></a>'}
+    function ids(key){const v=read(key,[]);return Array.isArray(v)?v.filter(id=>stories[id]):[]}
+    function showView(next){view=next;$('saved-button').hidden=next==='saved';['home','saved'].forEach(v=>$(v+'-view').hidden=v!==next);if(next==='saved')renderSaved();$('scroll').scrollTop=0}
+    function renderSaved(){const data=ids(savedKey).map(id=>[id,stories[id]]);$('saved-grid').innerHTML=data.map(x=>tile(x)).join('');$('saved-empty').hidden=!!data.length}
+    function renderHomeRecent(){const data=ids(recentKey).slice(0,4).map(id=>[id,stories[id]]);$('recent-head').hidden=!data.length;$('recent-row').hidden=!data.length;$('recent-row').innerHTML=data.map(x=>tile(x,true)).join('')}
+    function renderStories(){const q=$('search').value.trim().toLowerCase();const data=entries.filter(([id,s])=>(selected==='All'||s.category===selected)&&[s.title,s.category,s.location,s.summary].some(v=>String(v||'').toLowerCase().includes(q)));$('story-grid').innerHTML=data.map(x=>tile(x)).join('');$('no-results').hidden=!!data.length}
+    $('chips').innerHTML=categories.filter(c=>c==='All'||entries.some(([,s])=>s.category===c)).map(c=>'<button class="chip'+(c==='All'?' active':'')+'" data-category="'+safe(c)+'">'+safe(c)+'</button>').join('');
+    $('chips').addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(!b)return;selected=b.dataset.category;document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x===b));renderStories()});
+    $('search').addEventListener('input',renderStories);
+    $('saved-button').onclick=()=>showView(view==='saved'?'home':'saved');
+    $('back').onclick=()=>{if(view!=='home'){showView('home');return}if(document.referrer){try{const ref=new URL(document.referrer);if(ref.origin===location.origin&&ref.pathname!==location.pathname){history.back();return}}catch(e){}}location.href='home.html'};
+    if(entries.length){const [id,s]=entries[0];$('featured').href=href(id);$('featured-title').textContent=s.title;const src=Array.isArray(s.images)?s.images[0]:null;if(src){const img=document.createElement('img');img.alt='';img.src=src;img.onerror=()=>img.remove();$('featured').prepend(img)}}else{$('featured').hidden=true}
+    renderHomeRecent();renderStories();
+    window.addEventListener('pageshow',()=>{renderHomeRecent();if(view==='saved')renderSaved();});
   })();
-
-  const uid = session?.username || session?.email || "guest";
-  const savedKey = "terooka_culture_saved_" + uid;
-  const recentKey = "terooka_culture_recent_" + uid;
-
-  function readList(key) {
-    try {
-      const value = JSON.parse(localStorage.getItem(key));
-      return Array.isArray(value) ? value : [];
-    } catch {
-      return [];
-    }
-  }
-
-  function openStory(id) {
-    location.href =
-      "cultural-story.html?id=" +
-      encodeURIComponent(id) +
-      "&from=culture";
-  }
-
-  function createCard(id) {
-    const story = stories[id];
-    if (!story) return null;
-
-    const button = document.createElement("button");
-    button.className = "story-card";
-    button.type = "button";
-    button.onclick = () => openStory(id);
-
-    const art = document.createElement("div");
-    art.className = "story-art";
-    art.style.background = story.colour || "#E8D7F4";
-
-    const emoji = document.createElement("span");
-    emoji.textContent = story.emoji || "🌺";
-    art.appendChild(emoji);
-
-    const imagePath = story.images?.[0];
-    if (imagePath) {
-      const img = document.createElement("img");
-      img.src = imagePath;
-      img.alt = "";
-      img.onload = () => {
-        art.replaceChildren(img);
-      };
-    }
-
-    const info = document.createElement("div");
-    info.className = "story-info";
-
-    const category = document.createElement("div");
-    category.className = "category";
-    category.textContent = story.category;
-
-    const title = document.createElement("strong");
-    title.textContent = story.title;
-
-    const description = document.createElement("small");
-    description.textContent = story.summary;
-
-    info.append(category, title, description);
-
-    const arrow = document.createElement("span");
-    arrow.className = "story-arrow";
-    arrow.textContent = "›";
-
-    button.append(art, info, arrow);
-    return button;
-  }
-
-  function renderList(containerId, ids, emptyMessage) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = "";
-
-    const validIds = ids.filter(id => stories[id]);
-
-    if (!validIds.length) {
-      const empty = document.createElement("div");
-      empty.className = "empty";
-      empty.textContent = emptyMessage;
-      container.appendChild(empty);
-      return;
-    }
-
-    validIds.forEach(id => {
-      container.appendChild(createCard(id));
-    });
-  }
-
-  function render() {
-    const saved = readList(savedKey);
-    const recent = readList(recentKey);
-
-    renderList(
-      "saved-list",
-      saved,
-      "No saved stories yet. Bookmark a story to find it here!"
-    );
-
-    renderList(
-      "recent-list",
-      recent.filter(id => stories[id]).slice(0, 3),
-      "Stories you read will appear here."
-    );
-
-    document.getElementById("saved-count").textContent =
-      saved.length + " saved";
-
-    document.getElementById("recent-count").textContent =
-      Math.min(recent.filter(id => stories[id]).length, 3) + " recent";
-
-    const query = document.getElementById("story-search")
-      .value.trim().toLowerCase();
-
-    const all = Object.keys(stories).filter(id => {
-      const s = stories[id];
-      return (
-        s.title + " " +
-        s.category + " " +
-        s.location + " " +
-        s.summary
-      ).toLowerCase().includes(query);
-    });
-
-    renderList(
-      "all-stories",
-      all,
-      "No stories match your search."
-    );
-  }
-
-  document.getElementById("story-search")
-    .addEventListener("input", render);
-
-  let currentView = "main";
-  function showView(view) {
-    currentView = view;
-    document.getElementById("main-view").hidden = view !== "main";
-    document.getElementById("saved-view").hidden = view !== "saved";
-    document.getElementById("header-label").textContent = view === "saved" ? "SAVED STORIES" : "CULTURE DISCOVERY";
-    document.querySelector(".scroll").scrollTop = 0;
-    render();
-  }
-  document.getElementById("open-saved").onclick = () => showView("saved");
-  document.getElementById("back-btn").onclick = () => {
-    if (currentView === "saved") showView("main");
-    else location.href = "home.html";
-  };
-  window.addEventListener("pageshow", render);
-
-
-  render();
-
-  function scalePhone() {
-    const stage = document.getElementById("stage");
-
-    stage.style.transform = innerWidth <= 500
-      ? ""
-      : `scale(${Math.min(
-        (innerWidth - 32) / 414,
-        (innerHeight - 32) / 868,
-        1
-      )})`;
-  }
-
-  addEventListener("resize", scalePhone);
-  scalePhone();
-</script>
-</body>
-</html>
+</script></body></html>

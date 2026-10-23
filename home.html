@@ -246,13 +246,13 @@
       background: linear-gradient(135deg, #5724A3, #8834B9 55%, #D842A0);
       box-shadow: 0 14px 30px rgba(112,42,159,.24);
     }
-    .know svg.bg { position: absolute; width: 190px; height: 190px; right: -45px; bottom: -48px; opacity: .38; transform: rotate(-18deg); pointer-events:none; }
+    .know .hibiscus-bg { position:absolute; width:190px; height:190px; right:-45px; bottom:-48px; object-fit:contain; opacity:.38; transform:rotate(-35deg); pointer-events:none; }
     .know .k-eyebrow { font-size: 9.5px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; opacity: .85; margin: 0 0 8px; position: relative; }
     .know p.k-text { font: 500 17px/1.35 var(--serif); letter-spacing: -.01em; margin: 0; position: relative; max-width: 270px; }
 
     /* Compact action beside the fact carousel dots */
     .fact-footer{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:15px;min-height:28px;z-index:2}
-    .culture-link{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;color:#fff;text-decoration:none;font-size:11px;font-weight:800;padding:6px 0 6px 8px;border-radius:8px;transition:opacity .2s}
+    .culture-link{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;color:#fff;text-decoration:underline;text-underline-offset:3px;font-size:11px;font-weight:800;padding:6px 0 6px 8px;border-radius:8px;transition:opacity .2s}
     .culture-link:hover{opacity:.8}
     .culture-link svg{width:14px;height:14px;flex:none}
     .know .k-text { min-height: 94px; opacity: 0; transition: opacity .25s ease; }
@@ -414,7 +414,7 @@
     /* RECENT JOURNAL BOOKS — HORIZONTAL BOOKSHELF */
     .journal-rail { display:flex; gap:16px; overflow-x:auto; overflow-y:hidden; padding:8px 22px 18px; margin:0 -22px; scroll-snap-type:x mandatory; scrollbar-width:none; }
     .journal-rail::-webkit-scrollbar { display:none; }
-    .journal-book { position:relative; flex:0 0 146px; height:198px; padding:20px 14px 14px 22px; border-radius:5px 13px 13px 5px; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; color:#fff; text-decoration:none; background:linear-gradient(145deg,var(--book-a),var(--book-b)); box-shadow:4px 8px 14px rgba(50,32,75,.18),inset -5px 0 7px rgba(255,255,255,.14); scroll-snap-align:start; transition:transform .2s; }
+    .journal-book { position:relative; flex:0 0 146px; height:198px; padding:20px 14px 14px 22px; border-radius:5px 13px 13px 5px; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; color:#fff; text-decoration:none; background:#7453A9; box-shadow:0 14px 22px #5724a33d,inset 0 0 0 1px #ffffff24; scroll-snap-align:start; transition:transform .2s; }
     .journal-book:hover { transform:translateY(-4px); }
     .journal-book-spine { position:absolute; left:6px; top:0; bottom:0; width:6px; background:rgba(0,0,0,.17); border-right:1px solid rgba(255,255,255,.22); }
     .journal-book-ornament { position:absolute; top:23px; left:0; right:0; text-align:center; font-size:54px; color:rgba(255,255,255,.25); }
@@ -427,7 +427,7 @@
     .journal-book{justify-content:flex-start;padding:18px 12px 12px 24px;border-radius:4px 14px 14px 4px}
     .journal-book-spine{left:0;width:14px;background:#0004;border-right:2px dashed #ffffff55}
     .journal-bookmark{position:absolute;top:0;right:20px;bottom:0;width:9px;background:#FFD166;box-shadow:-1px 0 3px #0003}
-    .journal-plate{position:relative;z-index:1;margin:20px 15px 0 0;padding:9px 8px;background:#fffdf8ef;color:#32145B;border-radius:4px;transform:rotate(-2deg);box-shadow:0 2px 5px #0003;font:600 14px/1.2 var(--serif);overflow-wrap:anywhere}
+    .journal-plate{position:relative;z-index:1;margin:12px 30px 0 0;padding:9px 8px;background:#fffdf8ef;color:#32145B;border-radius:4px;transform:rotate(-2deg);box-shadow:0 2px 5px #0003;font:600 14px/1.2 var(--serif);overflow-wrap:anywhere}
     .journal-meta{position:relative;z-index:1;margin-top:auto;font-size:10px;font-weight:700;line-height:1.4;text-shadow:0 1px 4px #0005}
   </style>
 </head>
@@ -436,15 +436,6 @@
 <div class="stage" id="stage">
   <div class="phone">
     <div class="screen">
-
-      <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="petalGrad" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0" stop-color="#D842A0"/><stop offset="1" stop-color="#F58AA6"/>
-          </linearGradient>
-          <symbol id="hibiscus" viewBox="0 0 200 200"></symbol>
-        </defs>
-      </svg>
 
       <div class="glow glow-1"></div>
       <div class="glow glow-2"></div>
@@ -472,7 +463,7 @@
           <div class="top rise">
             <div>
               <p class="eyebrow" id="greet">Selamat datang</p>
-              <h1 id="hello">Hi, <em>traveller.</em></h1>
+              <h1 id="hello">Hi, <em>.</em></h1>
             </div>
           </div>
 
@@ -490,12 +481,12 @@
         <!-- DID YOU KNOW -->
         <section class="pad">
           <div class="know">
-            <svg class="bg" viewBox="0 0 200 200" aria-hidden="true"><use href="#hibiscus"/></svg>
+            <img class="hibiscus-bg" src="img/hibiscus.png" alt="" aria-hidden="true">
             <p class="k-eyebrow">Did you know</p>
             <p class="k-text" id="fun-fact" aria-live="polite">Songket is a traditional handwoven textile decorated with shimmering metallic threads, often worn during special ceremonies.</p>
             <div class="fact-footer">
               <div class="fact-dots" id="fact-dots" aria-label="Cultural facts"></div>
-              <a class="culture-link" href="culture-discovery.html">Discover more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+              <a class="culture-link" href="culture-discovery.html">Discover more</a>
             </div>
           </div>
         </section>
@@ -504,7 +495,7 @@
         <section id="sec-remember" class="section pad">
           <div class="sec-head">
             <h2 class="sec">Recent Journals</h2>
-            <a class="link" href="journal.html" style="text-decoration:none">View all →</a>
+            <a class="link" href="journal.html">View all</a>
           </div>
           <p class="sec-sub">Flip through your travel memories.</p>
           <div id="memories"></div>
@@ -530,6 +521,7 @@
 
 
 <script src="journal-store.js"></script>
+<script src="user-store.js"></script>
 <script>
   (function () {
     'use strict';
@@ -552,7 +544,9 @@
       catch (e) { toast('Couldn\u2019t save. Check your browser storage settings.'); return false; }
     }
 
-    var profile = load(PKEY, { interests: [], saved: [], hideStart: false });
+    var profile = (window.TerookaUser ? TerookaUser.read(uid) : load(PKEY, { interests: [], saved: [], hideStart: false }));
+    if (!Array.isArray(profile.interests)) profile.interests = [];
+    if (!Array.isArray(profile.saved)) profile.saved = [];
     var memories = load(TKEY, []);
     var cat = 'all';
     var query = ''; // Search is available on Discover, not Home.
@@ -661,34 +655,25 @@
 
     function has(arr, v) { return arr.indexOf(v) !== -1; }
     function toggle(arr, v) { var i = arr.indexOf(v); if (i === -1) arr.push(v); else arr.splice(i, 1); }
-    function saveProfile() { return store(PKEY, profile); }
+    function saveProfile() {
+      try {
+        profile = window.TerookaUser ? TerookaUser.save(uid, profile) : (store(PKEY, profile) ? profile : profile);
+        return true;
+      } catch (e) { toast('Could not save profile.'); return false; }
+    }
 
     var ICON_HEART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-9-9.2C1.8 7.6 3.6 4.5 6.8 4.5c2 0 3.3 1 5.2 3 1.9-2 3.2-3 5.2-3 3.2 0 5 3.1 3.8 6.3C19 15.6 12 20 12 20Z"/></svg>';
     var ICON_TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
     var ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
     var ICON_TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>';
 
-    /* ================= HIBISCUS SYMBOL ================= */
-    (function () {
-      var ns = 'http://www.w3.org/2000/svg';
-      var sym = $('#hibiscus');
-      var petal = 'M100 100 C62 84 48 40 76 20 C90 10 110 10 124 20 C152 40 138 84 100 100Z';
-      [0, 72, 144, 216, 288].forEach(function (a) {
-        var g = document.createElementNS(ns, 'g');
-        g.setAttribute('transform', 'rotate(' + a + ' 100 100)');
-        g.innerHTML = '<path d="' + petal + '" fill="url(#petalGrad)"/><path d="M100 98 C98 70 98 50 100 32" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/>';
-        sym.appendChild(g);
-      });
-      var s = document.createElementNS(ns, 'g');
-      s.innerHTML = '<circle cx="100" cy="100" r="9" fill="#B02A7E"/><path d="M100 100 C108 80 122 60 140 44" fill="none" stroke="#D842A0" stroke-width="4" stroke-linecap="round"/><g fill="#D842A0"><circle cx="140" cy="44" r="5"/><circle cx="151" cy="52" r="4"/><circle cx="131" cy="36" r="4"/><circle cx="147" cy="35" r="4"/></g>';
-      sym.appendChild(s);
-    })();
-
     /* ================= GREETING ================= */
     function renderGreeting() {
       var h = new Date().getHours();
       var g = h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat tengah hari' : h < 19 ? 'Selamat petang' : 'Selamat malam';
-      var first = (session.name || uid).trim().split(/\s+/)[0];
+      var displayName = profile.name || session.name || 'Wan';
+      if (/^demo$/i.test(String(displayName).trim())) displayName = 'Wan';
+      var first = String(displayName).trim().split(/\s+/)[0];
       $('#greet').textContent = g;
       var hello = $('#hello');
       hello.textContent = 'Hi, ';
@@ -750,21 +735,12 @@
       }
 
       list.forEach(function (p) {
-        var saved = has(profile.saved, p.id);
         var tags = el('div', { class: 'tags' });
-        if (score(p) > 0) tags.appendChild(el('span', { class: 'tag fy', text: 'For you' }));
-        p.cats.slice(0, score(p) > 0 ? 1 : 2).forEach(function (c) { tags.appendChild(el('span', { class: 'tag', text: CAT_LABEL[c] })); });
 
-        var heart = el('button', { class: 'heart', type: 'button', html: ICON_HEART,
-          'aria-pressed': String(saved), 'aria-label': (saved ? 'Remove ' : 'Save ') + p.name + (saved ? ' from saved' : ''),
-          onclick: function () {
-            toggle(profile.saved, p.id); saveProfile();
-            toast(has(profile.saved, p.id) ? p.name + ' saved' : p.name + ' removed');
-            renderStart(); renderPlaces();
-          } });
+        p.cats.slice(0, 2).forEach(function (c) { tags.appendChild(el('span', { class: 'tag', text: CAT_LABEL[c] })); });
 
         rail.appendChild(el('article', { class: 'place' },
-          el('div', { class: 'cover', style: 'background:' + p.grad }, tags, heart, el('div', { class: 'state', text: p.state })),
+          el('div', { class: 'cover', style: 'background:' + p.grad }, tags, el('div', { class: 'state', text: p.state })),
           el('div', { class: 'body' }, el('h3', { text: p.name }), el('p', { text: p.blurb }))));
       });
     }
@@ -807,7 +783,7 @@
       var rail = el('div', { class: 'journal-rail', 'aria-label': 'Recent journal books' });
       journalBooks.slice(0, 8).forEach(function(b,i) {
         var book=el('a',{class:'journal-book',href:'journal-edit.html?id='+encodeURIComponent(b.id),'aria-label':'Open '+(b.title||'Journal')});
-        book.style.background = b.customCoverColor || b.coverColor || cover(b);
+        book.style.background = b.customCoverColor || (typeof cover === 'function' ? cover(b) : (b.coverColor || '#7453A9'));
         book.appendChild(el('span',{class:'journal-book-spine','aria-hidden':'true'}));
         book.appendChild(el('span',{class:'journal-bookmark','aria-hidden':'true'}));
         book.appendChild(el('span',{class:'journal-plate',text:b.title||'Untitled Journal'}));
@@ -873,7 +849,9 @@
     }
 
     function openProfile() {
-      var first = (session.name || uid).trim().split(/\s+/)[0];
+      var displayName = profile.name || session.name || 'Wan';
+      if (/^demo$/i.test(String(displayName).trim())) displayName = 'Wan';
+      var first = String(displayName).trim().split(/\s+/)[0];
       var sv = el('b', { text: String(profile.saved.length) });
       var mm = el('b', { text: String(memories.length) });
       statsEls = { saved: sv, mem: mm };
@@ -881,7 +859,7 @@
       openSheet([
         el('div', { class: 'who' },
           el('div', { class: 'avatar', text: first.charAt(0).toUpperCase(), 'aria-hidden': 'true' }),
-          el('div', {}, el('b', { text: session.name || uid }), el('span', { text: '@' + uid + (session.email ? ' \u00B7 ' + session.email : '') }))),
+          el('div', {}, el('b', { text: profile.name || session.name || 'Wan' }), el('span', { text: '@' + uid + (session.email ? ' \u00B7 ' + session.email : '') }))),
         el('div', { class: 'stats' },
           el('div', { class: 'stat glass' }, sv, el('span', { text: 'Saved places' })),
           el('div', { class: 'stat glass' }, mm, el('span', { text: 'Memories' }))),
@@ -904,7 +882,7 @@
       scroller.scrollTo({ top: id === 'sec-home' ? 0 : Math.max(0, s.offsetTop - 56), behavior: 'smooth' });
     }
 
-    $$('.nav button').forEach(function (b) { b.addEventListener('click', function () { var target = b.getAttribute('data-go'); if (target === 'sec-discover') window.location.href = 'discover.html'; else if (target === 'camera') window.location.href = 'camera.html'; else if (target === 'sec-remember') window.location.href = 'journal.html'; else if (target === 'profile') openProfile(); else goTo(target); }); });
+    $$('.nav button').forEach(function (b) { b.addEventListener('click', function () { var target = b.getAttribute('data-go'); if (target === 'sec-discover') window.location.href = 'discover.html'; else if (target === 'camera') window.location.href = 'camera.html'; else if (target === 'sec-remember') window.location.href = 'journal.html'; else if (target === 'profile') window.location.href = 'profile.html'; else goTo(target); }); });
 
     // Home is the only active tab on home.html, even when scrolling.
     function syncNav() {
@@ -926,6 +904,11 @@
     // Re-read the shared journal store whenever Home becomes active again.
     // This keeps cover colours in sync after editing a journal on another page.
     window.addEventListener('pageshow', function () {
+      profile = window.TerookaUser ? TerookaUser.read(uid) : load(PKEY, profile);
+      if (!Array.isArray(profile.interests)) profile.interests = [];
+      if (!Array.isArray(profile.saved)) profile.saved = [];
+      renderGreeting();
+      renderPlaces();
       renderMemories();
     });
     document.addEventListener('visibilitychange', function () {

@@ -1,5 +1,3 @@
-```
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -772,7 +770,7 @@
                 type="email"
                 autocomplete="email"
                 placeholder="your@email.com"
-                value="demo@terooka.app"
+                value="wan@teeroka.app"
               >
             </div>
             <span class="err" id="err-email"></span>
@@ -788,7 +786,7 @@
                 type="password"
                 autocomplete="current-password"
                 placeholder="Enter password"
-                value="Demo1234"
+                value="wan12345"
               >
               <button
                 class="toggle"
@@ -878,6 +876,7 @@
   </div>
 </div>
 
+<script src="user-store.js"></script>
 <script>
   (function () {
     'use strict';
@@ -906,11 +905,13 @@
     }
 
     function setSession(user) {
+      const saved = window.TerookaUser ? TerookaUser.read(user.email) : {};
+      const displayName = saved.name && saved.name !== 'Demo Traveller' && saved.name !== 'Demo' ? saved.name : user.name;
       localStorage.setItem(
         SESSION_KEY,
         JSON.stringify({
           email: user.email,
-          name: user.name,
+          name: displayName,
           at: Date.now()
         })
       );
@@ -960,18 +961,37 @@
       return 'f' + (hash >>> 0).toString(16);
     }
 
-    /* LOCAL DEMO ACCOUNT — prototype only */
-    async function ensureDemoUser() {
-      const users = readUsers();
-      if (users.some(u => u.email === 'demo@terooka.app')) return;
+    /* WAN PROTOTYPE ACCOUNT — local demo only */
+    async function ensureWanUser() {
+      const users = readUsers().filter(u => u.email !== 'demo@terooka.app');
+      const email = 'wan@teeroka.app';
+      let user = users.find(u => u.email === email);
       const salt = makeSalt();
-      const hash = await hashPassword('Demo1234', salt);
-      users.push({ name: 'Demo Traveller', email: 'demo@terooka.app', salt, hash, createdAt: Date.now() });
+      const hash = await hashPassword('wan12345', salt);
+      if (!user) {
+        user = { name: 'Wan', email, salt, hash, createdAt: Date.now() };
+        users.push(user);
+      }
       writeUsers(users);
+      // Merge profile fields, never overwrite interests, avatar, journals, etc.
+      if (window.TerookaUser) {
+        const profile = TerookaUser.read(email);
+        if (!profile.name || /^demo( traveller)?$/i.test(profile.name)) {
+          TerookaUser.save(email, { name: 'Wan' });
+        }
+      }
     }
 
-    /* REDIRECT IF SIGNED IN */
-    if (getSession()) {
+    /* Do not keep redirecting to an old Demo session */
+    const existingSession = getSession();
+    if (existingSession && existingSession.email === 'demo@terooka.app') {
+      localStorage.removeItem(SESSION_KEY);
+    } else if (existingSession) {
+      if (existingSession.email === 'wan@teeroka.app') {
+        const saved = window.TerookaUser ? TerookaUser.read(existingSession.email) : {};
+        existingSession.name = saved.name && !/^demo( traveller)?$/i.test(saved.name) ? saved.name : 'Wan';
+        localStorage.setItem(SESSION_KEY, JSON.stringify(existingSession));
+      }
       window.location.replace(HOME);
       return;
     }
@@ -1063,8 +1083,8 @@
       form.dataset.mode = mode;
       tabs.dataset.mode = mode;
       if (previousMode !== mode) {
-        $('#password').value = mode === 'signin' ? 'Demo1234' : '';
-        $('#email').value = mode === 'signin' ? (localStorage.getItem('terooka_remembered_email') || 'demo@terooka.app') : '';
+        $('#password').value = mode === 'signin' ? 'wan12345' : '';
+        $('#email').value = mode === 'signin' ? ((localStorage.getItem('terooka_remembered_email') === 'demo@terooka.app' ? 'wan@teeroka.app' : (localStorage.getItem('terooka_remembered_email') || 'wan@teeroka.app'))) : '';
       }
       form.setAttribute('aria-labelledby', 'tab-' + mode);
 
@@ -1257,7 +1277,7 @@
       busy(true);
 
       try {
-        await ensureDemoUser();
+        await ensureWanUser();
         const users = readUsers();
 
         const existing = users.find(
@@ -1353,11 +1373,11 @@
       $('#err-policy').textContent = '';
     });
 
-    ensureDemoUser().catch(console.error);
+    ensureWanUser().catch(console.error);
 
     // Remember the email only, never the password.
     const rememberedEmail = localStorage.getItem('terooka_remembered_email');
-    if (rememberedEmail) $('#email').value = rememberedEmail;
+    if (rememberedEmail && rememberedEmail !== 'demo@terooka.app') $('#email').value = rememberedEmail;
     $$('.btn-social').forEach(button => button.addEventListener('click', () => {
       msg.className = 'form-msg';
       msg.textContent = button.dataset.social + ' sign-in is a demo placeholder. Connect OAuth to enable it.';

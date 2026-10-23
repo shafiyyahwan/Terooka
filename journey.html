@@ -104,6 +104,10 @@
       );
     }
 
+    .glow { position:absolute; border-radius:50%; filter:blur(55px); pointer-events:none; z-index:0; }
+    .glow-1 { width:240px;height:240px;top:-70px;right:-80px;background:rgba(216,66,160,.20); }
+    .glow-2 { width:260px;height:260px;top:420px;left:-120px;background:rgba(136,52,185,.14); }
+
     .island {
       position: absolute;
       z-index: 30;
@@ -525,23 +529,27 @@
       color: var(--purple);
     }
 
-    .back {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 18px;
-      padding: 5px 0;
-      border: 0;
-      background: transparent;
-      color: var(--purple);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .back svg {
-      width: 18px;
-      height: 18px;
-    }
+    .back { display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; margin-bottom:16px; padding:0; border:1px solid rgba(255,255,255,.88); border-radius:13px; background:rgba(255,255,255,.8); color:var(--purple); box-shadow:0 3px 12px #5724a312; }
+    .back svg { width:22px; height:22px; stroke-width:2.4; }
+    .destination-input-wrap { display:flex; flex-wrap:wrap; align-items:center; gap:7px; min-height:51px; padding:7px 10px; margin-top:9px; background:#fff; border:1px solid #e4d4ef; border-radius:13px; }
+    .destination-input-wrap:focus-within { border-color:var(--purple); }
+    .destination-chip { display:inline-flex; align-items:center; gap:6px; padding:7px 8px 7px 11px; border-radius:20px; background:#f0e4f8; color:var(--purple); font-size:11px; font-weight:800; }
+    .destination-chip button { display:flex; align-items:center; justify-content:center; width:17px; height:20px; padding:0; border:0; border-radius:0; background:transparent; color:var(--purple); font-size:19px; font-weight:600; line-height:1; flex-shrink:0; }
+    .destination-entry { flex:1 1 100px; width:100px; min-width:75px; padding:6px 3px; border:0; outline:0; background:transparent; font-size:12px; }
+    .caption-sparkle { display:flex; align-items:center; justify-content:center; gap:7px; border:1px solid #e8d8f5; border-radius:13px; background:#fff; color:#5724a3; padding:10px 12px; font-weight:800; font-size:11px; }
+    .caption-sparkle svg { width:19px;height:19px; }
+    .caption-panel { position:absolute; z-index:65; left:18px; right:18px; bottom:67px; display:none; padding:17px; border-radius:20px; background:#fff9fd; color:#32204b; box-shadow:0 14px 35px #0006; }
+    .caption-panel.show { display:block; }
+    .caption-panel > strong { display:block; color:#32204b; font-size:14px; }
+    .caption-panel > .sub { color:#796b85; opacity:1; }
+    .caption-panel textarea { width:100%; min-height:82px; resize:vertical; margin-top:10px; padding:11px; border:1px solid #e4d4ef; border-radius:11px; font:12px/1.6 'Plus Jakarta Sans',sans-serif; }
+    .caption-actions { display:flex; gap:8px; margin-top:10px; }
+    .caption-actions button { flex:1; padding:10px 5px; border:0; border-radius:10px; background:#f0e4f8; color:#5724a3; font-weight:800; font-size:11px; }
+    .caption-actions button:first-child { border: 1.5px solid #cbb1e1; background: #fff; }
+    .caption-actions button { border-radius: 12px; min-height: 44px; display:inline-flex; align-items:center; justify-content:center; }
+    .caption-actions button:last-child { background:linear-gradient(110deg,#5724a3,#d842a0); color:white; }
+    .caption-actions button { gap:7px; border-radius:12px; min-width:0; }
+    .caption-actions button svg { display:block; width:17px; height:17px; flex-shrink:0; }
 
     .danger {
       width: 100%;
@@ -937,6 +945,14 @@
     .photo-story-sheet h2 { font-size:24px; margin:12px 0; }
     .photo-story-sheet p { white-space:pre-line; font-size:12px; line-height:1.85; color:#6c5b79; }
     .photo-story-sheet .story-source { font-size:10px; color:#9987a7; }
+    .story-close { display:flex; align-items:center; justify-content:center; padding:0; line-height:1; font-family:Arial,sans-serif; }
+    .story-actions { display:flex; align-items:stretch; gap:10px; margin-top:14px; }
+    #storyLinkSaved { flex:1; display:flex !important; align-items:center; justify-content:center; margin-top:0 !important; }
+    #storyLinkSaved[hidden] { display:none !important; }
+    .story-bookmark { width:51px; height:51px; flex:none; display:grid; place-items:center; border:1px solid #e4d2ef; border-radius:15px; background:white; color:#5724a3; }
+    .story-bookmark svg { width:21px; height:21px; }
+    .story-bookmark.saved { background:#f0e4f8; border-color:#b58cda; }
+    .story-bookmark.saved svg { fill:#5724a3; }
     #storyLinkSaved { display:block; margin-top:14px; padding:15px; border-radius:14px; text-align:center; color:white; background:linear-gradient(110deg,#5724a3,#d842a0); text-decoration:none; font-size:12px; font-weight:800; }
 
     /* Smaller photo viewer so the "i" markers are fully visible */
@@ -963,9 +979,11 @@
 
     /* Slightly bigger, clearer marker */
     #preview .saved-marker {
-      width: 42px;
-      height: 42px;
-      font-size: 19px;
+      width: 32px;
+      height: 32px;
+      font-size: 15px;
+      border: 2px solid white;
+      box-shadow: 0 0 0 5px #ffffff40, 0 4px 12px #0008;
     }
 
     #preview #previewText {
@@ -978,6 +996,7 @@
 
     /* Lower the close (x) and delete buttons so they sit clear of the phone frame */
     #preview .preview-toolbar { top: 76px; left: 26px; right: 26px; }
+    #captionSparkle { margin-left:auto !important; margin-right:7px !important; background:#f6e6fc; color:#5724a3; }
     #preview .preview-toolbar button {
       display: flex;
       align-items: center;
@@ -1015,6 +1034,22 @@
     #preview .preview-nav.prev { left: 8px; }
     #preview .preview-nav.next { right: 8px; }
 
+
+    /* Journey overflow menu and compact destination remove control */
+    .hero-actions { display:flex; align-items:center; gap:8px; }
+    .journey-menu-wrap { position:relative; }
+    .journey-more { width:34px; height:32px; padding:0; }
+    .journey-menu { position:absolute; z-index:25; right:0; top:calc(100% + 8px); min-width:176px; padding:6px; border:1px solid #e8daf0; border-radius:13px; background:#fff; box-shadow:0 12px 28px #24103735; }
+    .journey-menu[hidden] { display:none !important; }
+    .journey-menu-delete { display:flex; align-items:center; gap:9px; width:100%; border:0; padding:11px 9px; border-radius:9px; background:transparent; color:#b33361; text-align:left; font-size:11px; font-weight:800; }
+    .journey-menu-delete:hover { background:#fff0f3; }
+    .destination-chip { gap:5px; }
+    .destination-chip button { display:flex; align-items:center; justify-content:center; width:17px; height:20px; padding:0; border:0; border-radius:0; background:transparent; color:var(--purple); font-size:19px; font-weight:600; line-height:1; flex-shrink:0; }
+    /* Centre SVG X precisely alongside destination text */
+    .destination-chip { display:inline-flex; align-items:center; gap:6px; line-height:1.3; vertical-align:middle; }
+    .destination-chip > span { display:inline-flex; align-items:center; line-height:1.3; }
+    .destination-chip button { display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; min-width:16px; padding:0; margin:0; line-height:0; vertical-align:middle; }
+    .destination-chip button svg { display:block; width:12px; height:12px; flex:none; }
   </style>
 </head>
 
@@ -1023,6 +1058,8 @@
 <div class="stage" id="stage">
   <div class="phone">
     <div class="screen">
+
+      <div class="glow glow-1"></div><div class="glow glow-2"></div>
 
       <!-- DYNAMIC ISLAND -->
       <div class="island"></div>
@@ -1121,12 +1158,34 @@
       <div class="preview" id="preview">
         <div class="preview-toolbar">
           <button id="closePreview" type="button" aria-label="Close photo" title="Close photo"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          <button id="captionSparkle" type="button" aria-label="Suggest photo caption" title="Suggest caption"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2L12 2Z"/><path d="m19 17 .8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8L19 17Z"/></svg></button>
           <button id="deletePhoto" type="button" class="preview-delete" aria-label="Delete photo" title="Delete photo"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M5 6l1 15h12l1-15M10 10v7M14 10v7"/></svg></button>
         </div>
         <div id="photoDetails"></div>
-        <button type="button" class="preview-nav prev" id="previousPhoto" aria-label="Previous photo">&#8249;</button>
-        <button type="button" class="preview-nav next" id="nextPhoto" aria-label="Next photo">&#8250;</button>
+        <button type="button" class="preview-nav prev" id="previousPhoto" aria-label="Previous photo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+        </button>
+
+        <button type="button" class="preview-nav next" id="nextPhoto" aria-label="Next photo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+        </button>
         <p id="previewText"></p>
+        <div id="captionPanel" class="caption-panel" role="dialog" aria-label="Caption suggestion">
+          <strong>Caption Suggestion</strong><p class="sub" style="color:#796b85;">Create a fun caption to share your travel memories on social media.</p>
+          <textarea id="captionText" aria-label="Suggested caption"></textarea>
+          <div class="caption-actions">
+            <button id="refreshCaption" type="button" aria-label="Try another caption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.9L3 10"/><path d="M3 4v6h6"/><path d="M4 13a8 8 0 0 0 14.9 3.9L21 14"/><path d="M15 14h6v6"/></svg>Try another</button>
+            <button id="shareCaption" type="button" aria-label="Share photo and caption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="12" rx="2"/><path d="M12 16V2m-5 5 5-5 5 5"/></svg>Share</button>
+          </div>
+        </div>
       </div>
       <div class="photo-story" id="photoStory">
         <div class="photo-story-sheet">
@@ -1135,7 +1194,12 @@
           <h2 id="storyTitle"></h2>
           <p id="storyDescription"></p>
           <p class="story-source" id="storySource"></p>
-          <a id="storyLinkSaved" href="#">Read Full Story</a>
+          <div class="story-actions" id="storyActions">
+            <a id="storyLinkSaved" href="#">Read Full Story</a>
+            <button type="button" id="storyBookmark" class="story-bookmark" aria-label="Save cultural story" aria-pressed="false" title="Save Story">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1242,6 +1306,7 @@
     const stampKey = 'terooka_stamps_' + uid;
     const photoKey = 'terooka_journey_photos_' + uid;
     const bookingKey = 'terooka_bookings_' + uid;
+    const journalKey = 'terooka_travelogue_' + uid;
 
     const places = window.TerookaData?.places || [];
 
@@ -1427,8 +1492,7 @@
       $('#main').innerHTML = `
       ${old ? `
         <button class="back" data-action="past">
-          ${icon('back', 18)}
-          Past Journeys
+          ${icon('back', 22)}
         </button>
       ` : ''}
 
@@ -1456,10 +1520,22 @@
             ${old ? 'Completed Journey' : 'Active Journey'}
           </span>
 
-          <button class="edit-btn" data-action="edit">
-            ${icon('edit', 15)}
-            Edit
-          </button>
+          <div class="hero-actions">
+            <button class="edit-btn" data-action="edit">
+              ${icon('edit', 15)} Edit
+            </button>
+            <div class="journey-menu-wrap">
+              <button class="edit-btn journey-more" data-action="menu" aria-label="Journey options" aria-expanded="false" aria-haspopup="true" title="Journey options">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
+              </button>
+              <div class="journey-menu" id="journeyMenu" hidden>
+                <button type="button" data-action="delete" class="journey-menu-delete">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M5 6l1 15h12l1-15M10 10v7M14 10v7"/></svg>
+                  Delete Journey
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <h2>
@@ -1510,17 +1586,9 @@
 
       <div id="tabContent"></div>
 
-      ${old ? `
-        <button class="delete-journey" data-action="delete">
-          Delete Journey
-        </button>
-      ` : `
+      ${old ? '' : `
         <button class="btn danger" data-action="end">
           End Journey
-        </button>
-
-        <button class="delete-journey" data-action="delete">
-          Delete Journey
         </button>
       `}
     `;
@@ -1691,8 +1759,7 @@
 
       $('#main').innerHTML = `
       <button class="back" data-action="home">
-        ${icon('back', 18)}
-        My Journeys
+        ${icon('back', 22)}
       </button>
 
       <h1>Past Journeys</h1>
@@ -1773,6 +1840,33 @@
        START JOURNEY
     ===================================== */
 
+    function setupDestinations(wrapId, inputId, initial = []) {
+      const wrap = document.getElementById(wrapId);
+      const input = document.getElementById(inputId);
+      let values = [];
+      const tidy = value => String(value).trim().replace(/\s+/g,' ').toLowerCase().replace(/(^|[\s-])([a-z])/g, (_,sep,ch) => sep + ch.toUpperCase());
+      function paint() {
+        wrap.querySelectorAll('.destination-chip').forEach(el => el.remove());
+        values.forEach((value,index) => {
+          const chip=document.createElement('span'); chip.className='destination-chip';
+          const text=document.createElement('span'); text.textContent=value;
+          const remove=document.createElement('button'); remove.type='button'; remove.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>'; remove.setAttribute('aria-label','Remove '+value);
+          remove.onclick=()=>{values.splice(index,1);paint();input.focus();};
+          chip.append(text,remove); wrap.insertBefore(chip,input);
+        });
+      }
+      function add(value) { const formatted=tidy(value); if(formatted && !values.some(x=>x.toLowerCase()===formatted.toLowerCase()))values.push(formatted); input.value='';paint(); }
+      initial.forEach(add);
+      input.addEventListener('keydown',e=>{
+        if(e.key==='Enter'||e.key===','){e.preventDefault();add(input.value);}
+        if(e.key==='Backspace'&&!input.value&&values.length){values.pop();paint();}
+      });
+      input.addEventListener('input',()=>{if(input.value.includes(',')){input.value.split(',').forEach(add);}});
+      input.addEventListener('blur',()=>{if(input.value.trim())add(input.value);});
+      wrap.addEventListener('click',e=>{if(e.target===wrap)input.focus();});
+      return ()=>{if(input.value.trim())add(input.value);return [...values];};
+    }
+
     function startJourney() {
       openSheet(`
       <h2>Start a Journey</h2>
@@ -1799,18 +1893,10 @@
           Destinations
         </label>
 
-        <input
-          id="journeyDestinations"
-          class="field"
-          name="destination"
-          maxlength="200"
-          placeholder="e.g. Kuching, Bau, Serian"
-          required
-        >
-
-        <p class="sub">
-          Add multiple destinations separated by commas.
-        </p>
+        <div class="destination-input-wrap" id="startDestinationWrap">
+          <input id="journeyDestinations" class="destination-entry" placeholder="Type a destination, press Enter" autocomplete="off" aria-label="Add destination">
+        </div>
+        <p class="sub">Press Enter or comma to add each destination. Tap × to remove one.</p>
 
         <div class="sheet-actions">
           <button
@@ -1828,6 +1914,7 @@
       </form>
     `);
 
+      const getStartDestinations = setupDestinations('startDestinationWrap','journeyDestinations');
       $('#startForm').onsubmit = event => {
         event.preventDefault();
 
@@ -1836,14 +1923,7 @@
         const data = new FormData(event.target);
         const name = String(data.get('name') || '').trim();
 
-        const destinationList = [
-          ...new Set(
-            String(data.get('destination') || '')
-              .split(',')
-              .map(value => value.trim())
-              .filter(Boolean)
-          )
-        ];
+        const destinationList = getStartDestinations();
 
         if (!name || !destinationList.length) return;
 
@@ -1905,18 +1985,10 @@
           Destinations
         </label>
 
-        <input
-          id="editDestinations"
-          class="field"
-          name="destination"
-          maxlength="200"
-          value="${esc(destinations(journey).join(', '))}"
-          required
-        >
-
-        <p class="sub">
-          Separate multiple destinations with commas.
-        </p>
+        <div class="destination-input-wrap" id="editDestinationWrap">
+          <input id="editDestinations" class="destination-entry" placeholder="Add another destination" autocomplete="off" aria-label="Add destination">
+        </div>
+        <p class="sub">Press Enter or comma to add each destination. Tap × to remove one.</p>
 
         <div class="sheet-actions">
           <button
@@ -1934,20 +2006,14 @@
       </form>
     `);
 
+      const getEditDestinations = setupDestinations('editDestinationWrap','editDestinations',destinations(journey));
       $('#editForm').onsubmit = event => {
         event.preventDefault();
 
         const data = new FormData(event.target);
         const name = String(data.get('name') || '').trim();
 
-        const destinationList = [
-          ...new Set(
-            String(data.get('destination') || '')
-              .split(',')
-              .map(value => value.trim())
-              .filter(Boolean)
-          )
-        ];
+        const destinationList = getEditDestinations();
 
         if (!name || !destinationList.length) return;
 
@@ -2111,32 +2177,123 @@
         marker.textContent = 'i';
         marker.title = 'Cultural inspiration';
         marker.setAttribute('aria-label', 'Learn about this pose');
-        marker.style.left = '50%';
-        marker.style.top = '50%';
+        marker.style.left = '55%';
+        marker.style.top = '60%';
         marker.onclick = () => showPhotoStory(pose);
         photoArea.appendChild(marker);
       }
+      $('#captionPanel').classList.remove('show');
       $('#preview').classList.add('show');
     }
 
-    function showPhotoStory(data) {
-      $('#storyCategory').textContent = data.category || 'Cultural information';
-      $('#storyTitle').textContent = data.title || 'Cultural Story';
-      $('#storyDescription').textContent = [data.description, data.note].filter(Boolean).join('\n\n');
-      $('#storySource').textContent = data.source || '';
-      const link = $('#storyLinkSaved');
-      if (data.storyUrl && /^cultural-story\.html\?id=[a-zA-Z0-9_-]+$/.test(data.storyUrl)) {
-        link.href = data.storyUrl + '&from=journey';
-        link.style.display = 'block';
-      } else {
-        link.style.display = 'none';
+    let captionVariation=0;
+    function suggestCaption() {
+      const journey=view==='pastDetail'?selected:active();
+      const photo=journey&&photos(journey).find(p=>String(p.id)===String(previewedPhotoId));
+      const locationName=photo?.placeName||photo?.location||destinations(journey||{}).join(' & ');
+      const where=String(locationName||'Malaysia').replace(/[<>]/g,'');
+      const options=[
+        `A little moment from ${where}, a memory worth keeping. ✨ #Terooka #TravelMemories`,
+        `Exploring ${where}, one photo and one beautiful memory at a time. 💜 #Terooka`,
+        `New places, lovely memories, and stories to remember. 📸 ${where} #Terooka`,
+        `Collecting moments, not just destinations. 🌸 Greetings from ${where}!`
+      ];
+      document.getElementById('captionText').value=options[captionVariation++%options.length];
+      document.getElementById('captionPanel').classList.add('show');
+    }
+    $('#captionSparkle').onclick=()=>{if($('#captionPanel').classList.contains('show'))$('#captionPanel').classList.remove('show');else suggestCaption();};
+    $('#refreshCaption').onclick=suggestCaption;
+    $('#shareCaption').onclick=async()=>{
+      const caption=$('#captionText').value.trim();
+      const journey=view==='pastDetail'?selected:active();
+      const photo=journey&&photos(journey).find(p=>String(p.id)===String(previewedPhotoId));
+      const src=photo?.src||photo?.image;
+      let file=null;
+      if(src){
+        try{
+          const response=await fetch(src);
+          if(!response.ok) throw new Error('Image unavailable');
+          const blob=await response.blob();
+          const extension=blob.type==='image/jpeg'?'jpg':'png';
+          file=new File([blob],`terooka-journey-photo.${extension}`,{type:blob.type||'image/png'});
+        }catch(e){ console.warn('Could not prepare photo for sharing',e); }
       }
+      try{
+        if(file && navigator.share && navigator.canShare?.({files:[file]})){
+          await navigator.share({files:[file],text:caption,title:'My Terooka Memory'});
+          return;
+        }
+        if(navigator.share){
+          await navigator.share({text:caption,title:'My Terooka Memory'});
+          return;
+        }
+        if(file){
+          const url=URL.createObjectURL(file);
+          const link=document.createElement('a');
+          link.href=url;link.download=file.name;
+          document.body.appendChild(link);link.click();link.remove();
+          setTimeout(()=>URL.revokeObjectURL(url),2000);
+        }
+        try{await navigator.clipboard.writeText(caption);}
+        catch{const el=$('#captionText');el.focus();el.select();document.execCommand('copy');}
+        alert(file?'Photo downloaded and caption copied. Ready to share!':'Caption copied. You can share it now!');
+      }catch(error){
+        if(error?.name!=='AbortError') alert('Sharing was not available. Please try again.');
+      }
+    };
+
+    const cultureSavedKey = 'terooka_culture_saved_' + uid;
+    let currentStoryId = null;
+    function updateStoryBookmark() {
+      const saved = currentStoryId && read(cultureSavedKey).includes(currentStoryId);
+      const button = $('#storyBookmark');
+      button.classList.toggle('saved', Boolean(saved));
+      button.setAttribute('aria-pressed', String(Boolean(saved)));
+      button.setAttribute('aria-label', saved ? 'Remove saved story' : 'Save cultural story');
+      button.title = saved ? 'Remove Saved Story' : 'Save Story';
+    }
+    $('#storyBookmark').onclick = () => {
+      if (!currentStoryId) return;
+      const ids = read(cultureSavedKey);
+      const next = ids.includes(currentStoryId) ? ids.filter(id => id !== currentStoryId) : [currentStoryId, ...ids];
+      if (write(cultureSavedKey, next)) updateStoryBookmark();
+    };
+
+    function showPhotoStory(data) {
+      const url = String(data.storyUrl || '');
+      const isNgajat = /(?:ngajat|pose)/i.test([data.title, data.id, url].join(' '));
+      const clean = value => String(value || '')
+        .split(/\n\s*\n/)
+        .map(p => p.trim())
+        .filter(p => p && !/prototype marker|specific motif.*confirm|terooka demo|verification pending|specific decoration.*verified|illustrated pose|follow the illustration|creative guide|artistic pose|artistic interpretation|formal instruction in traditional dance/i.test(p))
+        .join('\n\n');
+      $('#storyCategory').textContent = isNgajat ? 'Music & Dance' : (data.category || 'Cultural information');
+      $('#storyTitle').textContent = isNgajat ? 'Ngajat Traditional Dance' : (data.title || 'Cultural Story');
+      $('#storyDescription').textContent = isNgajat
+        ? 'Ngajat is a traditional Iban dance from Sarawak, performed at celebrations such as Gawai Dayak. Its movements, music and attire reflect Iban cultural heritage.'
+        : [clean(data.description), clean(data.note)].filter(Boolean).join('\n\n');
+      // Do not show outdated prototype or unverified source labels from saved photos.
+      $('#storySource').textContent = '';
+      $('#storySource').style.display = 'none';
+      const link = $('#storyLinkSaved');
+      const storyUrl = isNgajat ? 'cultural-story.html?id=ngajat' : url;
+      if (/^cultural-story\.html\?id=[a-zA-Z0-9_-]+$/.test(storyUrl)) {
+        link.href = storyUrl + '&from=journey';
+        link.hidden = false;
+        currentStoryId = new URLSearchParams(storyUrl.split('?')[1]).get('id');
+      } else {
+        link.hidden = true;
+        currentStoryId = null;
+      }
+      $('#storyActions').style.display = currentStoryId ? 'flex' : 'none';
+      updateStoryBookmark();
       $('#photoStory').classList.add('show');
     }
 
     $('#closeStory').onclick = () => $('#photoStory').classList.remove('show');
     $('#closePreview').onclick = () => {
       $('#photoStory').classList.remove('show');
+      $('#captionPanel').classList.remove('show');
       $('#preview').classList.remove('show');
     };
     $('#deletePhoto').onclick = () => {
@@ -2148,6 +2305,7 @@
       );
       if (write(photoKey, remaining)) {
         $('#photoStory').classList.remove('show');
+        $('#captionPanel').classList.remove('show');
         $('#preview').classList.remove('show');
         previewedPhotoId = null;
         render();
@@ -2196,7 +2354,7 @@
       if (!journey) return;
 
       const confirmed = confirm(
-        'Delete this journey permanently? Its photos, stamps and bookings will also be removed. This cannot be undone.'
+        'Delete this journey permanently? Its linked journal, photos and stamps will also be deleted. This cannot be undone.'
       );
 
       if (!confirmed) return;
@@ -2215,6 +2373,10 @@
 
       const remainingBookings = read(bookingKey).filter(
         item => !belongs(item, journey)
+      );
+
+      const remainingJournals = read(journalKey).filter(
+        book => String(book.journeyId ?? '') !== String(journey.id)
       );
 
       try {
@@ -2236,6 +2398,11 @@
         localStorage.setItem(
           bookingKey,
           JSON.stringify(remainingBookings)
+        );
+
+        localStorage.setItem(
+          journalKey,
+          JSON.stringify(remainingJournals)
         );
 
         selected = null;
@@ -2260,6 +2427,12 @@
         '[data-collect],[data-preview]'
       );
 
+      if (!event.target.closest('.journey-menu-wrap')) {
+        const menu = document.getElementById('journeyMenu');
+        if (menu) menu.hidden = true;
+        const more = document.querySelector('.journey-more');
+        if (more) more.setAttribute('aria-expanded', 'false');
+      }
       if (!element) return;
 
       if (element.dataset.tab) {
@@ -2322,6 +2495,15 @@
         case 'end':
           endJourney();
           break;
+
+        case 'menu': {
+          const menu = document.getElementById('journeyMenu');
+          if (menu) {
+            menu.hidden = !menu.hidden;
+            element.setAttribute('aria-expanded', String(!menu.hidden));
+          }
+          break;
+        }
 
         case 'delete':
           deleteJourney();

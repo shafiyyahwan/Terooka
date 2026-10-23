@@ -395,6 +395,28 @@
       opacity: 0.7;
     }
 
+
+    /* OPTIONAL PHOTO CAPTION — SAME INTERACTION AS JOURNEY */
+    .photo-caption-trigger { position:absolute;z-index:12;bottom:114px;left:20px;right:20px;display:none;justify-content:center; }
+    .photo-caption-trigger button { width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border:1px solid #e8d8f5;border-radius:14px;background:#fff9fd;color:#5724a3;font-weight:800;font-size:12px;box-shadow:0 5px 18px #180a3040; }
+    .photo-caption-trigger svg {width:18px;height:18px;}
+    .photo-caption-dim {position:absolute;inset:0;z-index:27;background:#180a3070;display:none;}
+    .photo-caption-dim.show {display:block;}
+    .photo-caption-panel {position:absolute;z-index:28;left:18px;right:18px;bottom:95px;display:none;padding:18px;border-radius:20px;background:#fff9fd;color:#32204b;box-shadow:0 14px 35px #0006;}
+    .photo-caption-panel.show {display:block;}
+    .photo-caption-panel strong {display:block;font-size:15px;padding-right:30px;}
+    .photo-caption-panel p {font-size:11px;color:#796b85;line-height:1.5;margin:7px 0 0;}
+    .photo-caption-panel textarea {box-sizing:border-box;width:100%;min-height:100px;resize:vertical;margin-top:12px;padding:11px;border:1px solid #e4d4ef;border-radius:11px;font:12px/1.6 'Plus Jakarta Sans',sans-serif;color:#32204b;background:white;}
+    .photo-caption-panel .caption-buttons {display:flex;gap:8px;margin-top:10px;}
+    .photo-caption-panel .caption-buttons button {flex:1;min-height:42px;padding:10px 5px;border:0;border-radius:10px;background:#f0e4f8;color:#5724a3;font-weight:800;font-size:11px;}
+    .photo-caption-panel .caption-buttons button:last-child {background:#efe5f9;color:#5724a3;}
+    .photo-caption-panel .share-photo-btn{width:100%;margin-top:9px;min-height:44px;border:0;border-radius:12px;background:var(--gradient);color:white;font-size:12px;font-weight:800;}
+    .photo-caption-panel .caption-buttons button{background:#efe5f9;}
+    .photo-caption-panel .caption-buttons button,.photo-caption-panel .share-photo-btn{display:flex;align-items:center;justify-content:center;gap:8px;}
+    .photo-caption-panel .caption-buttons svg,.photo-caption-panel .share-photo-btn svg{width:17px;height:17px;flex-shrink:0;}
+    .photo-caption-panel .caption-close {position:absolute;right:13px;top:12px;width:31px;height:31px;border:0;border-radius:10px;background:#f0e4f8;color:#5724a3;font-size:22px;}
+    @media(max-width:500px){.photo-caption-trigger{bottom:calc(89px + env(safe-area-inset-bottom))}.photo-caption-panel{bottom:calc(100px + env(safe-area-inset-bottom))}}
+
     /* CULTURE LENS SCANNING */
 
     .scan {
@@ -459,18 +481,18 @@
       position: absolute;
       transform: translate(-50%, -50%);
 
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      border: 3px solid white;
+      border: 2px solid white;
 
       background: var(--gradient);
       color: white;
 
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 800;
 
-      box-shadow: 0 0 0 7px #ffffff40, 0 4px 14px #0008;
+      box-shadow: 0 0 0 5px #ffffff40, 0 4px 10px #0008;
       pointer-events: auto;
     }
 
@@ -757,13 +779,11 @@
       }
     }
 
-    /* Exact outer frame and status bar shared with Home */
-    body { min-height: 100dvh; overflow: hidden; }
-    .stage { flex-shrink: 0; transform-origin: center; }
+    /* Consistent phone frame; one source of truth for dimensions */
+    .stage { position: relative; width: 414px; height: 868px; flex-shrink: 0; }
     .phone {
-      position: relative; inset: auto;
-      width: 414px; height: 868px; padding: 12px;
-      background: #111015; border-radius: 62px;
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      padding: 12px; background: #111015; border-radius: 62px;
       box-shadow: 0 24px 70px rgba(54,25,88,.23), 0 0 0 2px #343039;
     }
     .phone::before, .phone::after {
@@ -772,17 +792,13 @@
     }
     .phone::before { top: 155px; height: 52px; }
     .phone::after { top: 228px; height: 69px; }
-    .screen { width: 390px; height: 844px; border-radius: 50px; }
-    .island {
-      z-index: 30; top: 11px; width: 118px; height: 34px;
-      background: #08070a; border-radius: 30px;
-    }
+    .screen { width: 100%; height: 100%; border-radius: 50px; color: #fff; }
+    .island { z-index: 30; top: 11px; width: 118px; height: 34px; background: #08070a; }
     .status {
       position: absolute; top: 18px; left: 34px; right: 30px;
       z-index: 29; display: flex; justify-content: space-between;
       align-items: center; color: #fff; font-size: 14px; font-weight: 800;
-      text-shadow: 0 1px 4px rgba(0,0,0,.45);
-      pointer-events: none;
+      text-shadow: 0 1px 4px rgba(0,0,0,.45); pointer-events: none;
     }
     .homebar {
       position: absolute; bottom: 8px; left: 50%; z-index: 30;
@@ -790,11 +806,24 @@
       background: rgba(255,255,255,.9); border-radius: 20px;
       pointer-events: none;
     }
-    @media (max-width: 500px) {
-      body { overflow: auto; }
-      .phone { width: 100%; height: 100dvh; }
-      .phone::before, .phone::after, .status, .homebar { display: none; }
-      .screen { width: 100%; height: 100%; min-height: 650px; }
+    /* Keep guidance legible on both light and dark photos */
+    .hint, .caption { color: #fff; font-weight: 700; text-shadow: 0 2px 7px #000, 0 0 15px #000c; }
+    .scan span { color: #fff; text-shadow: 0 2px 8px #000; }
+    .sheet, .sheet h2, .sheet-header { color: var(--ink); }
+    .sheet p { color: #493756; }
+    .source { color: #665273; }
+    .toast { color: var(--purple); }
+    @media screen and (max-width: 500px) {
+      html, body { width: 100%; min-height: 100%; margin: 0; overflow: hidden; }
+      body { display: block; background: #23152f; }
+      .stage { position: relative; width: 100% !important; height: 100dvh !important; transform: none !important; margin: 0; }
+      .phone {
+        position: relative; inset: auto; width: 100% !important; height: 100dvh !important;
+        padding: 0 !important; border: 0 !important; border-radius: 0 !important;
+        box-shadow: none !important; background: transparent !important;
+      }
+      .phone::before, .phone::after, .island, .status, .homebar { display: none !important; }
+      .screen { width: 100% !important; height: 100% !important; min-height: 0 !important; border-radius: 0 !important; }
     }
   </style>
 </head>
@@ -911,16 +940,23 @@
 
         <div class="arrows">
           <button
-            class="glass"
+            class="glass back"
             id="prevPose"
             aria-label="Previous pose"
-          >&#8249;</button>
+          ><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
 
           <button
-            class="glass"
+            class="glass back"
             id="nextPose"
             aria-label="Next pose"
-          >&#8250;</button>
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </button>
         </div>
       </div>
 
@@ -965,6 +1001,20 @@
           Save to Journey
         </button>
       </div>
+
+
+      <div class="photo-caption-trigger" id="photoCaptionTrigger">
+        <button type="button" id="generatePhotoCaption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2L12 2Z"/><path d="m19 17 .8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8L19 17Z"/></svg>Generate AI Caption</button>
+      </div>
+      <div class="photo-caption-dim" id="photoCaptionDim"></div>
+      <section class="photo-caption-panel" id="photoCaptionPanel" role="dialog" aria-modal="true" aria-label="Photo caption suggestion">
+        <button class="caption-close" id="closePhotoCaption" type="button" aria-label="Close caption">&times;</button>
+        <strong>Caption Suggestion</strong>
+        <p>Generate a caption, edit it, then share your photo. Saving to Journey is optional.</p>
+        <textarea id="photoCaptionText" aria-label="Suggested photo caption"></textarea>
+        <div class="caption-buttons"><button id="regeneratePhotoCaption" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.9L3 10"/><path d="M3 4v6h6"/><path d="M4 13a8 8 0 0 0 14.9 3.9L21 14"/><path d="M15 14h6v6"/></svg>Regenerate</button></div>
+        <button class="share-photo-btn" id="sharePhotoCaption" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 13.5 6.6 4"/><path d="m15.3 6.5-6.6 4"/></svg>Share</button>
+      </section>
 
       <!-- INFORMATION BOTTOM SHEET -->
 
@@ -1206,9 +1256,11 @@
 
       $('resultActions').style.display =
         captured && !scanning ? 'flex' : 'none';
+      $('photoCaptionTrigger').style.display =
+        captured && !scanning ? 'flex' : 'none';
 
       $('aboutPose').style.display =
-        mode === 'pose' && !scanning ? 'flex' : 'none';
+        mode === 'pose' && !scanning && !captured ? 'flex' : 'none';
       $('aboutPose').classList.toggle('before-capture', !captured);
 
       const guide = mode === 'pose' && !captured;
@@ -1498,6 +1550,68 @@
         activeDiscoveries.length ? 'block' : 'none';
     }
 
+
+    /* PHOTO-LEVEL CAPTION (LOCAL PROTOTYPE, NO AI API) */
+    let photoCaptionVariation = 0;
+    function closePhotoCaption() {
+      $('photoCaptionPanel').classList.remove('show');
+      $('photoCaptionDim').classList.remove('show');
+    }
+    function suggestPhotoCaption() {
+      if (!captured || !photoData || scanning) return;
+      const place = 'Sarawak'; // Current camera prototype background/location
+      const options = mode === 'pose' ? [
+        `A little pose, a beautiful memory from ${place}. 📸✨ #Terooka #TravelMemories`,
+        `Finding my favourite angle while exploring ${place}! 💜 #Terooka #ExploreMalaysia`,
+        `Smiles, stories and unforgettable moments in ${place}. 🌸 #Terooka`
+      ] : [
+        `Discovering the stories behind ${place}, one photo at a time. ✨ #Terooka #CulturalHeritage`,
+        `More than a photograph — a little piece of ${place}'s heritage. 💜 #Terooka`,
+        `Exploring culture, collecting memories in ${place}. 📸 #Terooka #ExploreMalaysia`
+      ];
+      $('photoCaptionText').value = options[photoCaptionVariation++ % options.length];
+      $('photoCaptionPanel').classList.add('show');
+      $('photoCaptionDim').classList.add('show');
+    }
+    $('generatePhotoCaption').onclick = suggestPhotoCaption;
+    $('regeneratePhotoCaption').onclick = suggestPhotoCaption;
+    $('closePhotoCaption').onclick = closePhotoCaption;
+    $('photoCaptionDim').onclick = closePhotoCaption;
+    /* SHARE PHOTO: use native share sheet where supported; fallback to photo download + copied caption. */
+    $('sharePhotoCaption').onclick = async () => {
+      if (!captured || !photoData) return;
+      const caption = $('photoCaptionText').value.trim();
+      try {
+        const response = await fetch(photoData);
+        const blob = await response.blob();
+        const file = new File([blob], 'terooka-memory.png', { type: blob.type || 'image/png' });
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], text: caption, title: 'My Terooka Memory' });
+          return;
+        }
+        if (navigator.share) {
+          await navigator.share({ text: caption, title: 'My Terooka Memory' });
+          toast('Caption shared. Save the photo separately if needed.');
+          return;
+        }
+        const a = document.createElement('a');
+        a.href = photoData;
+        a.download = 'terooka-memory.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        try { await navigator.clipboard.writeText(caption); }
+        catch {
+          $('photoCaptionText').focus();
+          $('photoCaptionText').select();
+          document.execCommand('copy');
+        }
+        toast('Photo downloaded & caption copied. You can post them now!');
+      } catch (error) {
+        if (error.name !== 'AbortError') toast('Sharing unavailable. Try Copy Caption instead.');
+      }
+    };
+
     /* CAPTURE */
 
     async function capture() {
@@ -1537,8 +1651,6 @@
             render();
           }, 1800);
 
-        } else {
-          toast('Cartoon pose included in your photo');
         }
 
       } catch (error) {
@@ -1558,6 +1670,7 @@
     /* RETAKE */
 
     function retake() {
+      closePhotoCaption();
       clearTimeout(scanTimer);
 
       closeSheet();

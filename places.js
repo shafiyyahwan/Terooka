@@ -1,7 +1,17 @@
 
-/* Terooka shared place data.
-   All venues and sample reviews are fictional prototype content.
-*/
+/*
+ * Terooka — Shared Place Data
+ *
+ * Single source of truth for:
+ * - Discover map and preview
+ * - Explore Place details
+ * - Opening hours and visit types
+ * - Cultural experiences and booking
+ * - Photos and sample reviews
+ *
+ * Note: Some places and locations are fictional
+ * prototype content.
+ */
 
 window.TerookaData = window.TerookaData || {};
 
@@ -12,11 +22,31 @@ window.TerookaData.places = [
     city: 'Kuching',
     state: 'Sarawak',
     category: 'Heritage',
-    lat: 1.5583,
-    lng: 110.3477,
-    description: 'A riverside storytelling walk inspired by Kuching’s history.',
+
+    lat: 1.4000,
+    lng: 110.2400,
+
+    description:
+      'A riverside storytelling walk inspired by Kuching’s history.',
+
     image: 'img/riverfront1.jpg',
+    photos: ['img/riverfront1.jpg'],
+
     demo: true,
+
+    openingHours: {
+      Monday: '8:00 AM – 8:00 PM',
+      Tuesday: '8:00 AM – 8:00 PM',
+      Wednesday: '8:00 AM – 8:00 PM',
+      Thursday: '8:00 AM – 8:00 PM',
+      Friday: '8:00 AM – 8:00 PM',
+      Saturday: '8:00 AM – 8:00 PM',
+      Sunday: '8:00 AM – 8:00 PM'
+    },
+
+    visitType: 'Self-guided cultural walk',
+    workshop: null,
+
     reviews: [
       {
         name: 'Alya',
@@ -32,17 +62,38 @@ window.TerookaData.places = [
       }
     ]
   },
+
   {
     id: 'laksa',
     name: 'Rasa Sarawak Kitchen',
     city: 'Kuching',
     state: 'Sarawak',
     category: 'Food',
+
     lat: 1.5547,
     lng: 110.3532,
-    description: 'A food experience inspired by Sarawak laksa.',
-    image: 'img/sarawak-food.jpg',
+
+    description:
+      'A food experience inspired by Sarawak laksa.',
+
+    image: 'img/laksa-sarawak.jpg',
+    photos: ['img/laksa-sarawak.jpg'],
+
     demo: true,
+
+    openingHours: {
+      Monday: 'Closed',
+      Tuesday: '9:00 AM – 6:00 PM',
+      Wednesday: '9:00 AM – 6:00 PM',
+      Thursday: '9:00 AM – 6:00 PM',
+      Friday: '9:00 AM – 6:00 PM',
+      Saturday: '9:00 AM – 6:00 PM',
+      Sunday: '9:00 AM – 6:00 PM'
+    },
+
+    visitType: 'Walk-in dining',
+    workshop: null,
+
     reviews: [
       {
         name: 'Mira',
@@ -58,17 +109,58 @@ window.TerookaData.places = [
       }
     ]
   },
+
   {
     id: 'beads',
     name: 'Borneo Bead Studio',
     city: 'Kuching',
     state: 'Sarawak',
     category: 'Crafts',
+
     lat: 1.5625,
     lng: 110.3445,
-    description: 'A hands-on beadwork workshop inspired by Sarawak crafts.',
-    image: 'img/sarawak-beads.jpg',
+
+    description:
+      'A hands-on beadwork workshop inspired by Sarawak crafts.',
+
+    image: 'img/bead.jpg',
+    photos: ['img/bead.jpg'],
+
     demo: true,
+
+    openingHours: {
+      Monday: '9:00 AM – 5:00 PM',
+      Tuesday: '9:00 AM – 5:00 PM',
+      Wednesday: '9:00 AM – 5:00 PM',
+      Thursday: '9:00 AM – 5:00 PM',
+      Friday: '9:00 AM – 5:00 PM',
+      Saturday: '9:00 AM – 5:00 PM',
+      Sunday: 'Closed'
+    },
+
+    visitType: 'Workshop by reservation',
+
+    workshop: {
+      name: 'Traditional Beadwork Experience',
+
+      description:
+        'Discover beadwork techniques through a guided hands-on cultural activity.',
+
+      duration: '1.5 hours',
+      price: 35,
+
+      sessions: [
+        {
+          value: '10:00',
+          label: '10:00 AM – 11:30 AM'
+        },
+        {
+          value: '14:00',
+          label: '2:00 PM – 3:30 PM'
+        }
+      ]
+    },
+
     reviews: [
       {
         name: 'Nadia',
@@ -84,43 +176,106 @@ window.TerookaData.places = [
       }
     ]
   },
+
   {
     id: 'culturehouse',
-    name: 'Stories of Borneo Gallery',
+    name: 'Borneo Cultures Museum',
     city: 'Kuching',
     state: 'Sarawak',
     category: 'Museum',
-    lat: 1.5505,
-    lng: 110.3490,
-    description: 'A gallery featuring local stories, music and traditional objects.',
-    image: 'img/sarawak-gallery.jpg',
-    demo: true,
+
+    lat: 1.5549,
+    lng: 110.3439,
+
+    description:
+      'Explore the rich cultural heritage of Sarawak through interactive exhibitions, traditional artefacts, historical collections and stories of Borneo’s diverse communities.',
+
+    image: 'img/museum.jpg',
+    photos: ['img/museum.jpg'],
+
+    demo: false,
+
+    // Prototype schedule — verify before real use.
+    openingHours: {
+      Monday: 'Closed',
+      Tuesday: '9:00 AM – 4:45 PM',
+      Wednesday: '9:00 AM – 4:45 PM',
+      Thursday: '9:00 AM – 4:45 PM',
+      Friday: '9:00 AM – 4:45 PM',
+      Saturday: '9:00 AM – 4:45 PM',
+      Sunday: '9:00 AM – 4:45 PM'
+    },
+
+    visitType: 'Museum visit',
+    workshop: null,
+
     reviews: [
       {
         name: 'Sofia',
         stars: 5,
-        text: 'Enjoyed discovering the stories behind traditional objects.',
+        text: 'Loved learning about the different cultures and traditions of Sarawak.',
         sample: true
       },
       {
         name: 'Ryan',
         stars: 4,
-        text: 'Interesting exhibits about Sarawak cultural heritage.',
+        text: 'Beautiful museum with fascinating cultural exhibits and interactive displays.',
         sample: true
       }
     ]
   },
+
   {
     id: 'weaving',
     name: 'Anyaman Heritage Workshop',
     city: 'Kuching',
     state: 'Sarawak',
     category: 'Crafts',
+
     lat: 1.5573,
     lng: 110.3587,
-    description: 'A weaving experience inspired by traditional handicrafts.',
-    image: 'img/sarawak-weaving.jpg',
+
+    description:
+      'A weaving experience inspired by traditional handicrafts.',
+
+    image: 'img/anyaman.jpg',
+    photos: ['img/anyaman.jpg'],
+
     demo: true,
+
+    openingHours: {
+      Monday: '9:00 AM – 5:00 PM',
+      Tuesday: '9:00 AM – 5:00 PM',
+      Wednesday: '9:00 AM – 5:00 PM',
+      Thursday: '9:00 AM – 5:00 PM',
+      Friday: '9:00 AM – 5:00 PM',
+      Saturday: '9:00 AM – 5:00 PM',
+      Sunday: 'Closed'
+    },
+
+    visitType: 'Workshop by reservation',
+
+    workshop: {
+      name: 'Traditional Weaving Experience',
+
+      description:
+        'Explore basic weaving techniques with guidance from a workshop facilitator.',
+
+      duration: '2 hours',
+      price: 45,
+
+      sessions: [
+        {
+          value: '09:30',
+          label: '9:30 AM – 11:30 AM'
+        },
+        {
+          value: '14:00',
+          label: '2:00 PM – 4:00 PM'
+        }
+      ]
+    },
+
     reviews: [
       {
         name: 'Farah',
@@ -136,17 +291,38 @@ window.TerookaData.places = [
       }
     ]
   },
+
   {
     id: 'keklapis',
     name: 'Kek Lapis Corner',
     city: 'Kuching',
     state: 'Sarawak',
     category: 'Food',
+
     lat: 1.5514,
     lng: 110.3436,
-    description: 'A food stop highlighting Sarawak layered cakes.',
-    image: 'img/sarawak-kek-lapis.jpg',
+
+    description:
+      'A food stop highlighting Sarawak layered cakes.',
+
+    image: 'img/kek-lapis.jpg',
+    photos: ['img/kek-lapis.jpg'],
+
     demo: true,
+
+    openingHours: {
+      Monday: '9:00 AM – 7:00 PM',
+      Tuesday: '9:00 AM – 7:00 PM',
+      Wednesday: '9:00 AM – 7:00 PM',
+      Thursday: '9:00 AM – 7:00 PM',
+      Friday: '9:00 AM – 7:00 PM',
+      Saturday: '9:00 AM – 7:00 PM',
+      Sunday: '9:00 AM – 7:00 PM'
+    },
+
+    visitType: 'Walk-in food discovery',
+    workshop: null,
+
     reviews: [
       {
         name: 'Izzah',
@@ -162,17 +338,58 @@ window.TerookaData.places = [
       }
     ]
   },
+
   {
     id: 'baucraft',
     name: 'Bau Heritage Craft House',
     city: 'Bau',
     state: 'Sarawak',
     category: 'Crafts',
-    lat: 1.4166,
-    lng: 110.1551,
-    description: 'A craft experience in the Bau area.',
-    image: 'img/sarawak-bau.jpg',
+
+    lat: 1.3300,
+    lng: 110.3100,
+
+    description:
+      'A craft experience in the Bau area.',
+
+    image: 'img/craft-house.jpg',
+    photos: ['img/craft-house.jpg'],
+
     demo: true,
+
+    openingHours: {
+      Monday: 'Closed',
+      Tuesday: 'Closed',
+      Wednesday: '10:00 AM – 5:00 PM',
+      Thursday: '10:00 AM – 5:00 PM',
+      Friday: '10:00 AM – 5:00 PM',
+      Saturday: '10:00 AM – 5:00 PM',
+      Sunday: '10:00 AM – 5:00 PM'
+    },
+
+    visitType: 'Workshop by reservation',
+
+    workshop: {
+      name: 'Bau Craft Discovery Workshop',
+
+      description:
+        'Try a guided introductory craft activity inspired by the region’s creative traditions.',
+
+      duration: '1 hour',
+      price: 30,
+
+      sessions: [
+        {
+          value: '10:00',
+          label: '10:00 AM – 11:00 AM'
+        },
+        {
+          value: '15:00',
+          label: '3:00 PM – 4:00 PM'
+        }
+      ]
+    },
+
     reviews: [
       {
         name: 'Lina',
@@ -188,28 +405,50 @@ window.TerookaData.places = [
       }
     ]
   },
+
   {
     id: 'serian',
-    name: 'Serian Cultural Stories',
-    city: 'Serian',
+    name: 'Sarawak Cultural Village',
+    city: 'Kuching',
     state: 'Sarawak',
     category: 'Heritage',
-    lat: 1.1737,
-    lng: 110.5681,
-    description: 'A storytelling experience inspired by the cultural diversity of Serian.',
-    image: 'img/sarawak-serian.jpg',
-    demo: true,
+
+    lat: 1.7485,
+    lng: 110.3160,
+
+    description:
+      'Discover Sarawak’s diverse cultures at this living museum in Santubong. Explore traditional longhouses, watch cultural performances and learn about local crafts and heritage.',
+
+    image: 'img/cultural-villages.jpg',
+    photos: ['img/cultural-villages.jpg'],
+
+    demo: false,
+
+    // Prototype schedule — verify before real use.
+    openingHours: {
+      Monday: '9:00 AM – 5:00 PM',
+      Tuesday: '9:00 AM – 5:00 PM',
+      Wednesday: '9:00 AM – 5:00 PM',
+      Thursday: '9:00 AM – 5:00 PM',
+      Friday: '9:00 AM – 5:00 PM',
+      Saturday: '9:00 AM – 5:00 PM',
+      Sunday: '9:00 AM – 5:00 PM'
+    },
+
+    visitType: 'Cultural village visit',
+    workshop: null,
+
     reviews: [
       {
         name: 'Sara',
         stars: 5,
-        text: 'The stories introduced me to traditions I had not heard about.',
+        text: 'Loved exploring the traditional houses and learning about Sarawak’s different cultures.',
         sample: true
       },
       {
         name: 'Irfan',
         stars: 4,
-        text: 'A thoughtful way to explore Serian’s cultural diversity.',
+        text: 'The cultural performances and traditional architecture made the visit memorable.',
         sample: true
       }
     ]

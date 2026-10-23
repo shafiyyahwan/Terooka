@@ -18,11 +18,12 @@
       --serif:'Fraunces',Georgia,serif;
       --sans:'Plus Jakarta Sans',sans-serif;
       --grad:linear-gradient(115deg,#5724a3,#9339b5,#d842a0);
+      --outer:#EDE4F5;
     }
     *{box-sizing:border-box}
     html,body{margin:0;min-height:100%}
     body{
-      background:#ede4f5;color:var(--ink);font-family:var(--sans);
+      background:var(--outer);color:var(--ink);font-family:var(--sans);
       display:grid;place-items:center;min-height:100dvh;overflow:hidden
     }
     button,input,select{font:inherit}
@@ -43,6 +44,9 @@
       border-radius:50px;overflow:hidden;
       background:linear-gradient(160deg,#F0E4FB 0%,#F9EAF5 35%,#FFF9F7 70%,#FFECE5 100%)
     }
+    .glow{position:absolute;border-radius:50%;filter:blur(55px);pointer-events:none}
+    .glow-1{width:240px;height:240px;top:-70px;right:-80px;background:rgba(216,66,160,.20)}
+    .glow-2{width:260px;height:260px;top:420px;left:-120px;background:rgba(136,52,185,.14)}
     .island{
       position:absolute;z-index:900;top:11px;left:50%;
       transform:translateX(-50%);width:118px;height:34px;
@@ -73,6 +77,7 @@
     .circle svg{width:19px;height:19px}
     .intro{margin:4px 0 13px;color:var(--muted);font-size:11px}
     .search{
+      margin-top:14px; /* gap between "Discover" and the search bar */
       height:42px;border:1px solid #fff;background:#ffffffb8;
       border-radius:14px;display:flex;align-items:center;padding:0 13px;
       gap:8px;box-shadow:0 4px 14px #5724a30a
@@ -185,6 +190,10 @@
       width:32px;border:1px solid #ecdaf4;border-radius:10px;
       background:#f9f0ff;color:var(--purple);font-size:16px
     }
+    .save-btn{display:grid;place-items:center;flex-shrink:0;padding:0}
+    .save-btn svg{width:18px;height:18px}
+    .save-btn.is-saved{background:#f1ddfa;color:var(--purple);border-color:#d7b6ed}
+    .save-btn.is-saved svg{fill:currentColor}
     .close-preview{
       position:absolute;right:9px;top:8px;background:none;
       border:0;color:#9684a6;font-size:20px;line-height:1
@@ -341,6 +350,7 @@
     }
     @media(max-height:720px){
       .intro{display:none}
+      .search{margin-top:8px}
       .chips{padding:8px 20px}
       .nav{height:61px}
     }
@@ -351,6 +361,9 @@
 <div class="stage" id="stage">
   <div class="phone">
     <div class="screen">
+
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
 
       <div class="island"></div>
       <div class="status">
@@ -383,18 +396,10 @@
                 </svg>
               </button>
 
-              <button class="circle" id="filter-open" aria-label="Advanced filters">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 7h16M4 12h16M4 17h16"/>
-                  <circle cx="9" cy="7" r="2" fill="#fff"/>
-                  <circle cx="16" cy="12" r="2" fill="#fff"/>
-                  <circle cx="11" cy="17" r="2" fill="#fff"/>
-                </svg>
-              </button>
+
             </div>
           </div>
 
-          <p class="intro">Tap a pin to uncover the stories around you.</p>
 
           <label class="search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -427,12 +432,9 @@
             </div>
           </div>
 
-          <div class="map-hint" id="map-hint">
-            Tap a coloured pin to explore
-          </div>
 
           <div class="empty-map" id="empty-map">
-            No places match these filters.
+            No places match your search.
           </div>
 
           <!-- PLACE PREVIEW -->
@@ -448,7 +450,9 @@
 
               <div class="preview-actions">
                 <button class="small-btn" id="explore">Explore Place</button>
-                <button class="save-btn" id="save" aria-label="Save place">♡</button>
+                <button class="save-btn" id="save" type="button" aria-label="Save place" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21l-6-4-6 4z"/></svg>
+                </button>
               </div>
             </div>
 
@@ -542,6 +546,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script src="places.js"></script>
+<script src="user-store.js"></script>
 <script>
   (function(){
     'use strict';
@@ -556,7 +561,7 @@
 
     /* Demo can run without login */
     const uid = session?.username || session?.email || 'guest';
-    const savedKey = 'terooka_saved_places_' + uid;
+    const savedKey = 'terooka_saved_places_' + uid; // legacy key, migrated into user-store
     const reviewKey = 'terooka_reviews_' + uid;
 
     function load(key, fallback) {
@@ -567,7 +572,17 @@
       }
     }
 
-    let saved = load(savedKey, []);
+    // Use the same profile store as Home and Profile.
+    // Migrate older Discover bookmarks once, without losing existing saves.
+    const profile = window.TerookaUser ? TerookaUser.read(uid) : {saved:[]};
+    const oldSaved = load(savedKey, []);
+    let saved = [...new Set([
+      ...(Array.isArray(profile.saved) ? profile.saved : []),
+      ...(Array.isArray(oldSaved) ? oldSaved : [])
+    ])];
+    if(window.TerookaUser && saved.length !== (profile.saved || []).length){
+      try{TerookaUser.save(uid,{saved});}catch(e){}
+    }
     let reviews = load(reviewKey, {});
 
     function persist(key, value) {
@@ -578,92 +593,19 @@
       }
     }
 
-    /*
-      DEMO LOCATIONS:
-      These venues and pin coordinates are illustrative.
-      They are not verified real businesses.
-    */
-    const places = [
-      {
-        id:'riverstory',
-        name:'Riverfront Heritage Walk',
-        city:'Kuching',cat:'Heritage',
-        lat:1.5583,lng:110.3477,
-        desc:'Cultural walking experience inspired by Sarawak riverside history.',
-        photo:'img/sarawak-riverfront.jpg'
-      },
-      {
-        id:'laksa',
-        name:'Rasa Sarawak Kitchen',
-        city:'Kuching',cat:'Food',
-        lat:1.5547,lng:110.3532,
-        desc:'Food stop inspired by Sarawak laksa and local culinary traditions.',
-        photo:'img/sarawak-food.jpg'
-      },
-      {
-        id:'beads',
-        name:'Borneo Bead Studio',
-        city:'Kuching',cat:'Crafts',
-        lat:1.5625,lng:110.3445,
-        desc:'Hands-on beadwork workshop inspired by Sarawak craft traditions.',
-        photo:'img/sarawak-beads.jpg'
-      },
-      {
-        id:'culturehouse',
-        name:'Stories of Borneo Gallery',
-        city:'Kuching',cat:'Museum',
-        lat:1.5505,lng:110.3490,
-        desc:'Gallery concept featuring cultural stories, music and traditional objects.',
-        photo:'img/sarawak-gallery.jpg'
-      },
-      {
-        id:'weaving',
-        name:'Anyaman Heritage Workshop',
-        city:'Kuching',cat:'Crafts',
-        lat:1.5573,lng:110.3587,
-        desc:'Weaving experience inspired by Sarawak handicrafts.',
-        photo:'img/sarawak-weaving.jpg'
-      },
-      {
-        id:'keklapis',
-        name:'Kek Lapis Corner',
-        city:'Kuching',cat:'Food',
-        lat:1.5514,lng:110.3436,
-        desc:'Stop highlighting Sarawak layered cake traditions.',
-        photo:'img/sarawak-kek-lapis.jpg'
-      },
-      {
-        id:'baucraft',
-        name:'Bau Heritage Craft House',
-        city:'Bau',cat:'Crafts',
-        lat:1.4166,lng:110.1551,
-        desc:'Cultural craft experience in the Bau area.',
-        photo:'img/sarawak-bau.jpg'
-      },
-      {
-        id:'serian',
-        name:'Serian Cultural Stories',
-        city:'Serian',cat:'Heritage',
-        lat:1.1737,lng:110.5681,
-        desc:'Storytelling stop inspired by the cultural diversity of Serian.',
-        photo:'img/sarawak-serian.jpg'
-      }
-    ];
-
-    // Shared places.js is the source of truth for place descriptions and sample reviews.
-    const sharedPlaces = window.TerookaData?.places || [];
-    for (const local of places) {
-      const shared = sharedPlaces.find(item=>item.id===local.id);
-      if (!shared) continue;
-      local.name=shared.name || local.name;
-      local.city=shared.city || local.city;
-      local.cat=shared.category || local.cat;
-      local.desc=shared.description || local.desc;
-      local.photo=shared.image || local.photo;
-      local.sampleReviews=Array.isArray(shared.reviews) ? shared.reviews : [];
-    }
-
-    const cats = ['All Places','Heritage','Food','Crafts','Museum'];
+    // places.js is the single source of truth for cards, reviews and map pins.
+    const places = (window.TerookaData?.places || []).map(p => ({
+      id: p.id,
+      name: p.name,
+      city: p.city,
+      cat: p.category,
+      lat: Number(p.lat),
+      lng: Number(p.lng),
+      desc: p.description || '',
+      photo: p.image || '',
+      sampleReviews: Array.isArray(p.reviews) ? p.reviews : []
+    }));
+    const cats = window.TerookaData?.categories || ['All Places','Heritage','Food','Crafts','Museum'];
 
     const colors = {
       Heritage:'#8a49c6',
@@ -680,9 +622,6 @@
     };
 
     let category = 'All Places';
-    let minRating = 0;
-    let city = 'All';
-    let onlySaved = false;
     let query = '';
     let selected = null;
     let userMarker = null;
@@ -734,12 +673,6 @@
     function filtered() {
       return places.filter(p =>
         (category === 'All Places' || p.cat === category) &&
-        (city === 'All' || p.city === city) &&
-        (!onlySaved || saved.includes(p.id)) &&
-        (!minRating || (
-          ratingFor(p).avg !== null &&
-          ratingFor(p).avg >= minRating
-        )) &&
         (!query || (
           p.name+' '+p.city+' '+p.cat+' '+p.desc
         ).toLowerCase().includes(query))
@@ -802,7 +735,7 @@
       if (selected && !matches.some(p => p.id === selected.id)) {
         selected = null;
         $('#preview').classList.remove('show');
-        $('#map-hint').classList.remove('hidden');
+
       }
 
       matches.forEach(p => {
@@ -822,8 +755,7 @@
       });
 
       $('#map-label').textContent =
-        (city === 'All' ? 'Kuching, Sarawak' : city+', Sarawak') +
-        ' · ' + matches.length + ' places';
+        'Kuching, Sarawak · ' + matches.length + ' places';
     }
 
     /* PREVIEW AND ARROW NAVIGATION */
@@ -845,7 +777,7 @@
       selected = null;
 
       $('#preview').classList.remove('show');
-      $('#map-hint').classList.remove('hidden');
+
 
       updatePins();
     }
@@ -872,8 +804,8 @@
         );
       };
 
-      $('#save').textContent =
-        saved.includes(p.id) ? '♥' : '♡';
+      $('#save').classList.toggle('is-saved',saved.includes(p.id));
+      $('#save').setAttribute('aria-pressed',String(saved.includes(p.id)));
 
       $('#save').setAttribute(
         'aria-label',
@@ -883,7 +815,7 @@
       );
 
       $('#preview').classList.add('show');
-      $('#map-hint').classList.add('hidden');
+
 
       const matches = filtered();
       const index = matches.findIndex(place => place.id === p.id);
@@ -1084,121 +1016,6 @@
       };
     }
 
-    /* FILTERS */
-
-    function openFilters() {
-      openSheet(`
-    <div class="sheet-head">
-      <h2>Filter Discoveries</h2>
-      <button class="close" id="sheet-close">×</button>
-    </div>
-
-    <p>Choose what you want to see on the map.</p>
-
-    <label class="filter-label">Destination</label>
-
-    <select id="city-select">
-      <option value="All">All Sarawak places</option>
-      <option value="Kuching">Kuching</option>
-      <option value="Bau">Bau</option>
-      <option value="Serian">Serian</option>
-    </select>
-
-    <label class="filter-label">Minimum visitor rating</label>
-
-    <div class="filter-options" id="rating-options">
-      ${[0,3,4,4.5].map(n => `
-        <button class="filter-opt ${minRating===n?'on':''}"
-                data-rating="${n}">
-          ${n===0?'Any rating':n+'★ & up'}
-        </button>
-      `).join('')}
-    </div>
-
-    <label class="filter-label">Saved places</label>
-
-    <div class="filter-options">
-      <button class="filter-opt ${onlySaved?'on':''}"
-              id="saved-filter">
-        ♡ Saved only
-      </button>
-    </div>
-
-    <button class="primary" id="apply-filters">
-      Apply Filters
-    </button>
-
-    <button class="secondary"
-            style="width:100%;margin-top:9px"
-            id="clear-filters">
-      Clear Filters
-    </button>
-  `);
-
-      $('#city-select').value = city;
-      $('#sheet-close').onclick = closeSheet;
-
-      let tempRating = minRating;
-      let tempSaved = onlySaved;
-
-      $$('[data-rating]').forEach(button => {
-        button.onclick = () => {
-          tempRating = Number(button.dataset.rating);
-
-          $$('[data-rating]').forEach(item => {
-            item.classList.toggle(
-              'on',
-              Number(item.dataset.rating) === tempRating
-            );
-          });
-        };
-      });
-
-      $('#saved-filter').onclick = () => {
-        tempSaved = !tempSaved;
-        $('#saved-filter').classList.toggle('on',tempSaved);
-      };
-
-      $('#apply-filters').onclick = () => {
-        city = $('#city-select').value;
-        minRating = tempRating;
-        onlySaved = tempSaved;
-
-        closeSheet();
-        updatePins();
-
-        if(city !== 'All') {
-          const target = places.find(p => p.city === city);
-
-          if(target) {
-            map.flyTo(
-              [target.lat,target.lng],
-              city === 'Kuching' ? 14 : 12,
-              {duration:0.8}
-            );
-          }
-        } else {
-          map.flyTo(mapStart,13,{duration:0.8});
-        }
-      };
-
-      $('#clear-filters').onclick = () => {
-        city = 'All';
-        minRating = 0;
-        onlySaved = false;
-        category = 'All Places';
-        query = '';
-
-        $('#search').value = '';
-
-        renderChips();
-        closeSheet();
-        updatePins();
-
-        map.flyTo(mapStart,13,{duration:0.8});
-      };
-    }
-
     /* MAP INITIALISATION */
 
     function init() {
@@ -1285,10 +1102,14 @@
 
       updatePins();
 
-      const first = filtered()[0];
+      // Default: select Riverfront and centre its pin above the preview card.
+      const first = places.find(p => p.id === 'riverstory') || filtered()[0];
 
-      if(first) {
-        showPreview(first,false);
+      if (first) {
+        showPreview(first, false);
+        map.setView([first.lat, first.lng], 14, {animate:false});
+        // Leave room for the preview card at the bottom of the map.
+        map.panBy([0, 95], {animate:false});
       }
 
       [200,850,1800].forEach(delay => {
@@ -1305,7 +1126,6 @@
       updatePins();
     });
 
-    $('#filter-open').onclick = openFilters;
     $('#close-preview').onclick = closePreview;
 
     $('#prev-place').onclick = () => cyclePreview(-1);
@@ -1329,15 +1149,24 @@
         saved.splice(index,1);
       }
 
-      persist(savedKey,saved);
+      try {
+        if(window.TerookaUser) TerookaUser.save(uid,{saved:[...saved]});
+        else persist(savedKey,saved);
+      } catch(e) { toast('Could not save bookmark'); return; }
       showPreview(selected,false);
 
-      toast(index < 0 ? 'Place saved!' : 'Removed from saved places');
+      toast(index < 0 ? 'Place bookmarked!' : 'Bookmark removed');
     };
 
     $('#reset-view').onclick = () => {
-      map.flyTo(mapStart,13,{duration:0.8});
-      toast('Map centred on Kuching');
+      const riverfront = places.find(p => p.id === 'riverstory');
+      if (riverfront) {
+        showPreview(riverfront, false);
+        map.flyTo([riverfront.lat, riverfront.lng], 14, {duration:0.8});
+      } else {
+        map.flyTo(mapStart, 13, {duration:0.8});
+      }
+      toast('Map centred on Riverfront');
     };
 
     $('#overlay').onclick = event => {

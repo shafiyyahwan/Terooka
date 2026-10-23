@@ -20,13 +20,16 @@
     .phone::before,.phone::after{content:"";position:absolute;left:-5px;width:4px;background:#302b35;border-radius:4px}
     .phone::before{top:155px;height:52px}
     .phone::after{top:228px;height:69px}
-    .screen{position:relative;width:390px;height:844px;overflow:hidden;border-radius:50px;background:linear-gradient(160deg,#F0E4FB,#F9EAF5 35%,#FFF9F7 70%,#FFECE5)}
+    .screen{position:relative;width:390px;height:844px;overflow:hidden;border-radius:50px;background:linear-gradient(160deg,#F0E4FB 0%,#F9EAF5 35%,#FFF9F7 70%,#FFECE5 100%)}
+    .glow{position:absolute;border-radius:50%;filter:blur(55px);pointer-events:none}
+    .glow-1{width:240px;height:240px;top:-70px;right:-80px;background:rgba(216,66,160,.20)}
+    .glow-2{width:260px;height:260px;top:420px;left:-120px;background:rgba(136,52,185,.14)}
     .island{position:absolute;z-index:50;top:11px;left:50%;transform:translateX(-50%);width:118px;height:34px;border-radius:30px;background:#08070a}
     .status{position:absolute;z-index:49;top:18px;left:34px;right:30px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:800}
     .homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:126px;height:5px;border-radius:20px;background:#2F2837;z-index:60}
     .scroll{position:absolute;inset:0;padding:64px 22px 118px;overflow-y:auto;scrollbar-width:none}
     .scroll::-webkit-scrollbar{display:none}
-    h1{margin:0;font:600 30px/1.1 var(--serif);letter-spacing:-.025em;color:#32145B}
+    h1{margin:0;font:600 31px/1.12 var(--serif);letter-spacing:-.025em;color:#32145B}
     .sub{font-size:12px;color:var(--muted);line-height:1.5;margin:8px 0 0}
     .count{margin:18px 2px 12px;font-size:11px;font-weight:700;color:var(--muted)}
     .shelf{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px;perspective:900px}
@@ -49,6 +52,7 @@
     .bmeta{position:relative;z-index:1;margin-top:auto;font-size:10px;font-weight:700;line-height:1.4;white-space:pre-line;overflow-wrap:anywhere;text-shadow:0 1px 4px #0005}
     .newbook{width:100%;aspect-ratio:3/4.1;border:2px dashed #C9B4E2;border-radius:14px;background:#ffffff73;color:var(--purple);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-size:13px;font-weight:700;cursor:pointer}
     .plus-icon{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:rgba(87,36,163,.1);color:var(--purple);font-size:34px;font-weight:400;line-height:1}
+    .plus-icon svg{display:block;width:26px;height:26px;flex-shrink:0}
     .newbook:hover{background:#ffffffc9;border-color:var(--purple)}
     .nav{position:absolute;z-index:20;left:16px;right:16px;bottom:22px;height:66px;padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;border:1px solid white;border-radius:24px;background:#ffffffb3;backdrop-filter:blur(24px);box-shadow:0 14px 34px #5724a329}
     .nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:18px;text-decoration:none;color:#7D6B92;font-size:9px;font-weight:700}
@@ -82,6 +86,8 @@
 <div class="stage" id="stage">
   <div class="phone">
     <div class="screen">
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
 
       <div class="island"></div>
       <div class="status">
@@ -106,7 +112,6 @@
 
       <main class="scroll">
         <h1>My Journal</h1>
-        <p class="sub">Each journal is a book you can flip through. Tap one to open it.</p>
         <p class="count" id="count"></p>
         <div class="shelf" id="shelf"></div>
       </main>
@@ -273,7 +278,7 @@
 
       const plus=document.createElement('span');
       plus.className='plus-icon';
-      plus.textContent='+';
+      plus.innerHTML=`<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`;
       plus.setAttribute('aria-hidden','true');
 
       const label=document.createElement('span');
@@ -308,7 +313,7 @@
       const titleField=document.createElement('div');
       titleField.className='field';
       const titleLabel=document.createElement('label');
-      titleLabel.textContent='Journal title';
+      titleLabel.textContent='Journal title (optional)';
       titleLabel.htmlFor='edit-title';
       const input=document.createElement('input');
       input.id='edit-title';
@@ -393,16 +398,10 @@
       if(!journeys.length){
         content.innerHTML=`
         <h2>Start a Journey</h2>
-        <p class="sub">
-          Create a journey first to start your memory book.
-        </p>
-        <button class="btn" id="goJourney">
-          Go to My Journeys
-        </button>
+        <p class="sub">Create a journey first to start your memory book.</p>
+        <button class="btn" id="goJourney">Go to My Journeys</button>
       `;
-
         openSheet(content);
-
         content.querySelector('#goJourney').onclick=()=>{
           location.href='journey.html';
         };
@@ -445,12 +444,12 @@
       titleField.className='field';
 
       const titleLabel=document.createElement('label');
-      titleLabel.textContent='Journal title';
+      titleLabel.textContent='Journal title (optional)';
 
       const input=document.createElement('input');
       input.placeholder='e.g. My Sarawak Adventure';
       input.maxLength=60;
-      input.required=true;
+      input.required=false;
 
       titleField.append(titleLabel,input);
 
@@ -470,8 +469,8 @@
 
         const j=journeys.find(x=>String(x.id)===select.value);
 
-        if(!j||!input.value.trim()){
-          error.textContent='Please select a journey and enter a title.';
+        if(!j){
+          error.textContent='Please select a journey.';
           return;
         }
 
@@ -479,7 +478,7 @@
 
         const book={
           id:Date.now(),
-          title:input.value.trim(),
+          title:input.value.trim() || j.name || j.title || 'Journey',
           journeyId:String(j.id),
           destinations:places,
           place:places.join(', '),

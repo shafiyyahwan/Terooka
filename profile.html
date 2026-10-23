@@ -3,140 +3,1132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#EDE4F5">
-  <title>Profile — Terooka</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{--purple:#5724A3;--pink:#D842A0;--ink:#32204B;--muted:#796B85;--outer:#EDE4F5;--error:#C0224F;--serif:'Fraunces',Georgia,serif;--sans:'Plus Jakarta Sans',sans-serif;--grad:linear-gradient(105deg,var(--purple),#8834B9 52%,var(--pink))}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%}button,input,textarea{font-family:inherit}
-    body{background:var(--outer);font-family:var(--sans);color:var(--ink);min-height:100dvh;display:grid;place-items:center;overflow:hidden}
-    .stage{width:414px;height:868px;flex-shrink:0;transform-origin:center}
-    .phone{width:414px;height:868px;padding:12px;background:#111015;border-radius:62px;position:relative;box-shadow:0 24px 70px rgba(54,25,88,.23),0 0 0 2px #343039}
-    .screen{width:390px;height:844px;border-radius:50px;position:relative;overflow:hidden;background:linear-gradient(160deg,#F0E4FB 0%,#F9EAF5 35%,#FFF9F7 70%,#FFECE5 100%)}
-    .island{position:absolute;z-index:50;top:11px;left:50%;transform:translateX(-50%);height:34px;width:118px;background:#08070a;border-radius:30px}
-    .status{position:absolute;top:18px;left:34px;z-index:49;font-size:14px;font-weight:800}
-    .homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:126px;height:5px;background:#2F2837;border-radius:20px;z-index:60}
-    .scroll{position:absolute;inset:0;z-index:2;overflow-y:auto;scrollbar-width:none;padding:64px 22px 118px}
-    .scroll::-webkit-scrollbar{display:none}
-    h1{font:600 30px/1.1 var(--serif);letter-spacing:-.025em;color:#32145B;margin:0}
-    .sub{font-size:12px;color:var(--muted);margin:8px 0 0;line-height:1.5}
-    button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
-    .book{position:relative;aspect-ratio:3/4.1;border:0;color:#fff;text-align:left;cursor:pointer;display:flex;flex-direction:column;padding:18px 12px 12px 24px;border-radius:4px 14px 14px 4px;overflow:hidden;box-shadow:0 14px 22px rgba(87,36,163,.24),inset 0 0 0 1px rgba(255,255,255,.14);transition:transform .3s;transform-origin:left center}
-    .book:hover{transform:rotateY(-12deg) translateY(-3px)}
-    .book i{position:absolute;left:0;top:0;bottom:0;width:14px;background:rgba(0,0,0,.25);border-right:2px dashed rgba(255,255,255,.35)}
-    .book u{position:absolute;right:20px;top:0;bottom:0;width:9px;background:rgba(255,209,102,.92);box-shadow:-1px 0 3px rgba(0,0,0,.2)}
-    .plate{background:rgba(255,253,248,.94);color:#32145B;border-radius:4px;padding:9px 8px;margin:12px 34px 0 0;transform:rotate(-2deg);box-shadow:0 2px 5px rgba(0,0,0,.18)}
-    .plate b{display:block;font:600 14px/1.2 var(--serif);word-break:break-word}
-    .bmeta{margin-top:auto;font-size:10px;font-weight:700;line-height:1.4;white-space:pre-line;text-shadow:0 1px 4px rgba(0,0,0,.3)}
-    .sticker{position:absolute;right:38px;bottom:12px;font-size:26px;transform:rotate(12deg)}
-    .btn{display:inline-flex;align-items:center;justify-content:center;border:0;cursor:pointer;min-height:50px;padding:0 24px;border-radius:16px;background:var(--grad);color:#fff;font:800 13.5px var(--sans);box-shadow:0 12px 24px rgba(112,42,159,.2)}
-    .btn.full{width:100%}
-    /* NAV */
-    .nav{position:absolute;z-index:20;left:16px;right:16px;bottom:22px;height:66px;padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:rgba(255,255,255,.62);border:1px solid #fff;border-radius:24px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 14px 34px rgba(87,36,163,.16)}
-    .nav a{border-radius:18px;color:#7D6B92;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:700 9px var(--sans)}
-    .nav a svg{width:21px;height:21px}
-    .nav a[aria-current="page"]{color:var(--purple);background:rgba(216,66,160,.1)}
-    .toast{position:absolute;z-index:80;left:50%;top:58px;transform:translate(-50%,-20px);background:#32204B;color:#fff;font-size:12px;font-weight:700;padding:11px 16px;border-radius:14px;opacity:0;pointer-events:none;transition:.3s;max-width:86%;text-align:center}
-    .toast.show{opacity:1;transform:translate(-50%,0)}
-    @media(max-width:500px){body{display:block;overflow:auto}.stage,.phone{width:100%;height:100dvh;transform:none!important}.phone{padding:0;border-radius:0;box-shadow:none}.island,.status,.homebar{display:none}.screen{width:100%;height:100%;border-radius:0}.scroll{padding-top:30px}.viewer{padding-top:24px}.toast{top:24px}}
-    @media(prefers-reduced-motion:reduce){.book,.sheet,.overlay,.toast,.viewer{transition:none}}
+  <title>My Profile — Terooka</title>
 
-    h1{font-size:28px}.eyebrow{font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin:0 0 6px}
-    .card{background:rgba(255,255,255,.62);border:1px solid #fff;border-radius:24px;padding:18px;box-shadow:0 10px 26px rgba(87,36,163,.1);margin-top:16px}
-    .hd{display:flex;gap:14px;align-items:center}
-    .av{width:72px;height:72px;border-radius:50%;background:var(--grad);color:#fff;font:600 32px var(--serif);display:grid;place-items:center;flex:none;box-shadow:0 8px 18px rgba(112,42,159,.3);border:3px solid #fff}
-    .hd h1{font-size:22px}.hd p{margin:3px 0 0;font-size:12px;color:var(--muted);line-height:1.4}
-    .ghost{border:1.5px solid #D9C5F0;background:#fff;color:var(--purple);font:800 12px var(--sans);border-radius:12px;min-height:44px;padding:0 14px;cursor:pointer}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;text-align:center}
-    .stats b{display:block;font:600 24px var(--serif);color:#32145B}.stats span{font-size:10px;font-weight:700;color:var(--muted)}
-    .sec{display:flex;justify-content:space-between;align-items:baseline;margin:24px 2px 10px}
-    .sec h2{font:600 19px var(--serif);margin:0;color:#32145B}.sec a,.sec span{font-size:11px;font-weight:700;color:var(--purple);text-decoration:none}
-    .bar{height:8px;border-radius:8px;background:#E9DDF2;overflow:hidden;margin:2px 0 14px}.bar i{display:block;height:100%;background:var(--grad)}
-    .stamps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .sm{aspect-ratio:1;display:flex;align-items:center;justify-content:center;text-align:center;font:800 8px var(--sans);color:var(--purple);position:relative;border:0;background:none;padding:0;cursor:pointer}
-    .sm img{width:100%;height:100%;object-fit:contain}.sm.lock{opacity:.35;filter:grayscale(1)}
-    .sm .fb{width:100%;height:100%;border:2px double var(--purple);border-radius:50%;display:flex;align-items:center;justify-content:center;padding:6px}
-    .row{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 12px;scrollbar-width:none;perspective:900px}
-    .row .book{width:112px;flex:none;padding:12px 8px 8px 20px}.row .plate{margin-right:24px;padding:6px}.row .plate b{font-size:11px}
-    .trav{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .trav div{background:rgba(255,255,255,.62);border:1px solid #fff;border-radius:18px;padding:14px}
-    .trav small{font-size:10px;font-weight:700;color:var(--muted);display:block;margin-bottom:4px}.trav b{font:600 15px/1.25 var(--serif);color:#32145B}
-    .set{list-style:none;margin:0;padding:0}.set li{border-top:1px solid #EBDDF5}.set li:first-child{border:0}
-    .set button{width:100%;min-height:50px;background:none;border:0;text-align:left;font:700 13px var(--sans);color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-    .set .out{color:var(--error)}
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --purple: #5724A3;
+      --pink: #D842A0;
+      --ink: #32204B;
+      --muted: #796B85;
+      --sans: 'Plus Jakarta Sans', sans-serif;
+      --serif: 'Fraunces', Georgia, serif;
+      --gradient: linear-gradient(105deg,#5724A3,#8834B9 52%,#D842A0);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: #EDE4F5;
+      overflow: hidden;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .stage {
+      width: 414px;
+      height: 868px;
+      transform-origin: center;
+    }
+
+    .phone {
+      width: 414px;
+      height: 868px;
+      padding: 12px;
+      background: #111015;
+      border-radius: 62px;
+      position: relative;
+      box-shadow: 0 24px 70px #3619583b, 0 0 0 2px #343039;
+    }
+
+    .phone::before,
+    .phone::after {
+      content: "";
+      position: absolute;
+      left: -5px;
+      width: 4px;
+      background: #302b35;
+      border-radius: 4px;
+    }
+
+    .phone::before { top: 155px; height: 52px; }
+    .phone::after { top: 228px; height: 69px; }
+
+    .screen {
+      width: 390px;
+      height: 844px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 50px;
+      background: linear-gradient(160deg,#F0E4FB 0%,#F9EAF5 35%,#FFF9F7 70%,#FFECE5 100%);
+    }
+
+    .screen::before,
+    .screen::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(55px);
+      pointer-events: none;
+    }
+
+    .screen::before {
+      width: 240px;
+      height: 240px;
+      top: -70px;
+      right: -80px;
+      background: rgba(216,66,160,.20);
+    }
+
+    .screen::after {
+      width: 260px;
+      height: 260px;
+      top: 420px;
+      left: -120px;
+      background: rgba(136,52,185,.14);
+    }
+
+    .island {
+      position: absolute;
+      z-index: 30;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 118px;
+      height: 34px;
+      background: #08070a;
+      border-radius: 30px;
+    }
+
+    .status {
+      position: absolute;
+      top: 18px;
+      left: 34px;
+      right: 30px;
+      z-index: 29;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .homebar {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 126px;
+      height: 5px;
+      background: #2F2837;
+      border-radius: 20px;
+      z-index: 30;
+    }
+
+    .scroll {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow-y: auto;
+      scrollbar-width: none;
+      padding: 64px 22px 118px;
+    }
+
+    .scroll::-webkit-scrollbar { display: none; }
+
+    h1 {
+      font: 600 31px/1.12 var(--serif);
+      letter-spacing: -.025em;
+      color: #32145B;
+      margin: 0;
+    }
+
+    h1 em {
+      color: var(--pink);
+      font-style: normal;
+    }
+
+    /* Profile card */
+
+    .profile-hero {
+      margin-top: 21px;
+      padding: 22px 16px 20px;
+      border-radius: 25px;
+      background: linear-gradient(135deg,#5724A3,#8834B9 55%,#D842A0);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 13px 26px #5724a32b;
+    }
+
+    .profile-hero::before {
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      border: 1px solid #ffffff30;
+      border-radius: 50%;
+      right: -100px;
+      top: -100px;
+    }
+
+    /* Profile picture */
+
+    .pfp-wrap {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 12px;
+      position: relative;
+    }
+
+    .pfp {
+      width: 78px;
+      height: 78px;
+      border-radius: 18px;
+      border: 3px solid #ffffffd9;
+      background: #f4d8f6;
+      color: var(--purple);
+      display: grid;
+      place-items: center;
+      font: 600 33px var(--serif);
+      box-shadow: 0 8px 20px #2e125c38;
+      overflow: hidden;
+    }
+
+    .pfp img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Camera upload button */
+
+    .camera-change {
+      position: absolute;
+      right: -7px;
+      bottom: -5px;
+      width: 29px;
+      height: 29px;
+      display: grid;
+      place-items: center;
+      border: 2px solid white;
+      background: white;
+      color: var(--purple);
+      border-radius: 12px;
+      box-shadow: 0 5px 10px #32145b38;
+    }
+
+    .camera-change svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    /* Small SVG remove-photo X */
+
+    .photo-remove-x {
+      position: absolute;
+      top: -7px;
+      right: -7px;
+      transform: none;
+
+      width: 23px;
+      height: 23px;
+      padding: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #D842A0;
+      color: white;
+      border: 2px solid white;
+      border-radius: 50%;
+
+      cursor: pointer;
+      z-index: 5;
+      box-shadow: 0 4px 10px #32145b40;
+    }
+
+    .photo-remove-x svg {
+      width: 12px;
+      height: 12px;
+      display: block;
+    }
+
+    .photo-remove-x[hidden] {
+      display: none;
+    }
+
+    .profile-hero h2 {
+      font: 600 23px var(--serif);
+      margin: 0 0 5px;
+    }
+
+    .profile-hero p {
+      font-size: 11px;
+      color: #f9e9ff;
+      margin: 0;
+    }
+
+    /* Sections */
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 25px 2px 12px;
+    }
+
+    .section-head h3 {
+      font: 600 19px var(--serif);
+      margin: 0;
+    }
+
+    .card {
+      background: #ffffffa3;
+      border: 1px solid white;
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 6px 20px #5724a30b;
+    }
+
+    .field { margin-bottom: 15px; }
+    .field:last-child { margin-bottom: 0; }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 800;
+      color: #5b4670;
+      margin-bottom: 7px;
+    }
+
+    .field input {
+      display: block;
+      width: 100%;
+      border: 1.5px solid #eee1f7;
+      background: white;
+      border-radius: 13px;
+      outline: none;
+      color: var(--ink);
+      padding: 12px 13px;
+      font-size: 12px;
+    }
+
+    .field input:focus {
+      border-color: #a16acf;
+      box-shadow: 0 0 0 3px #a16acf26;
+    }
+
+    .save {
+      width: 100%;
+      border: 0;
+      background: var(--gradient);
+      color: white;
+      border-radius: 15px;
+      padding: 14px;
+      font-weight: 800;
+      font-size: 12px;
+      margin-top: 14px;
+      box-shadow: 0 8px 18px #5724a327;
+    }
+
+    /* Adventures */
+
+    .quick {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 9px;
+    }
+
+    .quick a {
+      text-decoration: none;
+      text-align: center;
+      color: var(--purple);
+      background: #ffffffb3;
+      border: 1px solid white;
+      border-radius: 17px;
+      padding: 15px 5px 13px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .quick svg {
+      display: block;
+      margin: 0 auto 8px;
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logout {
+      width: 100%;
+      border: 1.5px solid #f1c4d1;
+      border-radius: 15px;
+      padding: 14px;
+      color: #b72c56;
+      background: #fff6f9;
+      font-weight: 800;
+      font-size: 12px;
+      margin-top: 23px;
+    }
+
+    /* Saved places */
+    .saved-list{display:flex;flex-direction:column;gap:10px}
+    .saved-place{display:flex;align-items:center;gap:11px;padding:11px;background:#ffffffc9;border:1px solid #fff;border-radius:17px;box-shadow:0 5px 15px #5724a30c}
+    .saved-place-photo{width:62px;height:62px;flex:none;object-fit:cover;border-radius:12px;background:#ead8f5}
+    .saved-place-info{flex:1;min-width:0}
+    .saved-place-info strong{display:block;font:600 14px/1.25 var(--serif);overflow-wrap:anywhere}
+    .saved-place-info small{display:block;margin-top:5px;font-size:10px;color:var(--muted)}
+    .saved-place-actions{display:flex;align-items:center;gap:7px;margin-top:9px}
+    .saved-place-actions a{font-size:10px;font-weight:800;color:var(--purple);text-decoration:none}
+    .saved-place-remove{margin-left:auto;width:27px;height:27px;display:grid;place-items:center;border:1px solid #eedcf5;background:#fff6fc;color:#aa3c7b;border-radius:9px}
+    .saved-place-remove svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .saved-empty{text-align:center;padding:24px 15px;border:1px dashed #d7bce9;border-radius:19px;background:#ffffff91}
+    .saved-empty svg{width:29px;height:29px;stroke:var(--purple);fill:none;stroke-width:1.8}
+    .saved-empty p{font-size:11px;color:var(--muted);line-height:1.6}
+    .saved-empty a{display:inline-block;padding:10px 16px;background:var(--gradient);color:white;border-radius:12px;font-size:11px;font-weight:800;text-decoration:none}
+
+    /* Glass navigation */
+
+    .nav {
+      position: absolute;
+      z-index: 20;
+      left: 16px;
+      right: 16px;
+      bottom: 22px;
+      height: 66px;
+      padding: 6px;
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      gap: 2px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 24px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 14px 34px rgba(87,36,163,.16);
+    }
+
+    .nav a {
+      text-decoration: none;
+      border-radius: 18px;
+      color: #9886AB;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      font: 700 9px var(--sans);
+    }
+
+    .nav a svg {
+      width: 21px;
+      height: 21px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav a.active {
+      color: var(--purple);
+      background: rgba(216,66,160,.10);
+    }
+
+    /* Toast */
+
+    .toast {
+      position: absolute;
+      z-index: 60;
+      top: 58px;
+      left: 50%;
+      transform: translate(-50%,-10px);
+      background: #32204B;
+      color: white;
+      border-radius: 13px;
+      padding: 11px 15px;
+      font-size: 11px;
+      font-weight: 700;
+      max-width: 86%;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: .2s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%,0);
+    }
+
+    /* Logout confirmation */
+
+    .dialog-back {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      background: #21112d88;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .dialog-back.show { display: flex; }
+
+    .dialog {
+      background: #fff9ff;
+      border-radius: 23px;
+      padding: 23px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .dialog h3 {
+      font: 600 22px var(--serif);
+      margin: 0 0 8px;
+    }
+
+    .dialog p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .dialog-actions {
+      display: flex;
+      gap: 9px;
+      margin-top: 19px;
+    }
+
+    .dialog-actions button {
+      flex: 1;
+      border: 0;
+      border-radius: 13px;
+      padding: 12px 8px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .cancel { background: #eee6f5; color: var(--purple); }
+    .confirm { background: #bd315d; color: white; }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 3px solid var(--pink);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 500px) {
+      body { display: block; overflow: auto; }
+
+      .stage, .phone {
+        width: 100%;
+        height: 100dvh;
+        transform: none !important;
+      }
+
+      .phone {
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .phone::before,
+      .phone::after,
+      .island,
+      .status,
+      .homebar {
+        display: none;
+      }
+
+      .screen {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      }
+
+      .scroll { padding-top: 30px; }
+      .toast { top: 22px; }
+    }
+
+    .edit-toggle{display:inline-flex;align-items:center;gap:6px;border:1px solid #e6d4f1;border-radius:11px;background:#ffffffb8;color:var(--purple);padding:8px 12px;font-size:11px;font-weight:800}
+    .edit-toggle{display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+    #edit-profile{width:auto;height:36px;padding:0 12px;justify-content:center;border:1px solid #fff;border-radius:13px;background:#fff;color:var(--purple);box-shadow:0 5px 14px rgba(87,36,163,.12)}
+    #edit-profile svg{width:17px;height:17px}
+    .info-line{padding:9px 0;border-bottom:1px solid #eadcf0}
+    .info-line:last-child{border-bottom:0}
+    .info-line small{display:block;font-size:10px;color:var(--muted);font-weight:700;margin-bottom:5px}
+    .info-line strong{font-size:13px;color:var(--ink);overflow-wrap:anywhere}
+    [hidden]{display:none!important}
+    h1 em{font-style:normal;color:inherit;font-weight:inherit}
+
+    /* Saved Places as its own page, matching Saved Stories */
+    .saved-page-back{width:40px;height:40px;display:grid;place-items:center;background:#ffffffb8;border:1px solid white;border-radius:14px;color:var(--purple);margin:0 0 14px;cursor:pointer}
+    .saved-page-back svg{width:20px;height:20px}
+    .saved-eyebrow{font-size:10px;letter-spacing:1.6px;color:var(--pink);font-weight:800;margin:0 0 7px}
+    .saved-page-title{font:600 29px/1.15 var(--serif);color:#32145B;margin:0}
+    .saved-page-description{font-size:11px;color:var(--muted);line-height:1.7;margin:12px 0 19px}
+    .saved-page-count{font-size:10px;font-weight:800;color:var(--purple);margin-bottom:12px}
+    #saved-view{padding-top:0}
+    /* Saved collection: one full-width card per place */
+    .saved-list{display:flex;flex-direction:column;gap:12px}
+    .saved-wide{width:100%;min-height:114px;padding:12px;gap:12px;cursor:pointer;align-items:center;position:relative}
+    .saved-wide:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+    .saved-wide .saved-place-photo{width:94px;height:94px;border-radius:14px}
+    .saved-wide .saved-place-info{padding-right:28px}
+    .saved-wide .saved-place-info strong{font:600 15px/1.25 var(--serif);margin:5px 0}
+    .saved-category{display:block;color:var(--pink);font-size:10px;font-weight:800}
+    .saved-rating{color:#9b6912;font-size:11px;font-weight:800;margin-top:8px}
+    .saved-bookmark{position:absolute;right:12px;top:12px;width:30px;height:34px;border:0;background:#f5eafb;color:var(--purple);border-radius:9px;display:grid;place-items:center;cursor:pointer}
+    .saved-bookmark svg{width:19px;height:19px}
+    .saved-bookmark.unsaved svg{fill:none}
+    /* Saved Places: full-width cards with reviews and action row */
+    .saved-wide{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;overflow:hidden;cursor:default}
+    .saved-wide .saved-place-photo{width:100%;height:146px;object-fit:cover;border-radius:0;display:block}
+    .saved-wide .saved-place-info{padding:13px 15px 8px}
+    .saved-wide .saved-place-info strong{font-size:17px;margin:5px 0 6px}
+    .saved-rating{display:flex;align-items:center;gap:7px;margin-top:7px;color:#32145B;font-size:12px;font-weight:800}
+    .saved-rating .star{color:#F5A623;font-size:16px;line-height:1}
+    .saved-rating .review-count{color:#93819F;font-size:11px;font-weight:500}
+    .saved-card-actions{display:flex;align-items:center;gap:7px;padding:5px 15px 15px}
+    .saved-explore{flex:1;border:0;border-radius:12px;background:linear-gradient(100deg,#5724A3,#D842A0);color:#fff;font-size:11px;font-weight:800;padding:11px 12px;cursor:pointer}
+    .saved-wide .saved-bookmark{position:static;width:38px;height:38px;flex:none;border:1px solid #D8B8F2;border-radius:11px;background:#F2E6FC;color:#5724A3}
+    .saved-wide .saved-bookmark svg{width:19px;height:19px}
+    .saved-wide .saved-bookmark.unsaved svg{fill:none}
+    #profile-main-heading[hidden]{display:none!important}
+
   </style>
 </head>
+
 <body>
-<div class="stage" id="stage"><div class="phone"><div class="screen">
-  <div class="island"></div><div class="status">9:41</div>
-  <main class="scroll" id="main"></main>
-  <nav class="nav" aria-label="Main navigation">
-    <a href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m3 11 9-8 9 8M5 10v10h14V10"/></svg>Home</a>
-    <a href="discover.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 4-4 2 2-4z"/></svg>Discover</a>
-    <a href="journey.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 19c4-2 2-7 7-8s4-5 9-6M16 5h4v4"/><circle cx="4" cy="19" r="2"/></svg>Journey</a>
-    <a href="journal.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></svg>Journal</a>
-    <a href="profile.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 16-5 16 0"/></svg>Profile</a>
-  </nav>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <div class="homebar"></div>
-</div></div></div>
-<script src="journal-store.js"></script>
+<div class="stage" id="stage">
+  <div class="phone">
+    <div class="screen">
+
+      <div class="island"></div>
+
+      <div class="status">
+        <span>9:41</span>
+        <svg width="70" height="15" viewBox="0 0 70 15" fill="none">
+          <g fill="#32204B">
+            <rect x="0" y="10" width="3" height="5" rx="1"/>
+            <rect x="5" y="7" width="3" height="8" rx="1"/>
+            <rect x="10" y="4" width="3" height="11" rx="1"/>
+            <rect x="15" y="1" width="3" height="14" rx="1"/>
+          </g>
+          <g stroke="#32204B" stroke-width="1.8" stroke-linecap="round">
+            <path d="M27 5Q34-1 41 5"/>
+            <path d="M30 9Q34 5 38 9"/>
+          </g>
+          <circle cx="34" cy="12" r="1.5" fill="#32204B"/>
+          <rect x="48" y="2" width="19" height="11" rx="3" stroke="#32204B" stroke-width="1.3"/>
+          <rect x="50" y="4" width="15" height="7" rx="1.6" fill="#32204B"/>
+          <path d="M69 5v5" stroke="#32204B" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <main class="scroll">
+        <header id="profile-main-heading">
+          <h1>My Profile</h1>
+        </header>
+
+        <section class="profile-hero">
+          <div class="pfp-wrap">
+            <div class="pfp" id="avatar">W</div>
+
+            <button class="camera-change" id="change-photo"
+                    type="button" aria-label="Change profile picture">
+              <svg viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 7h4l2-3h4l2 3h4v13H4z"/>
+                <circle cx="12" cy="13" r="3"/>
+              </svg>
+            </button>
+
+            <button id="remove-photo" class="photo-remove-x"
+                    type="button" aria-label="Remove profile photo"
+                    title="Remove profile photo" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor"
+                   stroke-width="2.5"
+                   stroke-linecap="round"
+                   stroke-linejoin="round"
+                   aria-hidden="true">
+                <path d="M18 6 6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+
+          <h2 id="display-name">Wan</h2>
+          <p id="display-email">wan@teeroka.app</p>
+
+          <input id="photo-input" type="file"
+                 accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+        </section>
+
+        <div class="section-head" id="personal-head"><h3>Personal Information</h3><button class="edit-toggle" id="edit-profile" type="button" aria-label="Edit personal information"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L9 17l-4 1 1-4L16.5 3.5Z"/></svg><span>Edit</span></button></div>
+        <form id="profile-form" class="card">
+          <div id="profile-display">
+            <div class="info-line"><small>Name</small><strong id="view-name"></strong></div>
+            <div class="info-line"><small>Email address</small><strong id="view-email"></strong></div>
+            <div class="info-line"><small>Password</small><strong>••••••••</strong></div>
+          </div>
+          <div id="profile-edit-fields" hidden>
+            <div class="field"><label for="full-name">Name</label><input id="full-name" type="text" maxlength="80" autocomplete="name" required></div>
+            <div class="field"><label for="email">Email address</label><input id="email" type="email" readonly aria-readonly="true"></div>
+            <div class="field"><label for="current-password">Current password</label><input id="current-password" type="password" autocomplete="current-password" placeholder="Only needed to change password"></div>
+            <div class="field"><label for="new-password">New password</label><input id="new-password" type="password" autocomplete="new-password" placeholder="Leave blank to keep current password"></div>
+            <div class="field"><label for="confirm-password">Confirm new password</label><input id="confirm-password" type="password" autocomplete="new-password"></div>
+            <div style="display:flex;gap:9px"><button class="edit-toggle" id="cancel-edit" type="button" style="margin-top:14px;flex:1;justify-content:center">Cancel</button><button class="save" type="submit" style="flex:2">Save Changes</button></div>
+          </div>
+        </form>
+        <div class="section-head" id="adventures-head"><h3>My Adventures</h3></div>
+        <div class="quick" id="adventures-links">
+          <a href="journey.html"><svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"/></svg>Journeys</a>
+          <a href="journal.html"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></svg>Journals</a>
+          <a href="profile.html?view=saved" id="saved-shortcut"><svg viewBox="0 0 24 24"><path d="M5 4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v18l-7-5-7 5z"/></svg>Saved</a>
+        </div>
+        <section id="saved-view" hidden>
+          <button type="button" id="saved-back" class="saved-page-back" aria-label="Back to profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <div class="saved-eyebrow">YOUR COLLECTION</div>
+          <h1 class="saved-page-title">Saved Places</h1>
+          <p class="saved-page-description">Keep your favourite cultural places in one place.</p>
+          <div class="saved-page-count" id="saved-count"></div>
+          <div class="saved-list" id="saved-places-list" aria-live="polite"></div>
+        </section>
+
+        <button id="logout" class="logout" type="button">
+          Log Out
+        </button>
+      </main>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="home.html">
+          <svg viewBox="0 0 24 24">
+            <path d="m3 11 9-8 9 8M5 10v10h14V10"/>
+          </svg>
+          Home
+        </a>
+
+        <a href="discover.html">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="m15 9-2 4-4 2 2-4z"/>
+          </svg>
+          Discover
+        </a>
+
+        <a href="camera.html">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="6" width="18" height="15" rx="3"/>
+            <circle cx="12" cy="13.5" r="3.5"/>
+            <path d="M8 6l1.5-3h5L16 6"/>
+          </svg>
+          Camera
+        </a>
+
+        <a href="journal.html">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/>
+            <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>
+          </svg>
+          Journal
+        </a>
+
+        <a href="profile.html" class="active" aria-current="page">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-5 16-5 16 0"/>
+          </svg>
+          Profile
+        </a>
+      </nav>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+      <div class="dialog-back" id="dialog-back">
+        <div class="dialog" role="dialog" aria-modal="true"
+             aria-labelledby="dialog-title">
+          <h3 id="dialog-title">Log out?</h3>
+          <p>You'll return to the sign-in page. Your journals and journeys will stay saved in this browser.</p>
+
+          <div class="dialog-actions">
+            <button type="button" class="cancel" id="cancel-logout">
+              Stay here
+            </button>
+            <button type="button" class="confirm" id="confirm-logout">
+              Log out
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="homebar"></div>
+    </div>
+  </div>
+</div>
+
+<script src="user-store.js"></script>
+<script src="places.js"></script>
 <script>
-  (function(){
+  (function () {
     'use strict';
-    if(!session)return;
-    var PK='terooka_profile_'+uid,prof={};try{prof=JSON.parse(localStorage.getItem(PK))||{}}catch(e){}
-    function visited(){var v=[];try{v=JSON.parse(localStorage.getItem('terooka_visited_'+uid))||[]}catch(e){}
-      if(typeof window.terookaVisited==='function'){try{v=v.concat(window.terookaVisited()||[])}catch(e){}}
-      books.forEach(function(b){if(b.place)v.push(b.place)});return v.map(function(x){return String(x).trim().toLowerCase()})}
-    function stat(n,l){return el('div',{},el('b',{text:String(n)}),el('span',{text:l}))}
-    function sec(t,link){return el('div',{class:'sec'},el('h2',{text:t}),link||null)}
-    function render(){
-      var m=$('#main');m.innerHTML='';
-      var name=prof.name||String(uid).split('@')[0],v=visited(),got=STAMP_LIB.filter(function(s){return v.indexOf(s.id)>-1||v.indexOf(s.name.toLowerCase())>-1});
-      var places={};books.forEach(function(b){if(b.place)places[b.place.toLowerCase()]=(places[b.place.toLowerCase()]||0)+1});
-      var top=Object.keys(places).sort(function(a,b){return places[b]-places[a]})[0];
-      m.appendChild(el('p',{class:'eyebrow',text:'Your passport'}));
-      m.appendChild(el('div',{class:'card',style:'margin-top:0'},
-        el('div',{class:'hd'},el('div',{class:'av','aria-hidden':'true',text:name.charAt(0).toUpperCase()}),
-          el('div',{style:'flex:1;min-width:0'},el('h1',{text:name}),el('p',{text:prof.bio||'Add a short bio about how you travel.'}))),
-        el('div',{class:'stats'},stat(Object.keys(places).length,'Places'),stat(books.length,'Journals'),stat(got.length,'Stamps')),
-        el('button',{class:'ghost',type:'button',style:'width:100%;margin-top:14px',text:'Edit profile',onclick:function(){
-            var n=prompt('Display name',name);if(n===null)return;var b=prompt('Short bio',prof.bio||'');
-            prof.name=n.trim()||name;prof.bio=(b||'').trim();try{localStorage.setItem(PK,JSON.stringify(prof))}catch(e){}render()}})));
-      m.appendChild(sec('Stamp collection',el('span',{text:got.length+' of '+STAMP_LIB.length})));
-      var bar=el('div',{class:'bar'},el('i',{style:'width:'+Math.round(got.length/STAMP_LIB.length*100)+'%'}));
-      var g=el('div',{class:'stamps'});
-      STAMP_LIB.forEach(function(s){
-        var ok=got.indexOf(s)>-1,im=el('img',{src:'stamps/'+s.id+'.png',alt:''});
-        im.onerror=function(){im.replaceWith(el('span',{class:'fb',text:s.name}))};
-        g.appendChild(el('button',{class:'sm'+(ok?'':' lock'),type:'button','aria-label':s.name+(ok?' stamp':' stamp, locked'),onclick:function(){toast(ok?s.name+' — collected!':'Visit '+s.name+' to unlock.')}},im));
-      });
-      m.appendChild(el('div',{class:'card'},bar,g));
-      m.appendChild(sec('My journals',el('a',{href:'journal.html',text:'See all'})));
-      if(!books.length)m.appendChild(el('div',{class:'card',style:'margin:0;text-align:center'},el('p',{class:'sub',text:'No journals yet. Start your first one.'}),el('a',{class:'btn',href:'journal.html',style:'text-decoration:none;margin-top:12px',text:'New journal'})));
-      else{
-        var row=el('div',{class:'row'});
-        books.slice(0,4).forEach(function(b,i){row.appendChild(el('a',{class:'book',href:'journal-edit.html?id='+b.id,'aria-label':'Open '+b.title,style:'background:'+cover(b)+';text-decoration:none'},el('i'),el('u'),el('span',{class:'plate'},el('b',{text:b.title})),el('span',{class:'bmeta',text:b.pages.length+' pg'})))});
-        m.appendChild(row);
-        m.appendChild(el('a',{class:'btn full',href:'journal-edit.html?id='+books[0].id,style:'text-decoration:none',text:'Continue writing: '+books[0].title}));
-      }
-      m.appendChild(sec('Travel summary'));
-      m.appendChild(el('div',{class:'trav'},
-        el('div',{},el('small',{text:'Latest trip'}),el('b',{text:books[0]?books[0].title:'None yet'})),
-        el('div',{},el('small',{text:'Most written about'}),el('b',{text:top?top.replace(/\b\w/g,function(c){return c.toUpperCase()}):'—'}))));
-      m.appendChild(sec('Settings'));
-      m.appendChild(el('div',{class:'card',style:'margin:0;padding:6px 18px'},el('ul',{class:'set'},
-        el('li',{},el('button',{type:'button',onclick:function(){toast('Language switch coming soon.')}},'Language',el('span',{text:'English'}))),
-        el('li',{},el('button',{type:'button',onclick:function(){var a=el('a',{href:URL.createObjectURL(new Blob([JSON.stringify(books)],{type:'application/json'})),download:'terooka-journals.json'});document.body.appendChild(a);a.click();a.remove()}},'Export my journals',el('span',{text:'JSON'}))),
-        el('li',{},el('button',{class:'out',type:'button',onclick:function(){try{localStorage.removeItem('terooka_session')}catch(e){}location.replace('auth.html')}},'Log out')))));
+
+    let session;
+    try {
+      session = JSON.parse(localStorage.getItem('terooka_session'));
+    } catch (e) {}
+
+    if (!session) {
+      location.replace('auth.html');
+      return;
     }
-    render();
-    var stage=$('#stage');function fit(){if(innerWidth<=500){stage.style.transform='';return}stage.style.transform='scale('+Math.min(1,(innerHeight-28)/868,(innerWidth-28)/414)+')'}
-    fit();addEventListener('resize',fit);
+
+    const uid = session.username || session.email || 'guest';
+    let profile = TerookaUser.read(uid);
+
+    const $ = id => document.getElementById(id);
+    let toastTimer;
+
+    if (!profile.name || profile.name.toLowerCase() === 'demo') {
+      profile = TerookaUser.save(uid, { name: 'Wan' });
+      session.name = 'Wan';
+      localStorage.setItem('terooka_session', JSON.stringify(session));
+    }
+
+    function toast(message) {
+      $('toast').textContent = message;
+      $('toast').classList.add('show');
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        $('toast').classList.remove('show');
+      }, 2700);
+    }
+
+    function display() {
+      const name = profile.name || 'Wan';
+
+      $('display-name').textContent = name;
+      $('display-email').textContent = session.email || uid;
+
+      $('avatar').replaceChildren();
+
+      if (profile.avatar) {
+        const img = document.createElement('img');
+        img.src = profile.avatar;
+        img.alt = 'Profile photo';
+        $('avatar').appendChild(img);
+      } else {
+        $('avatar').textContent =
+          name.trim().charAt(0).toUpperCase() || 'W';
+      }
+
+      $('remove-photo').hidden = !profile.avatar;
+    }
+
+    $('full-name').value = profile.name || 'Wan';
+    $('email').value = session.email || uid;
+    display();
+
+    function setEditing(editing) {
+      $('profile-display').hidden = editing;
+      $('profile-edit-fields').hidden = !editing;
+      $('edit-profile').hidden = editing;
+      if (editing) {
+        $('full-name').value = profile.name || 'Wan';
+        $('current-password').value = '';
+        $('new-password').value = '';
+        $('confirm-password').value = '';
+        $('full-name').focus();
+      }
+    }
+    function refreshInfo() {
+      $('view-name').textContent = profile.name || 'Wan';
+      $('view-email').textContent = session.email || uid;
+    }
+    refreshInfo();
+    $('edit-profile').onclick = () => setEditing(true);
+    $('cancel-edit').onclick = () => setEditing(false);
+
+    function makeSalt() {
+      const bytes = new Uint8Array(12);
+      if (crypto.getRandomValues) crypto.getRandomValues(bytes);
+      return Array.from(bytes, b => b.toString(16).padStart(2,'0')).join('');
+    }
+    async function hashPassword(password, salt) {
+      const value = salt + password;
+      if (crypto.subtle && window.TextEncoder) {
+        const buffer = await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));
+        return Array.from(new Uint8Array(buffer),b=>b.toString(16).padStart(2,'0')).join('');
+      }
+      let hash=5381;
+      for (let i=0;i<value.length;i++) hash=((hash<<5)+hash+value.charCodeAt(i))|0;
+      return 'f'+(hash>>>0).toString(16);
+    }
+    $('profile-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const name = $('full-name').value.trim();
+      const nextPassword = $('new-password').value;
+      if (!name) { toast('Please enter your name.'); return; }
+      if (nextPassword) {
+        if (nextPassword.length < 8 || !/[a-z]/i.test(nextPassword) || !/\d/.test(nextPassword)) {
+          toast('Password needs 8 characters, a letter and a number.'); return;
+        }
+        if (nextPassword !== $('confirm-password').value) { toast('New passwords do not match.'); return; }
+      } else if ($('confirm-password').value || $('current-password').value) {
+        toast('Enter a new password to change it.'); return;
+      }
+      try {
+        let users = JSON.parse(localStorage.getItem('terooka_users') || '[]');
+        let account = users.find(u => u.email === (session.email || uid));
+        if (nextPassword) {
+          if (!account || !account.salt || !account.hash) { toast('Account not found. Please sign in again.'); return; }
+          if (!await hashPassword($('current-password').value,account.salt).then(h=>h===account.hash)) {
+            toast('Current password is incorrect.'); return;
+          }
+          const salt=makeSalt();
+          account.salt=salt;
+          account.hash=await hashPassword(nextPassword,salt);
+        }
+        if (account) account.name=name;
+        if (account) localStorage.setItem('terooka_users',JSON.stringify(users));
+        profile=TerookaUser.save(uid,{name});
+        session.name=name;session.displayName=name;
+        localStorage.setItem('terooka_session',JSON.stringify(session));
+        display();refreshInfo();setEditing(false);
+        toast(nextPassword?'Profile and password updated!':'Profile updated!');
+      } catch(err) { toast('Unable to save changes.'); }
+    });
+
+    // Upload photo
+    $('change-photo').onclick = () => {
+      $('photo-input').click();
+    };
+
+    $('photo-input').addEventListener('change', e => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      if (!/^image\/(png|jpeg|webp|gif)$/.test(file.type)) {
+        toast('Please choose a PNG, JPG or WebP image.');
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        toast('Please choose an image under 10 MB.');
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const img = new Image();
+
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const size = 320;
+
+          canvas.width = size;
+          canvas.height = size;
+
+          const side = Math.min(img.width, img.height);
+          const x = (img.width - side) / 2;
+          const y = (img.height - side) / 2;
+
+          canvas.getContext('2d').drawImage(
+            img, x, y, side, side,
+            0, 0, size, size
+          );
+
+          const avatar = canvas.toDataURL('image/jpeg', .78);
+
+          try {
+            profile = TerookaUser.save(uid, { avatar });
+            display();
+            toast('Profile photo updated!');
+          } catch (err) {
+            toast('Not enough browser storage for this photo.');
+          }
+        };
+
+        img.onerror = () => toast('Could not open that image.');
+        img.src = reader.result;
+      };
+
+      reader.onerror = () => toast('Could not read that image.');
+      reader.readAsDataURL(file);
+
+      e.target.value = '';
+    });
+
+    // Functional SVG X: remove photo
+    $('remove-photo').addEventListener('click', () => {
+      try {
+        profile = TerookaUser.save(uid, { avatar: null });
+        display();
+        toast('Profile photo removed!');
+      } catch (err) {
+        toast('Could not remove profile photo.');
+      }
+    });
+
+    // Saved places share the same profile storage as Discover.
+    // Use places.js exclusively for saved-place details.
+    function savedPlaceData(id) {
+      return (window.TerookaData?.places || []).find(p => String(p.id) === String(id)) || null;
+    }
+    function renderSavedPlaces() {
+      profile = TerookaUser.read(uid);
+      const legacyKey = 'terooka_saved_places_' + uid;
+      let legacy = [];
+      try { legacy = JSON.parse(localStorage.getItem(legacyKey)) || []; } catch(e) {}
+      const saved = [...new Set([...(Array.isArray(profile.saved) ? profile.saved : []), ...(Array.isArray(legacy) ? legacy : [])])].filter(id => savedPlaceData(id));
+      if(saved.length !== profile.saved.length) {
+        try { profile = TerookaUser.save(uid,{saved}); localStorage.removeItem(legacyKey); } catch(e) {}
+      }
+      $('saved-count').textContent = saved.length ? saved.length + ' saved' : '';
+      const list = $('saved-places-list');
+      list.replaceChildren();
+      if (!saved.length) {
+        const empty = document.createElement('div');
+        empty.className = 'saved-empty';
+        empty.innerHTML = '<svg viewBox="0 0 24 24"><path d="M5 4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v18l-7-5-7 5z"/></svg><p>No saved places yet. Places you bookmark will appear here.</p>';
+        list.appendChild(empty);
+        return;
+      }
+      let allReviews = {};
+      try { allReviews = JSON.parse(localStorage.getItem('terooka_reviews_' + uid)) || {}; } catch(e) {}
+      saved.forEach(id => {
+        const place = savedPlaceData(id);
+        const card = document.createElement('article');
+        card.className = 'saved-place saved-wide';
+        card.setAttribute('aria-label', place.name);
+        const open = () => { location.href = 'place.html?id=' + encodeURIComponent(id) + '&from=profile'; };
+
+        const photo = document.createElement('img');
+        photo.className = 'saved-place-photo';
+        photo.alt = '';
+        photo.src = place.image;
+        photo.onerror = () => { photo.onerror = null; photo.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="#e9d8f4"/><path d="M34 20h32v62L50 69 34 82z" fill="none" stroke="#5724a3" stroke-width="4"/></svg>'); };
+        const info = document.createElement('div'); info.className = 'saved-place-info';
+        const category = document.createElement('span'); category.className = 'saved-category'; category.textContent = place.category;
+        const title = document.createElement('strong'); title.textContent = place.name;
+        const sub = document.createElement('small'); sub.textContent = [place.city, place.state].filter(Boolean).join(', ');
+        const ratings = [...(place.reviews || []), ...(Array.isArray(allReviews[id]) ? allReviews[id] : [])].filter(r => Number.isFinite(Number(r.stars)) && Number(r.stars) >= 1 && Number(r.stars) <= 5);
+        const rating = document.createElement('div'); rating.className = 'saved-rating';
+        if(ratings.length) {
+          const avg = ratings.reduce((total, r) => total + Number(r.stars), 0) / ratings.length;
+          const star = document.createElement('span'); star.className='star'; star.textContent='★';
+          const score = document.createElement('span'); score.textContent=avg.toFixed(1);
+          const count = document.createElement('span'); count.className='review-count'; count.textContent='(' + ratings.length + ' reviews)';
+          rating.append(star,score,count);
+        } else {
+          const star = document.createElement('span'); star.className='star'; star.textContent='☆';
+          const count = document.createElement('span'); count.className='review-count'; count.textContent='No reviews yet';
+          rating.append(star,count);
+        }
+        info.append(category, title, sub, rating);
+        const bookmark = document.createElement('button');
+        bookmark.type = 'button'; bookmark.className = 'saved-bookmark';
+        bookmark.setAttribute('aria-label', 'Remove ' + place.name + ' from saved');
+        bookmark.setAttribute('aria-pressed', 'true');
+        bookmark.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>';
+        bookmark.onclick = e => {
+          e.stopPropagation();
+          bookmark.setAttribute('aria-pressed','false');
+          bookmark.classList.add('unsaved');
+          const remaining = saved.filter(x => x !== id);
+          try {
+            profile = TerookaUser.save(uid, {saved:remaining});
+            localStorage.removeItem(legacyKey);
+            renderSavedPlaces();
+            toast('Removed from saved');
+          } catch(err) { bookmark.setAttribute('aria-pressed','true'); bookmark.classList.remove('unsaved'); toast('Could not update saved places'); }
+        };
+        const actions = document.createElement('div'); actions.className='saved-card-actions';
+        const explore = document.createElement('button'); explore.type='button'; explore.className='saved-explore'; explore.textContent='Explore Place';
+        explore.addEventListener('click', open);
+        actions.append(explore,bookmark);
+        card.append(photo, info, actions);
+        list.appendChild(card);
+      });
+    }
+    function showSavedView(show) {
+      ['profile-main-heading','personal-head','profile-form','adventures-head','adventures-links'].forEach(id => $(id).hidden = show);
+      document.querySelector('.profile-hero').hidden = show;
+      $('logout').hidden = show;
+      $('saved-view').hidden = !show;
+      if (show) renderSavedPlaces();
+      document.querySelector('.scroll').scrollTop=0;
+    }
+    $('saved-shortcut').addEventListener('click',e=>{e.preventDefault();showSavedView(true);history.pushState({view:'saved'},'','profile.html?view=saved');});
+    $('saved-back').addEventListener('click',()=>{showSavedView(false);history.pushState({view:'profile'},'','profile.html');});
+    renderSavedPlaces();
+    window.addEventListener('pageshow',renderSavedPlaces);
+    if(new URLSearchParams(location.search).get('view')==='saved') showSavedView(true);
+    window.addEventListener('popstate',()=>showSavedView(new URLSearchParams(location.search).get('view')==='saved'));
+
+    // Logout
+    $('logout').onclick = () => {
+      $('dialog-back').classList.add('show');
+    };
+
+    $('cancel-logout').onclick = () => {
+      $('dialog-back').classList.remove('show');
+    };
+
+    $('dialog-back').addEventListener('click', e => {
+      if (e.target === $('dialog-back')) {
+        $('dialog-back').classList.remove('show');
+      }
+    });
+
+    $('confirm-logout').onclick = () => {
+      localStorage.removeItem('terooka_session');
+      location.replace('auth.html');
+    };
+
+    // Match Home phone frame scaling
+    function fit() {
+      if (innerWidth > 500) {
+        const scale = Math.min(
+          (innerWidth - 28) / 414,
+          (innerHeight - 28) / 868,
+          1
+        );
+
+        $('stage').style.transform = 'scale(' + scale + ')';
+      } else {
+        $('stage').style.transform = 'none';
+      }
+    }
+
+    addEventListener('resize', fit);
+    fit();
   })();
 </script>
+
 </body>
 </html>
