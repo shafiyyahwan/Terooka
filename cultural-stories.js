@@ -482,10 +482,10 @@ window.CULTURAL_STORIES = {
     imageSources: [
       {
         image: "img/sape-1.jpg",
-        title: "Traditional Sape instrument photograph 1",
-        credit: "Attribution pending",
-        url: "https://pemetaanbudaya.jkkn.gov.my/en/senibudaya/detail/1083",
-        licence: "Source page contains a photo; reuse permission not confirmed"
+        title: "Sape Performance",
+        credit: "tottr",
+        url: "https://commons.wikimedia.org/wiki/File:P1300085_Mathew_Ngau_Jau_aus_Borneo_(Klangkosmos-Detmold).jpg",
+        licence: "Creative Commons Attribution-Share Alike 2.0 Generic license"
       },
       {
         image: "img/sape-2.jpg",
@@ -549,10 +549,10 @@ window.CULTURAL_STORIES = {
     imageSources: [
       {
         image: "img/manok-pansuh-1.jpg",
-        title: "Manok Pansuh photograph 1",
-        credit: "Attribution pending",
-        url: "https://pemetaanbudaya.jkkn.gov.my/senibudaya/detail/745/galeri",
-        licence: "Gallery reference only; reuse permission not confirmed"
+        title: "Close up of Manok Pansuh",
+        credit: "Song GK",
+        url: "https://commons.wikimedia.org/wiki/File:Manuk_pansuh.jpg",
+        licence: "Creative Commons CC0 1.0 Universal Public Domain Dedication"
       },
       {
         image: "img/manok-pansuh-2.jpg",
