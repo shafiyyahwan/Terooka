@@ -69,10 +69,10 @@ window.CULTURAL_STORIES = {
     imageSources: [
       {
         image: "img/beadwork-1.jpg",
-        title: "Traditional beadwork photograph 1",
-        credit: "Attribution pending",
-        url: "",
-        licence: "To be confirmed"
+        title: "Bead Weaving, Sarawak",
+        credit: "Rod Waddington",
+        url: "https://commons.wikimedia.org/wiki/File:Bead_Weaving,_Sarawak_(7246866286).jpg",
+        licence: "Creative Commons Attribution-Share Alike 2.0 Generic license"
       },
       {
         image: "img/beadwork-2.jpg",
@@ -631,9 +631,9 @@ window.CULTURAL_STORIES = {
       {
         image: "img/pua-kumbu-2.jpg",
         title: "Pua Kumbu textile photograph 2",
-        credit: "Attribution pending",
-        url: "",
-        licence: "To be confirmed"
+        credit: "Thomas Quine",
+        url: "https://commons.wikimedia.org/wiki/File:Malaysian_Iban_weaving_techniques_(29046933783).jpg",
+        licence: "Creative Commons Attribution 2.0 Generic license"
       }
     ],
 
